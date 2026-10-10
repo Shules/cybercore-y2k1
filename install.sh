@@ -29,3 +29,15 @@ echo "Restarting Plasma..."
 systemctl --user restart plasma-plasmashell.service
 
 echo "Done!"
+
+# 6. Apply Klassy Settings
+echo "Applying Klassy Settings..."
+cp ./config/klassyrc ~/.config/
+qdbus6 org.kde.KWin /KWin reconfigure
+
+# 7. Apply System Colors (kdeglobals)
+echo "Applying Window Button Hover Colors..."
+kwriteconfig6 --file ~/.config/kdeglobals --group "Colors:Button" --key DecorationHover "0,240,255"
+kwriteconfig6 --file ~/.config/kdeglobals --group "Colors:Window" --key DecorationHover "0,240,255"
+# Reload KWin to pick up global color changes
+qdbus6 org.kde.KWin /KWin reconfigure

@@ -4,43 +4,45 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 
 ## Fase 0 — Estructura y respaldo del proyecto
 - [x] Crear el proyecto cybercore-y2k1.
-- [ ] Incluir README, instalador y desinstalador.
-- [ ] Separar configuraciones de KDE, KWin, Plasma, Konsole, KRunner, atajos, temas, cursores, iconos, fuentes, Conky, Glava, Fastfetch, SDDM, Plymouth, GRUB, Firefox, Vencord, aplicaciones propias, scripts, wallpapers y sonidos.
-- [ ] Preparar cybercore-backup y cybercore-restore.
-- [ ] El backup debe contemplar Plasma, KWin, Klassy, Kvantum, Conky, Glava, Konsole, Fastfetch, Firefox, Vencord, scripts, wallpapers, configuración de monitores y personalizaciones generales.
-- [ ] El objetivo es que toda la personalización pueda recuperarse sin depender de acordarse qué archivos se tocaron manualmente.
+- [x] Incluir README, instalador y desinstalador.
+- [x] Separar configuraciones de KDE, KWin, Plasma, Konsole, KRunner, atajos, temas, cursores, iconos, fuentes, Conky, Glava, Fastfetch, SDDM, Plymouth, GRUB, Firefox, Vencord, aplicaciones propias, scripts, wallpapers y sonidos.
+- [x] Preparar cybercore-backup y cybercore-restore.
+- [x] El backup debe contemplar Plasma, KWin, Klassy, Kvantum, Conky, Glava, Konsole, Fastfetch, Firefox, Vencord, scripts, wallpapers, configuración de monitores y personalizaciones generales.
+- [x] El objetivo es que toda la personalización pueda recuperarse sin depender de acordarse qué archivos se tocaron manualmente.
 
 ## Fase 1 — Identidad visual global
-- [ ] Fondo/chasis: #0E0918, violeta carbón profundo.
-- [ ] Violeta estructural: #BD00FF para bordes, líneas, marcos y elementos visuales principales.
-- [ ] Cian eléctrico: #00F0FF.
-- [ ] Texto principal: #E2E8F0, blanco hielo.
-- [ ] Cian y violeta quedan como identidad visual permanente, mezclados constantemente.
-- [ ] El cian puede intensificarse en hover, focus, active, selección, telemetría e indicadores.
-- [ ] Exo 2 como familia principal del sistema.
-- [ ] Estética hard-edge, con radio de esquina prácticamente 0 px.
+- [x] Fondo/chasis: #0E0918, violeta carbón profundo.
+- [x] Violeta estructural: #BD00FF para bordes, líneas, marcos y elementos visuales principales.
+- [x] Cian eléctrico: #00F0FF.
+- [x] Texto principal: #E2E8F0, blanco hielo.
+- [x] Cian y violeta quedan como identidad visual permanente, mezclados constantemente.
+- [x] El cian puede intensificarse en hover, focus, active, selección, telemetría e indicadores.
+- [x] Exo 2 como familia principal del sistema.
+- [x] Estética hard-edge, con radio de esquina prácticamente 0 px.
 - [x] Phosphor Thin/Light para HUD, barras, telemetría, botones técnicos y módulos custom.
-- [ ] Tango 3D/skeuomorphic para Dolphin, carpetas, escritorio y elementos con estética clásica Windows/Y2K.
-- [ ] Cursor Phinger Cursors Light/White.
+- [x] Tango 3D/skeuomorphic para Dolphin, carpetas, escritorio y elementos con estética clásica Windows/Y2K.
+- [x] Cursor Phinger Cursors Light/White.
 - [ ] Sonidos Longhorn / Windows Vista Beta.
-- [ ] Sin papelera visible en el escritorio.
+- [x] Sin papelera visible en el escritorio.
 
 ## Fase 2 — Plasma, KWin y apariencia del shell
 - [ ] Configurar Klassy y Kvantum.
 - [ ] Ventanas con estilo Aero + Cybercore.
 - [ ] Borde violeta neón de aproximadamente 1.5 px.
-- [ ] Esquinas rectas.
+- [ ] Esquinas minimamente redondeadas (4px).
 - [ ] Botones de ventana 3D/cristal.
 - [ ] Botón de cerrar en rojo.
 - [ ] Hover cian en los demás botones.
 
-**Blur estratégico**
-- [ ] Barra superior: blur fuerte.
-- [ ] Ventanas: blur moderado.
-- [ ] Dolphin: blur moderado.
-- [ ] Menús contextuales: blur moderado.
+**Blur estratégico (ACLARACIÓN CRÍTICA)**
+> ⚠️ **NO usar reglas globales de opacidad en KWin (`kwinrulesrc`)** para lograr el blur. Forzar la transparencia desde KWin vuelve opaco/transparente TODO el contenido (textos, imágenes, etc.) volviendo la interfaz inusable.
+> El "Blur Aero" debe lograrse configurando la translucidez del marco en **Klassy** y del fondo de la aplicación en **Kvantum** (para apps Qt).
+- [ ] Barra superior: blur fuerte (mediante panel/widget).
+- [ ] Ventanas: blur moderado (solo fondo/marco vía Kvantum/Klassy).
+- [ ] Dolphin: blur moderado (Kvantum).
+- [ ] Menús contextuales: blur moderado (Kvantum).
 - [ ] KRunner: casi opaco.
-- [ ] Konsole: prácticamente opaco.
+- [ ] Konsole: prácticamente opaco (Configuración nativa de Konsole).
 - [ ] Widgets de escritorio: transparentes o sin cajas pesadas.
 - [ ] Notificaciones: opacas.
 - [ ] Fondos estructurales y wallpapers: sólidos.
@@ -73,12 +75,12 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 
 ## Fase 4 — Panel superior HUD
 - [x] Panel nativo de Plasma.
-- [ ] Altura objetivo inicial: 28 px.
+- [x] Altura objetivo inicial: 28 px.
 - [x] Siempre visible.
 - [ ] Transparente con blur fuerte.
 - [ ] Identidad violeta + cian.
-- [ ] Divisiones finas.
-- [ ] Aspecto de HUD técnico.
+- [x] Divisiones finas.
+- [x] Aspecto de HUD técnico.
 
 **Izquierda**
 - [x] Pager de 10 escritorios virtuales.
@@ -90,7 +92,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Segundero continuo.
 - [x] Reproductor multimedia MPRIS.
 - [x] Audio de salida con icono Phosphor, click para mute/unmute, slider horizontal visible y desplegable para dispositivos/apps.
-- [ ] Micrófono con icono Phosphor, click para mute/unmute, slider de ganancia y selector/desplegable de entrada.
+- [x] Micrófono con icono Phosphor, click para mute/unmute, slider de ganancia y selector/desplegable de entrada.
 
 **Derecha**
 - [x] Telemetría compacta de CPU, GPU, RAM y temperatura CPU.
@@ -99,7 +101,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Notificaciones.
 - [x] Konsole.
 - [x] Mostrar escritorio.
-- [ ] Separadores verticales finos entre bloques.
+- [x] Separadores verticales finos entre bloques.
 
 ## Fase 5 — Panel inferior estilo Windows
 - [x] Panel nativo de Plasma.
@@ -120,7 +122,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [ ] Bluetooth.
 - [ ] Color Picker.
 - [ ] Reloj/calendario.
-- [x] Mostrar escritorio.
+- [ ] Mostrar escritorio.
 - [ ] Phosphor solo en los iconos técnicos de la derecha.
 
 ## Fase 6 — Escritorio principal
@@ -175,7 +177,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [ ] No volver a un flujo tiling permanente.
 
 ## Fase 10 — Firefox
-- [ ] Migrar/importar lo necesario desde Edge.
+- [x] Migrar/importar lo necesario desde Edge.
 - [ ] Aplicar userChrome.css.
 - [ ] Forzar esquinas rectas.
 - [ ] Integrar violeta/cian.

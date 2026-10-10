@@ -1,0 +1,11 @@
+[Windeco]
+BorderSize=1.5px
+ButtonStyle=Mac
+CornerRadius=4
+DrawBackgroundGradient=true
+TitleBarColors=20,12,33,189,0,255
+TitleBarOpacity=85
+WindowOutlineCustomColorActive=189,0,255
+WindowOutlineCustomColorInactive=189,0,255
+WindowOutlineStyleActive=4
+WindowOutlineStyleInactive=4
