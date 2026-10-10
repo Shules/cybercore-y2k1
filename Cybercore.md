@@ -35,18 +35,20 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [ ] Hover cian en los demás botones.
 
 **Blur estratégico (ACLARACIÓN CRÍTICA)**
-> ⚠️ **NO usar reglas globales de opacidad en KWin (`kwinrulesrc`)** para lograr el blur. Forzar la transparencia desde KWin vuelve opaco/transparente TODO el contenido (textos, imágenes, etc.) volviendo la interfaz inusable.
-> El "Blur Aero" debe lograrse configurando la translucidez del marco en **Klassy** y del fondo de la aplicación en **Kvantum** (para apps Qt).
-- [ ] Barra superior: blur fuerte (mediante panel/widget).
-- [ ] Ventanas: blur moderado (solo fondo/marco vía Kvantum/Klassy).
-- [ ] Dolphin: blur moderado (Kvantum).
-- [ ] Menús contextuales: blur moderado (Kvantum).
+> ⚠️ **El Blur es GLOBAL y está gestionado por KWin (`kwinrulesrc`) a una opacidad muy leve (98%/95%)**.
+> Se aplica a TODAS las ventanas del sistema (nativas de Plasma y aplicaciones externas/Electron) mediante una regla global, combinada con el motor de Blur de KWin activo. 
+> Como la opacidad es del 98%, genera el efecto "Aero Cristal" sin comprometer la lectura del texto.
+> **Klassy** gestiona exclusivamente el renderizado y borde de la barra de título (decoración), y KWin gestiona el resto del cuerpo.
+- [x] Barra superior: blur fuerte (panel nativo).
+- [x] Ventanas globales: blur sutil (KWin global a 98% activo / 95% inactivo).
+- [x] Dolphin, Antigravity y otros: heredan la regla global. No requieren Kvantum.
+- [ ] Menús contextuales: blur moderado (Kvantum/KWin).
 - [ ] KRunner: casi opaco.
-- [ ] Konsole: prácticamente opaco (Configuración nativa de Konsole).
+- [ ] Konsole: prácticamente opaco.
 - [ ] Widgets de escritorio: transparentes o sin cajas pesadas.
 - [ ] Notificaciones: opacas.
 - [ ] Fondos estructurales y wallpapers: sólidos.
-*La idea es evitar que todo termine pareciendo simplemente Windows Aero con neón.*
+*Nota: Prohibido inyectar opacidades fuertes (ej: 85%) globales porque vuelve inusable la UI.*
 
 **Microinteracciones**
 - [ ] Burn My Windows con efecto Glitch únicamente.
