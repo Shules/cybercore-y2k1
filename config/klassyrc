@@ -1,8 +1,8 @@
 [ButtonColors]
 ButtonBackgroundColorsActive=Accent
 ButtonBackgroundColorsInactive=Accent
-ButtonBackgroundOpacityActive=6
-ButtonBackgroundOpacityInactive=6
+ButtonBackgroundOpacityActive=85
+ButtonBackgroundOpacityInactive=85
 CloseButtonIconColorActive=AsSelected
 CloseButtonIconColorInactive=AsSelected
 UseHoverAccentActive=true
@@ -23,3 +23,12 @@ WindowOutlineCustomColorOpacityActive=255
 WindowOutlineCustomColorOpacityInactive=255
 WindowOutlineStyleActive=4
 WindowOutlineStyleInactive=4
+
+[WindowOutlineStyle]
+LockWindowOutlineCustomColorActiveInactive=false
+WindowOutlineCustomColorActive=189,0,255
+WindowOutlineCustomColorInactive=94,0,128
+WindowOutlineCustomColorOpacityActive=100
+WindowOutlineCustomColorOpacityInactive=100
+WindowOutlineStyleActive=WindowOutlineCustomColor
+WindowOutlineStyleInactive=WindowOutlineCustomColor
