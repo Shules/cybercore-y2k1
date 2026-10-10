@@ -1,0 +1,14 @@
+[1]
+Description=Forzar Blur en Dolphin
+opacityactive=99
+opacityactiverule=2
+opacityinactive=99
+opacityinactiverule=2
+wmclass=dolphin
+wmclasscomplete=false
+wmclassmatch=1
+types=1
+
+[General]
+count=1
+rules=1

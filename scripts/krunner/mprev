@@ -1,0 +1,3 @@
+#!/bin/bash
+playerctl previous
+notify-send -t 1500 "Music" "Previous"

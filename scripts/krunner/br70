@@ -1,0 +1,3 @@
+#!/bin/bash
+brightnessctl set 70%
+notify-send -t 1500 'Brightness' 'Set to 70%'

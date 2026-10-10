@@ -2,7 +2,11 @@
 FreeFloating=true
 
 [Plugins]
+browserhistoryEnabled=false
+krunner_bookmarksEnabled=false
 krunner_keysEnabled=true
+krunner_placesEnabled=false
+krunner_recentdocumentsEnabled=false
 
 [Plugins][Favorites]
 plugins=krunner_sessions,krunner_powerdevil,krunner_services,krunner_systemsettings

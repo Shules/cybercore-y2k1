@@ -1,0 +1,3 @@
+#!/bin/bash
+(sleep 900 && notify-send -u critical 'TIMER COMPLETE' 'Timer for 15 mins is up!' --icon=dialog-warning) &
+notify-send -t 2000 'Timer Set' 'Will alert in 15 minute(s)'

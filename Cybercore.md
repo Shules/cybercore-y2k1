@@ -60,26 +60,26 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] KRunner centrado, casi opaco, con borde cian neón de 2 px y sombra dura.
 
 ## Fase 3 — KRunner como Command Center
-- [ ] KRunner no será solo el buscador de Plasma.
-- [ ] Convertirlo en centro de comandos del sistema.
-- [ ] Crear scripts para comandos como:
-  - [ ] `> firefox`
-  - [ ] `> volume 60`
-  - [ ] `> workspace 4`
-  - [ ] `> bluetooth`
-  - [ ] `> screenshot`
-  - [ ] `> music play`
-  - [ ] `> timer 25`
-  - [ ] `> shutdown`
-- [ ] Guardar la lógica de estos comandos dentro de la carpeta de scripts del proyecto.
-- [ ] La intención es controlar una parte importante del sistema desde una única interfaz rápida.
+- [x] KRunner no será solo el buscador de Plasma.
+- [x] Convertirlo en centro de comandos del sistema.
+- [x] Crear scripts para comandos como:
+  - [x] `> firefox`
+  - [x] `> volume 60`
+  - [x] `> workspace 4`
+  - [x] `> bluetooth`
+  - [x] `> screenshot`
+  - [x] `> music play`
+  - [x] `> timer 25`
+  - [x] `> shutdown`
+- [x] Guardar la lógica de estos comandos dentro de la carpeta de scripts del proyecto.
+- [x] La intención es controlar una parte importante del sistema desde una única interfaz rápida.
 
 ## Fase 4 — Panel superior HUD
 - [x] Panel nativo de Plasma.
 - [x] Altura objetivo inicial: 28 px.
 - [x] Siempre visible.
 - [ ] Transparente con blur fuerte.
-- [ ] Identidad violeta + cian.
+- [x] Identidad violeta + cian.
 - [x] Divisiones finas.
 - [x] Aspecto de HUD técnico.
 

@@ -1,0 +1,3 @@
+#!/bin/bash
+wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%
+notify-send -t 1500 'Volume' 'Set to 15%'

@@ -19,7 +19,7 @@ gtk-update-icon-cache ~/.local/share/icons/Tango 2>/dev/null || true
 rm -rf ~/.cache/icon-cache.kcache 2>/dev/null || true
 
 # 1. Configs
-echo "[1] Applying KDE configs (kdeglobals, kwinrc, dolphinrc, krunnerrc)..."
+echo "[1] Applying KDE configs (kdeglobals, kwinrc, dolphinrc, krunnerrc, kwinrulesrc)..."
 cp -r config/kde/* ~/.config/ 2>/dev/null || true
 cp -r config/kwin/* ~/.config/ 2>/dev/null || true
 cp -r config/krunner/* ~/.config/ 2>/dev/null || true
@@ -58,35 +58,19 @@ echo "[8] Configuring Fastfetch..."
 mkdir -p ~/.config/fastfetch/
 cp fastfetch/config-compact.jsonc ~/.config/fastfetch/ 2>/dev/null || true
 
-# 5. KWin Rules (Blur)
-echo "[9] Configuring KWin Blur Rules..."
-cat << 'KWIN' > ~/.config/kwinrulesrc
-[1]
-Description=Transparencia Global
-opacityactive=98
-opacityactiverule=2
-opacityinactive=95
-opacityinactiverule=2
-types=1
-
-[General]
-count=1
-rules=1
-KWIN
-
-# 7. KRunner Scripts
-echo "[10] Deploying KRunner Scripts..."
+# 5. KRunner Scripts & Entries
+echo "[9] Deploying KRunner Command Scripts..."
 mkdir -p ~/.local/bin
-ln -sf $(dirname $(realpath $0))/scripts/krunner/* ~/.local/bin/ 2>/dev/null || true
+cp -r $(dirname $(realpath $0))/scripts/krunner/* ~/.local/bin/ 2>/dev/null || true
+chmod +x ~/.local/bin/* 2>/dev/null || true
 
-# 9. KRunner Desktop Entries
-echo "[11] Deploying KRunner Application Entries..."
+echo "[10] Deploying KRunner Application Entries..."
 mkdir -p ~/.local/share/applications/krunner_cmds
 cp applications/krunner_cmds/*.desktop ~/.local/share/applications/krunner_cmds/ 2>/dev/null || true
 kbuildsycoca6 --noincremental >/dev/null 2>&1 || true
 
-# 8. Apply & Reload
-echo "[12] Reloading KWin and Plasma..."
+# 6. Apply & Reload
+echo "[11] Reloading KWin and Plasma..."
 qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
 rm -rf ~/.cache/plasma* || true
 rm -rf ~/.cache/krunner* || true
