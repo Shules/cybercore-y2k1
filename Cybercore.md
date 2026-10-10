@@ -19,7 +19,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [ ] El cian puede intensificarse en hover, focus, active, selección, telemetría e indicadores.
 - [ ] Exo 2 como familia principal del sistema.
 - [ ] Estética hard-edge, con radio de esquina prácticamente 0 px.
-- [ ] Phosphor Thin/Light para HUD, barras, telemetría, botones técnicos y módulos custom.
+- [x] Phosphor Thin/Light para HUD, barras, telemetría, botones técnicos y módulos custom.
 - [ ] Tango 3D/skeuomorphic para Dolphin, carpetas, escritorio y elementos con estética clásica Windows/Y2K.
 - [ ] Cursor Phinger Cursors Light/White.
 - [ ] Sonidos Longhorn / Windows Vista Beta.
@@ -72,39 +72,39 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [ ] La intención es controlar una parte importante del sistema desde una única interfaz rápida.
 
 ## Fase 4 — Panel superior HUD
-- [ ] Panel nativo de Plasma.
+- [x] Panel nativo de Plasma.
 - [ ] Altura objetivo inicial: 28 px.
-- [ ] Siempre visible.
+- [x] Siempre visible.
 - [ ] Transparente con blur fuerte.
 - [ ] Identidad violeta + cian.
 - [ ] Divisiones finas.
 - [ ] Aspecto de HUD técnico.
 
 **Izquierda**
-- [ ] Pager de 10 escritorios virtuales.
-- [ ] Escritorios compactos y numerados.
-- [ ] Escritorio activo marcado visualmente con una línea/barra violeta inferior.
+- [x] Pager de 10 escritorios virtuales.
+- [x] Escritorios compactos y numerados.
+- [x] Escritorio activo marcado visualmente con una línea/barra violeta inferior.
 
 **Zona central**
-- [ ] Reloj en formato HH:MM:SS.
-- [ ] Segundero continuo.
-- [ ] Reproductor multimedia MPRIS.
+- [x] Reloj en formato HH:MM:SS.
+- [x] Segundero continuo.
+- [x] Reproductor multimedia MPRIS.
 - [ ] Audio de salida con icono Phosphor, click para mute/unmute, slider horizontal visible y desplegable para dispositivos/apps.
 - [ ] Micrófono con icono Phosphor, click para mute/unmute, slider de ganancia y selector/desplegable de entrada.
 
 **Derecha**
-- [ ] Telemetría compacta de CPU, GPU, RAM y temperatura CPU.
-- [ ] Formato icono Phosphor + porcentaje/valor.
-- [ ] Gestor de recursos.
-- [ ] Notificaciones.
-- [ ] Konsole.
-- [ ] Mostrar escritorio.
+- [x] Telemetría compacta de CPU, GPU, RAM y temperatura CPU.
+- [x] Formato icono Phosphor + porcentaje/valor.
+- [x] Gestor de recursos.
+- [x] Notificaciones.
+- [x] Konsole.
+- [x] Mostrar escritorio.
 - [ ] Separadores verticales finos entre bloques.
 
 ## Fase 5 — Panel inferior estilo Windows
-- [ ] Panel nativo de Plasma.
+- [x] Panel nativo de Plasma.
 - [ ] 100% del ancho.
-- [ ] Siempre visible.
+- [x] Siempre visible.
 - [ ] Estilo como el panel superior.
 - [ ] Panel Colorizer para integrarlo visualmente con el resto.
 
@@ -120,7 +120,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [ ] Bluetooth.
 - [ ] Color Picker.
 - [ ] Reloj/calendario.
-- [ ] Mostrar escritorio.
+- [x] Mostrar escritorio.
 - [ ] Phosphor solo en los iconos técnicos de la derecha.
 
 ## Fase 6 — Escritorio principal
