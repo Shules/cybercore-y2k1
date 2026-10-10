@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=mc
+Exec=mc
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

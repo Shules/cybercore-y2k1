@@ -72,3 +72,9 @@ rm -rf ~/.cache/plasma* || true
 rm -rf ~/.cache/krunner* || true
 
 echo "Installation complete! Restart your session or run 'systemctl --user restart plasma-plasmashell' to apply all changes."
+
+# 9. KRunner Desktop Entries
+echo "[12] Deploying KRunner Application Entries..."
+mkdir -p ~/.local/share/applications/krunner_cmds
+cp applications/krunner_cmds/*.desktop ~/.local/share/applications/krunner_cmds/
+kbuildsycoca6 --noincremental || true
