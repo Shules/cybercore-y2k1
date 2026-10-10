@@ -89,7 +89,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Reloj en formato HH:MM:SS.
 - [x] Segundero continuo.
 - [x] Reproductor multimedia MPRIS.
-- [ ] Audio de salida con icono Phosphor, click para mute/unmute, slider horizontal visible y desplegable para dispositivos/apps.
+- [x] Audio de salida con icono Phosphor, click para mute/unmute, slider horizontal visible y desplegable para dispositivos/apps.
 - [ ] Micrófono con icono Phosphor, click para mute/unmute, slider de ganancia y selector/desplegable de entrada.
 
 **Derecha**
