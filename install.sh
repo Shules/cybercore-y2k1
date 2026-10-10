@@ -42,3 +42,32 @@ kwriteconfig6 --file ~/.config/kdeglobals --group "Colors:Button" --key Decorati
 kwriteconfig6 --file ~/.config/kdeglobals --group "Colors:Window" --key DecorationHover "0,240,255"
 # Reload KWin to pick up global color changes
 qdbus6 org.kde.KWin /KWin reconfigure
+
+# --- FASE 2: Kvantum, KWin y Dolphin ---
+echo "Instalando tema Kvantum Cybercore-Y2K1..."
+mkdir -p ~/.config/Kvantum
+cp -r config/Kvantum/Cybercore-Y2K1 ~/.config/Kvantum/
+kvantummanager --set Cybercore-Y2K1
+
+echo "Configurando KWin (Transparencia global y Dolphin)..."
+cat << 'KWIN' > ~/.config/kwinrulesrc
+[1]
+Description=Forzar Blur en Dolphin
+opacityactive=99
+opacityactiverule=2
+opacityinactive=99
+opacityinactiverule=2
+wmclass=dolphin
+wmclasscomplete=false
+wmclassmatch=1
+types=1
+
+[General]
+count=1
+rules=1
+KWIN
+qdbus6 org.kde.KWin /KWin reconfigure
+
+echo "Configurando grilla rígida en Dolphin..."
+kwriteconfig6 --file dolphinrc --group IconsMode --key MaximumTextLines 2
+kwriteconfig6 --file dolphinrc --group IconsMode --key TextWidthIndex 1
