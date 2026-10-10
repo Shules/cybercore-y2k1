@@ -47,6 +47,7 @@ qdbus6 org.kde.KWin /KWin reconfigure
 echo "Instalando tema Kvantum Cybercore-Y2K1..."
 mkdir -p ~/.config/Kvantum
 cp -r config/Kvantum/Cybercore-Y2K1 ~/.config/Kvantum/
+cp config/Kvantum/kvantum.kvconfig ~/.config/Kvantum/
 kvantummanager --set Cybercore-Y2K1
 
 echo "Configurando KWin (Transparencia global y Dolphin)..."

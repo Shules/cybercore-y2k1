@@ -1,0 +1,8 @@
+[General]
+theme=Cybercore-Y2K1
+
+[Hacks]
+no_focus_rect=true
+no_focus_rects=true
+remove_focus_rect=true
+remove_focus_rects=true
