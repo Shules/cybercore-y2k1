@@ -3,6 +3,5 @@ if [ -z "$1" ]; then
     exit 1
 fi
 MSG=${2:-"Timer for $1 mins is up!"}
-# Run in background detached
 (sleep $(($1 * 60)) && notify-send -u critical "TIMER COMPLETE" "$MSG" --icon=dialog-warning) &
 notify-send -t 2000 "Timer Set" "Will alert in $1 minute(s)"
