@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=System Monitor
+Exec=plasma-systemmonitor
+Icon=/home/julian/.local/share/icons/hicolor/scalable/apps/cybercore-sysmon.svg
+Type=Application

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=RAM
+Exec=plasma-systemmonitor
+Icon=/home/julian/.local/share/icons/hicolor/scalable/apps/cybercore-ram.svg
+Type=Application

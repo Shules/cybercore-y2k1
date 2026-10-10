@@ -1,0 +1,8 @@
+{
+    "KPlugin": {
+        "Id": "com.cybercore.konsole",
+        "Name": "Cybercore Konsole",
+        "Version": "1.0",
+        "Category": "Utilities"
+    }
+}

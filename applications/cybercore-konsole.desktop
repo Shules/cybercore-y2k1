@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Konsole
+Exec=/usr/bin/konsole
+Icon=/home/julian/.local/share/icons/hicolor/scalable/apps/cybercore-konsole.svg
+Type=Application
+Terminal=false
+StartupNotify=true

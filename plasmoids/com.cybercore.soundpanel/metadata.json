@@ -1,0 +1,8 @@
+{
+    "KPlugin": {
+        "Id": "com.cybercore.soundpanel",
+        "Name": "Cybercore Sound Panel",
+        "Version": "1.0",
+        "Category": "Utilities"
+    }
+}

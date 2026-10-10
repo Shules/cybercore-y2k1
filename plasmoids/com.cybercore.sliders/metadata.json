@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Id": "com.cybercore.sliders",
+        "Name": "Cybercore Audio Sliders",
+        "Version": "1.0",
+        "Description": "Sliders de volumen y micrófono nativos con íconos Phosphor.",
+        "Icon": "audio-volume-high",
+        "Category": "Multimedia",
+        "License": "GPL-2.0+",
+        "ServiceTypes": ["Plasma/Applet"]
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

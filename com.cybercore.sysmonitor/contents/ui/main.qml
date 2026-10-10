@@ -18,13 +18,19 @@ PlasmoidItem {
     }
 
     Sensors.Sensor { id: cpuSensor; sensorId: "cpu/all/usage" }
-    Sensors.Sensor { id: gpuSensor; sensorId: "gpu/all/usage" }
-    Sensors.Sensor { id: ramSensor; sensorId: "memory/physical/used" }
-    Sensors.Sensor { id: tempSensor; sensorId: "lmsensors/k10temp-pci-00c3/Tctl" }
+    Sensors.Sensor { id: gpuSensor; sensorId: "gpu/gpu0/usage" }
+    Sensors.Sensor { id: ramSensor; sensorId: "memory/physical/usedPercent" }
+    Sensors.Sensor { id: tempSensor; sensorId: "cpu/all/averageTemperature" }
 
-    fullRepresentation: Item {
-        implicitWidth: contentRow.implicitWidth
-        implicitHeight: contentRow.implicitHeight
+    fullRepresentation: MouseArea {
+        id: mouseArea
+        Layout.minimumWidth: contentRow.implicitWidth
+        Layout.maximumWidth: contentRow.implicitWidth
+        Layout.preferredWidth: contentRow.implicitWidth
+        
+        cursorShape: Qt.PointingHandCursor
+        hoverEnabled: true
+        onClicked: executable.exec("plasma-systemmonitor")
 
         RowLayout {
             id: contentRow
@@ -36,86 +42,73 @@ PlasmoidItem {
                 spacing: 4
                 Image {
                     source: "file:///home/julian/cybercore-y2k1/icons/phosphor/cpu-light.svg"
+                    Layout.preferredWidth: 14; Layout.preferredHeight: 14
                     sourceSize.width: 14; sourceSize.height: 14
-                    Layout.alignment: Qt.AlignVCenter
                 }
                 PlasmaComponents.Label {
-                    text: cpuSensor.formattedValue
+                    text: cpuSensor.formattedValue !== "" ? cpuSensor.formattedValue : "N/A"
                     font.family: "Exo 2"
                     font.pixelSize: 12
                     font.bold: true
-                    color: "#00F0FF"
-                    Layout.alignment: Qt.AlignVCenter
+                    color: "#00F0FF"; Layout.preferredWidth: 36; horizontalAlignment: Text.AlignRight
                 }
             }
             
-            Rectangle { Layout.preferredWidth: 1; Layout.preferredHeight: 12; Layout.fillWidth: false; color: "#BD00FF"; opacity: 0.5; Layout.alignment: Qt.AlignVCenter }
+            Rectangle { Layout.preferredWidth: 1; Layout.preferredHeight: 12; color: "#BD00FF"; opacity: 0.5 }
             
             // 2. RAM
             RowLayout {
                 spacing: 4
                 Image {
                     source: "file:///home/julian/cybercore-y2k1/icons/phosphor/memory-light.svg"
+                    Layout.preferredWidth: 14; Layout.preferredHeight: 14
                     sourceSize.width: 14; sourceSize.height: 14
-                    Layout.alignment: Qt.AlignVCenter
                 }
                 PlasmaComponents.Label {
-                    text: ramSensor.formattedValue
+                    text: ramSensor.formattedValue !== "" ? ramSensor.formattedValue : "N/A"
                     font.family: "Exo 2"
                     font.pixelSize: 12
                     font.bold: true
-                    color: "#00F0FF"
-                    Layout.alignment: Qt.AlignVCenter
+                    color: "#00F0FF"; Layout.preferredWidth: 36; horizontalAlignment: Text.AlignRight
                 }
             }
             
-            Rectangle { Layout.preferredWidth: 1; Layout.preferredHeight: 12; Layout.fillWidth: false; color: "#BD00FF"; opacity: 0.5; Layout.alignment: Qt.AlignVCenter }
+            Rectangle { Layout.preferredWidth: 1; Layout.preferredHeight: 12; color: "#BD00FF"; opacity: 0.5 }
             
             // 3. GPU
             RowLayout {
                 spacing: 4
                 Image {
                     source: "file:///home/julian/cybercore-y2k1/icons/phosphor/graphics-card-light.svg"
+                    Layout.preferredWidth: 14; Layout.preferredHeight: 14
                     sourceSize.width: 14; sourceSize.height: 14
-                    Layout.alignment: Qt.AlignVCenter
                 }
                 PlasmaComponents.Label {
-                    text: gpuSensor.formattedValue
+                    text: gpuSensor.formattedValue !== "" ? gpuSensor.formattedValue : "N/A"
                     font.family: "Exo 2"
                     font.pixelSize: 12
                     font.bold: true
-                    color: "#00F0FF"
-                    Layout.alignment: Qt.AlignVCenter
+                    color: "#00F0FF"; Layout.preferredWidth: 26; horizontalAlignment: Text.AlignRight
                 }
             }
             
-            Rectangle { Layout.preferredWidth: 1; Layout.preferredHeight: 12; Layout.fillWidth: false; color: "#BD00FF"; opacity: 0.5; Layout.alignment: Qt.AlignVCenter }
+            Rectangle { Layout.preferredWidth: 1; Layout.preferredHeight: 12; color: "#BD00FF"; opacity: 0.5 }
             
             // 4. TEMPERATURA
             RowLayout {
                 spacing: 4
                 Image {
                     source: "file:///home/julian/cybercore-y2k1/icons/phosphor/thermometer-light.svg"
+                    Layout.preferredWidth: 14; Layout.preferredHeight: 14
                     sourceSize.width: 14; sourceSize.height: 14
-                    Layout.alignment: Qt.AlignVCenter
                 }
                 PlasmaComponents.Label {
                     text: tempSensor.formattedValue !== "" ? tempSensor.formattedValue : "N/A"
                     font.family: "Exo 2"
                     font.pixelSize: 12
                     font.bold: true
-                    color: "#00F0FF"
-                    Layout.alignment: Qt.AlignVCenter
+                    color: "#00F0FF"; Layout.preferredWidth: 36; horizontalAlignment: Text.AlignRight
                 }
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            hoverEnabled: true
-            onClicked: {
-                executable.exec("plasma-systemmonitor")
             }
         }
     }

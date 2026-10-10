@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Temp
+Exec=plasma-systemmonitor
+Icon=/home/julian/.local/share/icons/hicolor/scalable/apps/cybercore-temp.svg
+Type=Application

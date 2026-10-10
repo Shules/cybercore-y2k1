@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=CPU
+Exec=plasma-systemmonitor
+Icon=/home/julian/.local/share/icons/hicolor/scalable/apps/cybercore-cpu.svg
+Type=Application

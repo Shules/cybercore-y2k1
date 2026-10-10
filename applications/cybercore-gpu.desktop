@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=GPU
+Exec=plasma-systemmonitor
+Icon=/home/julian/.local/share/icons/hicolor/scalable/apps/cybercore-gpu.svg
+Type=Application

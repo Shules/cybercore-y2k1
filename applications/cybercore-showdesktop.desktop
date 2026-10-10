@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Mostrar escritorio
+Exec=qdbus6 org.kde.kglobalaccel /component/kwin invokeShortcut "Show Desktop"
+Icon=/home/julian/.local/share/icons/hicolor/scalable/apps/cybercore-showdesktop.svg
+Type=Application
+Terminal=false

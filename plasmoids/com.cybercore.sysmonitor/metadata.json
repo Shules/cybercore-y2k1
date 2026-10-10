@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Id": "com.cybercore.sysmonitor",
+        "Name": "Cybercore System Monitor",
+        "Version": "1.0",
+        "Description": "Monitores de CPU, GPU, RAM y Temp. Abre el admin de tareas al clickear.",
+        "Icon": "utilities-system-monitor",
+        "Category": "System Information",
+        "License": "GPL-2.0+",
+        "ServiceTypes": ["Plasma/Applet"]
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

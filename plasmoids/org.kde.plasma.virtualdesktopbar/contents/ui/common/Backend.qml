@@ -1,0 +1,91 @@
+import QtQuick
+import org.kde.plasma.virtualdesktopbar 1.0
+
+VirtualDesktopBar {
+    id: backend
+
+    required property ListModel desktopInfoList
+    required property ListModel activityInfoList
+
+    Component.onCompleted: {
+        if (backend) {
+            // backend.startSignalTrace(backend, "backend");
+            // if (typeof plasmoid !== "undefined") {
+            //     backend.startSignalTrace(plasmoid, "plasmoid");
+            //     backend.startSignalTrace(plasmoid.configuration, "plasmoid.configuration");
+            // }
+            console.log("Backend is ready. Requesting desktop info list...");
+            initializeDesktopInfoList(backend.requestDesktopInfoList());
+            initializeActivityInfoList(backend.requestActivityInfoList());
+        }
+    }
+
+    onDesktopCreated: function (desktopId, desktopData) {
+        let newDesktop = {
+            "id": desktopData.id || 0,
+            "uuid": desktopId,
+            "name": desktopData.name || "Desktop " + (desktopInfoList.count + 1),
+            "is_current": false,
+            "has_windows": false,
+        };
+
+        desktopInfoList.append(newDesktop);
+    }
+
+    onDesktopRemoved: function (desktopId) {
+        for (let i = 0; i < desktopInfoList.count; i++) {
+            const desktop = desktopInfoList.get(i);
+            if (desktop.uuid === desktopId) {
+                desktopInfoList.remove(i);
+                break;
+            }
+        }
+    }
+
+    onDesktopDataChanged: function (desktopId, desktopData) {
+        for (let i = 0; i < desktopInfoList.count; i++) {
+            const desktop = desktopInfoList.get(i);
+            if (desktop.uuid === desktopId) {
+                let updatedDesktop = {
+                    "id": desktopData.id !== undefined ? desktopData.id : desktop.id,
+                    "uuid": desktopId,
+                    "name": desktopData.name !== undefined ? desktopData.name : desktop.name,
+                    "is_current": desktop.is_current,
+                };
+
+                desktopInfoList.set(i, updatedDesktop);
+                break;
+            }
+        }
+    }
+
+    onCurrentChanged: function (desktopId) {
+        for (let i = 0; i < desktopInfoList.count; i++) {
+            desktopInfoList.setProperty(i, "is_current", false);
+            const desktop = desktopInfoList.get(i);
+            if (desktop.uuid === desktopId) {
+                desktopInfoList.setProperty(i, "is_current", true);
+            }
+        }
+    }
+
+    function initializeDesktopInfoList(data) {
+        desktopInfoList.clear();
+
+        for (let i = 0; i < data.length; i++) {
+            let desktop = data[i];
+            desktop.has_windows = false;
+            desktopInfoList.append(desktop);
+        }
+    }
+
+    function initializeActivityInfoList(data) {
+        activityInfoList.clear();
+
+        for (let i = 0; i < data.length; i++) {
+            let activity = data[i];
+            activityInfoList.append(activity);
+        }
+
+    }
+}

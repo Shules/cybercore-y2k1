@@ -110,8 +110,8 @@ PlasmoidItem {
             }
             PlasmaComponents.Slider {
                 id: volSlider
-                Layout.minimumWidth: 100
-                Layout.maximumWidth: 130
+                Layout.preferredWidth: 78
+                
                 Layout.alignment: Qt.AlignVCenter
                 from: 0; to: 100
                 value: root.sinkVolume
@@ -142,8 +142,8 @@ PlasmoidItem {
             }
             PlasmaComponents.Slider {
                 id: micSlider
-                Layout.minimumWidth: 80
-                Layout.maximumWidth: 110
+                Layout.preferredWidth: 78
+                
                 Layout.alignment: Qt.AlignVCenter
                 from: 0; to: 100
                 value: root.sourceVolume

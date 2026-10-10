@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+
+    <kcfgfile name=""/>
+
+    <group name="Behavior">
+        <!-- Behavior - Empty desktops -->
+        <entry name="EmptyDesktopName" type="String">
+            <label>The default name assigned to newly created virtual desktops.</label>
+            <default></default>
+        </entry>
+
+        <!-- Behavior - Adding desktops -->
+        <entry name="SwitchToNewDesktop" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="PromptRenameNew" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="NewDesktopCommand" type="String">
+            <default></default>
+        </entry>
+
+        <!-- Behavior - Dynamic desktops -->
+        <entry name="DynamicDesktops" type="Bool">
+            <default>false</default>
+        </entry>
+
+        <!-- Behavior - Multiple screens/monitors -->
+        <entry name="FilterByScreen" type="Bool">
+            <default>true</default>
+        </entry>
+
+        <!-- Behavior - Mouse wheel handling -->
+        <entry name="WheelClickRemoves" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="WheelScrollSwitches" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="WheelInvertDirection" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="WheelWrapAround" type="Bool">
+            <default>false</default>
+        </entry>
+    </group>
+
+    <group name="Appearance">
+        <!-- Appearance - Animations -->
+        <entry name="AnimationsEnable" type="Bool">
+            <default>true</default>
+        </entry>
+
+        <!-- Appearance - Tooltips -->
+        <entry name="TooltipsEnable" type="Bool">
+            <default>true</default>
+        </entry>
+
+        <!-- Appearance - Add desktop button -->
+        <entry name="ShowAddButton" type="Bool">
+            <default>true</default>
+        </entry>
+<!--        <entry name="AddDesktopButtonSize" type="Int">-->
+<!--            <default>0</default>-->
+<!--        </entry>-->
+
+        <!-- Appearance - Desktop buttons -->
+        <entry name="ButtonMarginVertical" type="Int">
+            <default>3</default>
+        </entry>
+        <entry name="ButtonMarginHorizontal" type="Int">
+            <default>3</default>
+        </entry>
+        <entry name="ButtonSpacing" type="Int">
+            <default>3</default>
+        </entry>
+        <entry name="ButtonCommonSize" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="ShowOnlyCurrent" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="ShowOnlyOccupied" type="Bool">
+            <default>false</default>
+        </entry>
+
+        <!-- Appearance - Desktop labels -->
+        <entry name="LabelStyle" type="Int">
+            <default>0</default>
+        </entry>
+        <entry name="LabelCustomFormat" type="String">
+            <default></default>
+        </entry>
+        <entry name="LabelMaxLength" type="Int">
+            <default>25</default>
+        </entry>
+        <entry name="LabelFont" type="String">
+            <default></default>
+        </entry>
+        <entry name="LabelFontSize" type="Int">
+            <default>0</default>
+        </entry>
+        <entry name="LabelColor" type="String">
+            <default></default>
+        </entry>
+        <entry name="LabelDimIdle" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="LabelUppercase" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="LabelBoldCurrent" type="Bool">
+            <default>false</default>
+        </entry>
+
+        <!-- Appearance - Desktop indicators -->
+        <entry name="IndicatorStyle" type="Int">
+            <default>0</default>
+        </entry>
+        <entry name="IndicatorBlockRadius" type="Int">
+            <default>2</default>
+        </entry>
+        <entry name="IndicatorLineThickness" type="Int">
+            <default>3</default>
+        </entry>
+        <entry name="IndicatorInvert" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="IndicatorColorIdle" type="String">
+            <default></default>
+        </entry>
+        <entry name="IndicatorColorCurrent" type="String">
+            <default></default>
+        </entry>
+        <entry name="IndicatorColorOccupied" type="String">
+            <default></default>
+        </entry>
+        <entry name="IndicatorColorAttention" type="String">
+            <default></default>
+        </entry>
+        <entry name="IndicatorKeepOpacity" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="IndicatorDistinctOccupied" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="IndicatorDistinctAttention" type="Bool">
+            <default>false</default>
+        </entry>
+    </group>
+</kcfg>
