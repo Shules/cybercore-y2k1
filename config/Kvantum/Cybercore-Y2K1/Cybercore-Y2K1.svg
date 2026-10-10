@@ -378,11 +378,11 @@
 </g>
 <g style="fill-rule:evenodd;stroke:none" id="scrollbarslider-normal-topleft" transform="translate(-135.5,5.749757)">
 <path style="fill:#969696;fill-opacity:0" id="scrollbarslider-normal-topleft0-9" d="m 155,1089 c -6.648,0 -12,5.3521 -12,12 h 12 v -12 z " />
-<path style="fill:#767b87" id="path4475-1" d="m 155,1092.5 c -4,0.011 -4,2.7501 -4,8.4998 l 4,2e-4 z" />
+<path style="fill:#5E0080" id="path4475-1" d="m 155,1092.5 c -4,0.011 -4,2.7501 -4,8.4998 l 4,2e-4 z" />
 </g>
 <g style="fill-rule:evenodd;stroke:none" id="scrollbarslider-normal-left" transform="translate(-135.5,5.749757)">
 <path style="fill:#969696;fill-opacity:0" id="scrollbarslider-normal-left0-1" d="m 143,1101 0,16.4064 0,.094 12,0 0,-16.5 -12,0 z " />
-<path style="fill:#767b87" id="path4477-3" d="m 151,1100.9998 0,16.4064 0,0.094 4,2e-4 0,-16.5 -4,-2e-4 z" />
+<path style="fill:#5E0080" id="path4477-3" d="m 151,1100.9998 0,16.4064 0,0.094 4,2e-4 0,-16.5 -4,-2e-4 z" />
 </g>
 <use width="450" x="0" y="0" height="1230" ns1:href="#scrollbarslider-normal-left" id="scrollbarslider-normal-right" transform="matrix(-1,0,0,1,39,0)" />
 <use width="450" x="0" y="0" height="1230" ns1:href="#scrollbarslider-normal-topleft" id="scrollbarslider-normal-topright" transform="matrix(-1,0,0,1,39,0)" />
