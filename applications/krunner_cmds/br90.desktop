@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=br90
+Exec=br90
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

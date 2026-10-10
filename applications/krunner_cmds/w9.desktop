@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=w9
+Exec=w9
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

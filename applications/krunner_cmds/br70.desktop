@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=br70
+Exec=br70
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

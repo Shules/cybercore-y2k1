@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=w7
+Exec=w7
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=br80
+Exec=br80
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

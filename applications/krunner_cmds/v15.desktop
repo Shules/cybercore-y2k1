@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=v15
+Exec=v15
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

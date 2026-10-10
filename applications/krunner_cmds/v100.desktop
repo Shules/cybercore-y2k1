@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=v100
+Exec=v100
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=t10
+Exec=t10
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

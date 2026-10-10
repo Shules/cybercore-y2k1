@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=w8
+Exec=w8
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

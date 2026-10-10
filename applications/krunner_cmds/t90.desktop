@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=t90
+Exec=t90
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

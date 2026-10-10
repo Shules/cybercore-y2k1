@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=w10
+Exec=w10
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

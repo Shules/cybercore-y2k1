@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=w1
+Exec=w1
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

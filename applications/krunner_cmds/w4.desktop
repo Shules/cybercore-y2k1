@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=w4
+Exec=w4
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

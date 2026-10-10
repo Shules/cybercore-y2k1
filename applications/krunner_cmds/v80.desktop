@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=v80
+Exec=v80
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

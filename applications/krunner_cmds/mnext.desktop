@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=mnext
+Exec=mnext
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=br1
+Exec=br1
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

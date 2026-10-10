@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=w5
+Exec=w5
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

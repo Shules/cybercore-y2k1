@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=w6
+Exec=w6
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;

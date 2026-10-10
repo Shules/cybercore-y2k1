@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=w3
+Exec=w3
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;
