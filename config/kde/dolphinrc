@@ -1,0 +1,28 @@
+[ExtractDialog]
+2 screens: Height=480
+2 screens: Width=910
+
+[General]
+FilterBar=false
+ShowSpaceInfo=false
+ShowZoomSlider=false
+Version=202
+ViewMode=0
+ViewPropsTimestamp=2026,5,13,6,26,45.029
+
+[IconsMode]
+MaximumTextLines=1
+TextWidthIndex=0
+
+[KFileDialog Settings]
+Places Icons Auto-resize=false
+Places Icons Static Size=22
+
+[MainWindow]
+MenuBar=Disabled
+
+[Notification Messages]
+warnAboutRisksBeforeActingAsAdmin=false
+
+[PreviewSettings]
+Plugins=audiothumbnail,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,mobi,opendocumentthumbnail,svgthumbnail,textthumbnail,windowsexethumbnail,windowsimagethumbnail

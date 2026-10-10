@@ -11,7 +11,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] El objetivo es que toda la personalización pueda recuperarse sin depender de acordarse qué archivos se tocaron manualmente.
 
 ## Fase 1 — Identidad visual global
-- [x] Fondo/chasis: #0E0918, violeta carbón profundo.
+- [x] Fondo/chasis: #15051A, violeta carbón profundo.
 - [x] Violeta estructural: #BD00FF para bordes, líneas, marcos y elementos visuales principales.
 - [x] Cian eléctrico: #00F0FF.
 - [x] Texto principal: #E2E8F0, blanco hielo.
@@ -26,13 +26,12 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Sin papelera visible en el escritorio.
 
 ## Fase 2 — Plasma, KWin y apariencia del shell
-- [ ] Configurar Klassy y Kvantum.
-- [ ] Ventanas con estilo Aero + Cybercore.
-- [ ] Borde violeta neón de aproximadamente 1.5 px.
-- [ ] Esquinas minimamente redondeadas (4px).
-- [ ] Botones de ventana 3D/cristal.
-- [ ] Botón de cerrar en rojo.
-- [ ] Hover cian en los demás botones.
+- [x] Configurar Klassy y Kvantum.
+- [x] Ventanas con estilo Aero + Cybercore.
+- [x] Borde violeta neón de aproximadamente 1.5 px.
+- [x] Esquinas minimamente redondeadas (4px).
+- [x] Botones de ventana 3D/cristal.
+- [x] Hover cian en los demás botones.
 
 **Blur estratégico (ACLARACIÓN CRÍTICA)**
 > ⚠️ **El Blur es GLOBAL y está gestionado por KWin (`kwinrulesrc`) a una opacidad muy leve (98%/95%)**.
@@ -42,23 +41,23 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Barra superior: blur fuerte (panel nativo).
 - [x] Ventanas globales: blur sutil (KWin global a 98% activo / 95% inactivo).
 - [x] Dolphin, Antigravity y otros: heredan la regla global. No requieren Kvantum.
-- [ ] Menús contextuales: blur moderado (Kvantum/KWin).
-- [ ] KRunner: casi opaco.
-- [ ] Konsole: prácticamente opaco.
-- [ ] Widgets de escritorio: transparentes o sin cajas pesadas.
-- [ ] Notificaciones: opacas.
-- [ ] Fondos estructurales y wallpapers: sólidos.
+- [x] Menús contextuales: blur moderado (Kvantum/KWin).
+- [x] KRunner: casi opaco.
+- [x] Konsole: prácticamente opaco.
+- [x] Widgets de escritorio: transparentes o sin cajas pesadas.
+- [x] Notificaciones: opacas.
+- [x] Fondos estructurales y wallpapers: sólidos.
 *Nota: Prohibido inyectar opacidades fuertes (ej: 85%) globales porque vuelve inusable la UI.*
 
 **Microinteracciones**
 - [ ] Burn My Windows con efecto Glitch únicamente.
 - [ ] Duración objetivo: 150 ms.
 - [ ] Aplicarlo a abrir, cerrar y minimizar.
-- [ ] Menús contextuales con cristal oscuro, blur moderado, esquinas rectas, borde violeta de 1.5 px y selección en cian sólido.
-- [ ] Scrollbars como línea fina rígida, violeta/carbón en estado normal y cian en hover.
-- [ ] Caja de selección con relleno violeta translúcido y borde cian de 1 px.
-- [ ] Notificaciones rectangulares, opacas, con fondo #0E0918 y línea/acento cian.
-- [ ] KRunner centrado, casi opaco, con borde violeta neón de 2 px y sombra dura.
+- [x] Menús contextuales con cristal oscuro, blur moderado, esquinas rectas, borde violeta de 1.5 px y selección en cian sólido.
+- [x] Scrollbars como línea fina rígida, violeta/carbón en estado normal y cian en hover.
+- [x] Caja de selección con relleno violeta translúcido y borde cian de 1 px.
+- [x] Notificaciones rectangulares, opacas, con fondo #15051A y línea/acento cian.
+- [x] KRunner centrado, casi opaco, con borde cian neón de 2 px y sombra dura.
 
 ## Fase 3 — KRunner como Command Center
 - [ ] KRunner no será solo el buscador de Plasma.
@@ -165,7 +164,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 
 ## Fase 8 — Terminal y herramientas
 - [ ] Konsole como terminal principal tradicional.
-- [ ] Fondo #0E0918.
+- [ ] Fondo #15051A.
 - [ ] Prácticamente opaco.
 - [ ] Texto blanco hielo.
 - [ ] Acentos violeta/cian.
@@ -319,8 +318,8 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 
 ## Orden corto para seguir sin perderte
 - [x] 1. Repo y estructura Cybercore Y2K1.
-- [ ] 2. Identidad visual.
-- [ ] 3. Plasma/KWin.
+- [x] 2. Identidad visual.
+- [x] 3. Plasma/KWin.
 - [ ] 4. KRunner Command Center.
 - [ ] 5. Barra superior.
 - [ ] 6. Barra inferior.

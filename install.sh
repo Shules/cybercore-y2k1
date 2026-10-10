@@ -1,74 +1,68 @@
 #!/bin/bash
-echo "Installing Cybercore Y2K1 Environment..."
+set -e
 
-# 1. Install Plasmoids
-echo "Installing Plasmoids..."
-mkdir -p ~/.local/share/plasma/plasmoids
-cp -r ./plasmoids/* ~/.local/share/plasma/plasmoids/
+echo "======================================"
+echo "Installing Cybercore Y2K1 Environment"
+echo "======================================"
 
-# 2. Install Desktop Entries
-echo "Installing Application shortcuts..."
-mkdir -p ~/.local/share/applications
-cp -r ./applications/* ~/.local/share/applications/
+# 1. Configs
+echo "[1] Applying KDE configs (kdeglobals, kwinrc, dolphinrc, krunnerrc)..."
+cp -r config/kde/* ~/.config/
+cp -r config/kwin/* ~/.config/
+cp -r config/krunner/* ~/.config/
 
-# 3. Install Icon Theme Overrides (for the audio arrow hack)
-echo "Installing Icon Theme Overrides..."
-mkdir -p ~/.local/share/icons
-cp -r ./icons/theme-overrides/* ~/.local/share/icons/
-gtk-update-icon-cache ~/.local/share/icons/Tango || true
-rm -rf ~/.cache/icon-cache.kcache
-
-# 4. Apply Panel Configuration
-echo "Applying Panel Configuration..."
-cp ./config/plasma-org.kde.plasma.desktop-appletsrc ~/.config/
-# Note: In a real fresh install, appending or merging with kwriteconfig6 is safer, 
-# but since this is a highly customized locked layout, replacing it is standard for dotfiles.
-
-# 5. Restart Plasma
-echo "Restarting Plasma..."
-systemctl --user restart plasma-plasmashell.service
-
-echo "Done!"
-
-# 6. Apply Klassy Settings
-echo "Applying Klassy Settings..."
+echo "[2] Applying Klassy settings..."
 mkdir -p ~/.config/klassy
-cp ./config/klassyrc ~/.config/klassy/
-qdbus6 org.kde.KWin /KWin reconfigure
+cp config/klassyrc ~/.config/klassy/
 
-# 7. Apply System Colors (kdeglobals)
-echo "Applying Window Button Hover Colors..."
-kwriteconfig6 --file ~/.config/kdeglobals --group "Colors:Button" --key DecorationHover "0,240,255"
-kwriteconfig6 --file ~/.config/kdeglobals --group "Colors:Window" --key DecorationHover "0,240,255"
-# Reload KWin to pick up global color changes
-qdbus6 org.kde.KWin /KWin reconfigure
+# 2. Themes (Plasma, Kvantum, Color Schemes)
+echo "[3] Installing Plasma Desktop Theme..."
+mkdir -p ~/.local/share/plasma/desktoptheme/
+cp -r themes/plasma/Cybercore-Y2K1 ~/.local/share/plasma/desktoptheme/
 
-# --- FASE 2: Kvantum, KWin y Dolphin ---
-echo "Instalando tema Kvantum Cybercore-Y2K1..."
+echo "[4] Installing Kvantum Theme..."
 mkdir -p ~/.config/Kvantum
-cp -r config/Kvantum/Cybercore-Y2K1 ~/.config/Kvantum/
-cp config/Kvantum/kvantum.kvconfig ~/.config/Kvantum/
-kvantummanager --set Cybercore-Y2K1
+cp -r themes/kvantum/Cybercore-Y2K1 ~/.config/Kvantum/
+kvantummanager --set Cybercore-Y2K1 || echo "Kvantum manager not found, skipping."
 
-echo "Configurando KWin (Transparencia global y Dolphin)..."
+echo "[5] Applying Color Scheme..."
+mkdir -p ~/.local/share/color-schemes/
+cp themes/colors/Cybercore.colors ~/.local/share/color-schemes/
+plasma-apply-colorscheme Cybercore
+
+# 3. Konsole
+echo "[6] Configuring Konsole..."
+mkdir -p ~/.local/share/konsole/
+cp config/konsole/Cybercore.colorscheme ~/.local/share/konsole/
+cp config/konsole/Cybercore.profile ~/.local/share/konsole/
+cp config/konsole/konsolerc ~/.config/
+
+# 4. Fastfetch
+echo "[7] Configuring Fastfetch..."
+mkdir -p ~/.config/fastfetch/
+cp fastfetch/config-compact.jsonc ~/.config/fastfetch/
+
+# 5. KWin Rules (Blur)
+echo "[8] Configuring KWin Blur Rules..."
+# The user's repo tracks kwinrulesrc but if it doesn't we can inject it
 cat << 'KWIN' > ~/.config/kwinrulesrc
 [1]
-Description=Forzar Blur en Dolphin
-opacityactive=99
+Description=Transparencia Global
+opacityactive=98
 opacityactiverule=2
-opacityinactive=99
+opacityinactive=95
 opacityinactiverule=2
-wmclass=dolphin
-wmclasscomplete=false
-wmclassmatch=1
 types=1
 
 [General]
 count=1
 rules=1
 KWIN
-qdbus6 org.kde.KWin /KWin reconfigure
 
-echo "Configurando grilla rígida en Dolphin..."
-kwriteconfig6 --file dolphinrc --group IconsMode --key MaximumTextLines 2
-kwriteconfig6 --file dolphinrc --group IconsMode --key TextWidthIndex 1
+# 6. Apply & Reload
+echo "[9] Reloading KWin and Plasma..."
+qdbus6 org.kde.KWin /KWin reconfigure || true
+rm -rf ~/.cache/plasma* || true
+rm -rf ~/.cache/krunner* || true
+
+echo "Installation complete! Restart your session or run 'systemctl --user restart plasma-plasmashell' to apply all changes."
