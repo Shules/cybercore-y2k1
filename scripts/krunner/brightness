@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    exit 1
+fi
+brightnessctl set "$1%"
+notify-send -t 1500 "Brightness" "Set to $1%"

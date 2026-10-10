@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    notify-send "Volume" "Current Volume: $(wpctl get-volume @DEFAULT_AUDIO_SINK@)"
+    exit 0
+fi
+wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1%"
+notify-send -t 1500 "Volume" "Set to $1%"

@@ -1,0 +1,9 @@
+#!/bin/bash
+STATE=$(nmcli radio wifi)
+if [ "$STATE" = "enabled" ]; then
+    nmcli radio wifi off
+    notify-send -t 1500 "Wi-Fi" "Disabled"
+else
+    nmcli radio wifi on
+    notify-send -t 1500 "Wi-Fi" "Enabled"
+fi

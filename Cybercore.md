@@ -163,13 +163,13 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [ ] Integrado al wallpaper.
 
 ## Fase 8 — Terminal y herramientas
-- [ ] Konsole como terminal principal tradicional.
-- [ ] Fondo #15051A.
-- [ ] Prácticamente opaco.
-- [ ] Texto blanco hielo.
-- [ ] Acentos violeta/cian.
+- [x] Konsole como terminal principal tradicional.
+- [x] Fondo #15051A.
+- [x] Prácticamente opaco.
+- [ x Texto blanco hielo.
+- [x] Acentos violeta/cian.
 - [ ] Prompt con bloques sólidos y flechas.
-- [ ] Fastfetch muy minimalista con OS, CPU, RAM y Uptime.
+- [x] Fastfetch muy minimalista con OS, CPU, RAM y Uptime.
 
 ## Fase 9 — Polonium / Tiling opcional
 - [ ] Polonium instalado pero apagado por defecto.

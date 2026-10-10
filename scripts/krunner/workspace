@@ -1,0 +1,5 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    exit 1
+fi
+qdbus6 org.kde.KWin /KWin org.kde.KWin.setCurrentDesktop "$1"

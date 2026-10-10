@@ -1,0 +1,5 @@
+#!/bin/bash
+notify-send "System Clean" "Starting..."
+yay -Sc --noconfirm
+journalctl --vacuum-time=3d
+notify-send "System Clean" "Finished cleaning caches and logs!"

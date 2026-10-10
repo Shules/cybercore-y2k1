@@ -1,0 +1,3 @@
+#!/bin/bash
+spectacle -r -b -c
+notify-send -t 1500 "Screenshot" "Region copied to clipboard"

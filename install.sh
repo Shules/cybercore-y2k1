@@ -60,7 +60,13 @@ rules=1
 KWIN
 
 # 6. Apply & Reload
-echo "[9] Reloading KWin and Plasma..."
+# 7. KRunner Scripts
+echo "[10] Deploying KRunner Scripts..."
+mkdir -p ~/.local/bin
+ln -sf $(dirname $(realpath $0))/scripts/krunner/* ~/.local/bin/
+
+# 8. Apply & Reload
+echo "[11] Reloading KWin and Plasma..."
 qdbus6 org.kde.KWin /KWin reconfigure || true
 rm -rf ~/.cache/plasma* || true
 rm -rf ~/.cache/krunner* || true

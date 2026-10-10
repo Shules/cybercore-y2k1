@@ -1,0 +1,4 @@
+#!/bin/bash
+CMD=${1:-play-pause}
+playerctl "$CMD"
+notify-send -t 1500 "Music" "Action: $CMD"
