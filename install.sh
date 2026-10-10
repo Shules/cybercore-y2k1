@@ -32,7 +32,8 @@ echo "Done!"
 
 # 6. Apply Klassy Settings
 echo "Applying Klassy Settings..."
-cp ./config/klassyrc ~/.config/
+mkdir -p ~/.config/klassy
+cp ./config/klassyrc ~/.config/klassy/
 qdbus6 org.kde.KWin /KWin reconfigure
 
 # 7. Apply System Colors (kdeglobals)
