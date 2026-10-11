@@ -20,6 +20,11 @@ gtk-update-icon-cache ~/.local/share/icons/breeze 2>/dev/null || true
 gtk-update-icon-cache ~/.local/share/icons/breeze-dark 2>/dev/null || true
 rm -rf ~/.cache/icon-cache.kcache 2>/dev/null || true
 
+echo "[0.1] Installing Cybercore Fonts (Exo2, Share Tech Mono, Phosphor, Cyberfonts)..."
+mkdir -p ~/.local/share/fonts
+cp -r ./fonts/* ~/.local/share/fonts/ 2>/dev/null || true
+fc-cache -f ~/.local/share/fonts/ 2>/dev/null || true
+
 # 1. Configs
 echo "[1] Applying KDE configs (kdeglobals, kwinrc, dolphinrc, krunnerrc, kwinrulesrc)..."
 cp -r config/kde/* ~/.config/ 2>/dev/null || true

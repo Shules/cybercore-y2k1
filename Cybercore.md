@@ -78,7 +78,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Panel nativo de Plasma.
 - [x] Altura objetivo inicial: 28 px.
 - [x] Siempre visible.
-- [ ] Transparente con blur fuerte.
+- [x] Transparente con blur fuerte.
 - [x] Identidad violeta + cian.
 - [x] Divisiones finas.
 - [x] Aspecto de HUD técnico.
@@ -127,30 +127,31 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [ ] Phosphor solo en los iconos técnicos de la derecha.
 
 ## Fase 6 — Escritorio principal
-- [ ] Mantener el centro y la izquierda relativamente limpios.
+- [x] Mantener el centro y la izquierda relativamente limpios.
 - [ ] Wallpaper aun por decidir.
-- [ ] Carpetas y archivos visibles con Tango 3D.
-- [ ] Columna de widgets perfectamente alineada a la derecha.
+- [x] Carpetas y archivos visibles con Tango 3D.
+- [x] Columna de widgets perfectamente alineada a la derecha (`com.cybercore.deskcolumn`).
 
 **Reloj**
-- [ ] Texto flotante.
-- [ ] Formato HH:MM:SS.
-- [ ] Exo 2 Bold/Black.
-- [ ] Blanco hielo.
-- [ ] Sin fondo pesado.
+- [x] Texto flotante sin fondo pesado.
+- [x] Formato `[ HH:MM:SS ]` en blanco hielo.
+- [x] Tipografía `Share Tech Mono` (Consola Táctica / Terminal Cyberpunk).
+- [x] Subtítulo `SYS.DATE: DD-MES // DÍA` en violeta neón (#A200FF).
 
 **Calendario**
-- [ ] Minimalista.
-- [ ] Sin cuadrícula visible.
-- [ ] Cabecera mes/año en cian.
-- [ ] Días en blanco hielo.
-- [ ] Día actual destacado mediante violeta + borde cian.
+- [x] Minimalista sin cuadrícula pesada.
+- [x] Cabecera mes/año en violeta neón (#A200FF) sincronizada con el reloj.
+- [x] Días de la semana y números en blanco hielo (#E0F8FF).
+- [x] Día actual destacado mediante fondo violeta neón + borde cian eléctrico.
 
 **Clima**
-- [ ] Tarjeta minimalista.
+- [x] Tarjeta técnica con borde cian neón y fondo violeta carbón (#15051A).
+- [x] Córdoba Capital, telemetría de temperatura en blanco hielo, humedad y viento en violeta atenuado.
+- [x] Icono meteorológico Phosphor ubicado debajo de la temperatura, mapeado para todos los estados (despejado, parcialmente nublado, nublado, llovizna, lluvia, tormenta, nieve, niebla).
 
 **Reproductor**
-- [ ] Espacio reservado para módulo compacto conectado al reproductor principal.
+- [x] Módulo compacto reservado con enlace MPRIS.
+- [ ] Expansión interactiva con click (portada, controles de reproducción) conectado a la app propia de la Fase 12.
 
 ## Fase 7 — Monitor secundario
 - [ ] Wallpaper igual al principal.
@@ -320,10 +321,10 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - [x] 1. Repo y estructura Cybercore Y2K1.
 - [x] 2. Identidad visual.
 - [x] 3. Plasma/KWin.
-- [ ] 4. KRunner Command Center.
-- [ ] 5. Barra superior.
+- [x] 4. KRunner Command Center.
+- [x] 5. Barra superior.
 - [ ] 6. Barra inferior.
-- [ ] 7. Widgets del monitor principal.
+- [x] 7. Widgets del monitor principal.
 - [ ] 8. Monitor secundario.
 - [ ] 9. Konsole + prompt + Fastfetch.
 - [ ] 10. Polonium opcional.

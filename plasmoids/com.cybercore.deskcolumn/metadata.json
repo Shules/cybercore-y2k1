@@ -1,0 +1,14 @@
+{
+    "KPlugin": {
+        "Id": "com.cybercore.deskcolumn",
+        "Name": "Cybercore Desktop Column",
+        "Version": "1.0",
+        "Description": "Columna técnica de widgets para el escritorio: Reloj HH:MM:SS, Calendario minimalista, Clima de Córdoba y Reproductor.",
+        "Icon": "preferences-system-time",
+        "Category": "Utilities",
+        "License": "GPL-2.0+",
+        "ServiceTypes": ["Plasma/Applet"]
+    },
+    "KPackageStructure": "Plasma/Applet",
+    "X-Plasma-API-Minimum-Version": "6.0"
+}
