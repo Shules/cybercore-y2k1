@@ -19,29 +19,20 @@ PlasmoidItem {
     }
 
     fullRepresentation: Item {
-        Layout.minimumWidth: 8
-        Layout.preferredWidth: 8
+        Layout.minimumWidth: 10
+        Layout.preferredWidth: 10
         Layout.fillHeight: true
 
         MouseArea {
             id: mouseArea
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
-            // Use negative margins to bleed into the panel's padding
-            anchors.topMargin: -12
-            anchors.bottomMargin: -12
-            anchors.rightMargin: -12
-            anchors.leftMargin: -4
-            
+            anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             
             Rectangle {
                 anchors.fill: parent
                 color: "#ffffff"
-                opacity: mouseArea.containsMouse ? 0.05 : 0.0
+                opacity: mouseArea.containsMouse ? 0.08 : 0.0
             }
             
             onClicked: {
