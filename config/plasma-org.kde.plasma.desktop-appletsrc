@@ -211,6 +211,7 @@ immutability=1
 plugin=org.kde.plasma.virtualdesktopbar
 
 [Containments][276][Applets][277][Configuration][Appearance]
+IndicatorColorOccupied=transparent
 ButtonSpacing=6
 IndicatorColorAttention=#A200FF
 IndicatorColorCurrent=#A200FF
