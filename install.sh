@@ -16,6 +16,8 @@ cp -r ./applications/* ~/.local/share/applications/ 2>/dev/null || true
 mkdir -p ~/.local/share/icons
 cp -r ./icons/theme-overrides/* ~/.local/share/icons/ 2>/dev/null || true
 gtk-update-icon-cache ~/.local/share/icons/Tango 2>/dev/null || true
+gtk-update-icon-cache ~/.local/share/icons/breeze 2>/dev/null || true
+gtk-update-icon-cache ~/.local/share/icons/breeze-dark 2>/dev/null || true
 rm -rf ~/.cache/icon-cache.kcache 2>/dev/null || true
 
 # 1. Configs
