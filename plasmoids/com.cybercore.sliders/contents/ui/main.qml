@@ -15,34 +15,51 @@ PlasmoidItem {
     SinkModel {
         id: sinkModel
         onRowsInserted: (parent, first, last) => root.updateSink()
+        onRowsRemoved: (parent, first, last) => root.updateSink()
         onDataChanged: (topLeft, bottomRight, roles) => root.updateSink()
         onModelReset: root.updateSink()
+        onCountChanged: root.updateSink()
     }
 
     SourceModel {
         id: sourceModel
         onRowsInserted: (parent, first, last) => root.updateSource()
+        onRowsRemoved: (parent, first, last) => root.updateSource()
         onDataChanged: (topLeft, bottomRight, roles) => root.updateSource()
         onModelReset: root.updateSource()
+        onCountChanged: root.updateSource()
+    }
+
+    Component.onCompleted: {
+        updateSink();
+        updateSource();
     }
 
     function updateSink() {
+        var found = null;
         for (let i = 0; i < sinkModel.count; ++i) {
             let obj = sinkModel.data(sinkModel.index(i, 0), 257);
             if (obj && obj.default) {
-                if (root.defaultSink !== obj) root.defaultSink = obj;
-                return;
+                found = obj;
+                break;
             }
+        }
+        if (root.defaultSink !== found) {
+            root.defaultSink = found;
         }
     }
 
     function updateSource() {
+        var found = null;
         for (let i = 0; i < sourceModel.count; ++i) {
             let obj = sourceModel.data(sourceModel.index(i, 0), 257);
             if (obj && obj.default) {
-                if (root.defaultSource !== obj) root.defaultSource = obj;
-                return;
+                found = obj;
+                break;
             }
+        }
+        if (root.defaultSource !== found) {
+            root.defaultSource = found;
         }
     }
 
@@ -69,9 +86,10 @@ PlasmoidItem {
                     source: root.sinkMuted ? "file:///home/julian/.local/share/icons/phosphor/speaker-slash-light.svg" : (root.sinkVolume > 50 ? "file:///home/julian/.local/share/icons/phosphor/speaker-high-light.svg" : "file:///home/julian/.local/share/icons/phosphor/speaker-low-light.svg")
                     sourceSize.width: 18; sourceSize.height: 18
                     Layout.alignment: Qt.AlignVCenter
+                    opacity: root.defaultSink ? 1.0 : 0.4
                     MouseArea {
                         anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
+                        cursorShape: root.defaultSink ? Qt.PointingHandCursor : Qt.ArrowCursor
                         onClicked: {
                             if (root.defaultSink) {
                                 root.defaultSink.muted = !root.defaultSink.muted;
@@ -83,6 +101,7 @@ PlasmoidItem {
                     id: volSlider
                     Layout.preferredWidth: 78
                     Layout.alignment: Qt.AlignVCenter
+                    enabled: root.defaultSink !== null
                     from: 0; to: 100
                     value: root.sinkVolume
                     onMoved: {
@@ -108,9 +127,10 @@ PlasmoidItem {
                     source: root.sourceMuted ? "file:///home/julian/.local/share/icons/phosphor/microphone-slash-light.svg" : "file:///home/julian/.local/share/icons/phosphor/microphone-light.svg"
                     sourceSize.width: 18; sourceSize.height: 18
                     Layout.alignment: Qt.AlignVCenter
+                    opacity: root.defaultSource ? 1.0 : 0.4
                     MouseArea {
                         anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
+                        cursorShape: root.defaultSource ? Qt.PointingHandCursor : Qt.ArrowCursor
                         onClicked: {
                             if (root.defaultSource) {
                                 root.defaultSource.muted = !root.defaultSource.muted;
@@ -122,6 +142,7 @@ PlasmoidItem {
                     id: micSlider
                     Layout.preferredWidth: 78
                     Layout.alignment: Qt.AlignVCenter
+                    enabled: root.defaultSource !== null
                     from: 0; to: 100
                     value: root.sourceVolume
                     onMoved: {

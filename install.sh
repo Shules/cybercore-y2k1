@@ -104,7 +104,9 @@ cp -r "$BASEDIR"/config/glava/* ~/.config/glava/
 cp "$BASEDIR"/scripts/cybercore-gpu ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-gpu-daemon ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-toggle-desktop ~/.local/bin/
-chmod +x ~/.local/bin/cybercore-gpu ~/.local/bin/cybercore-gpu-daemon ~/.local/bin/cybercore-toggle-desktop
+cp "$BASEDIR"/scripts/cybercore-backup ~/.local/bin/
+cp "$BASEDIR"/scripts/cybercore-restore ~/.local/bin/
+chmod +x ~/.local/bin/cybercore-gpu ~/.local/bin/cybercore-gpu-daemon ~/.local/bin/cybercore-toggle-desktop ~/.local/bin/cybercore-backup ~/.local/bin/cybercore-restore
 
 # Clean legacy autostarts
 rm -f ~/.config/autostart/conky.desktop ~/.config/autostart/glava.desktop 2>/dev/null || true
@@ -112,8 +114,9 @@ rm -f ~/.config/autostart/conky.desktop ~/.config/autostart/glava.desktop 2>/dev
 # Install and enable systemd user services for HUD
 mkdir -p ~/.config/systemd/user
 cp "$BASEDIR"/config/systemd/*.service ~/.config/systemd/user/
-systemctl --user daemon-reload || true
-systemctl --user enable --now cybercore-gpu.service conky.service glava.service 2>/dev/null || true
+systemctl --user daemon-reload
+systemctl --user enable conky.service glava.service cybercore-gpu.service
+systemctl --user restart cybercore-gpu.service conky.service glava.service
 
 # 7. Apply & Reload
 echo "[12] Reloading KWin and Plasma..."

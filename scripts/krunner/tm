@@ -4,14 +4,17 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-# Validate that $1 is a positive number
-if ! [[ "$1" =~ ^[0-9]+([.][0-9]+)?$ ]] || (( $(echo "$1 <= 0" | bc -l 2>/dev/null || [ "$1" -le 0 ] 2>/dev/null) )); then
-    notify-send -u critical "Timer Error" "Invalid duration: '$1'. Specify a positive number of minutes."
+raw_min="$1"
+# Check if $raw_min is a valid positive number using pure bash / awk
+is_pos=$(awk -v val="$raw_min" 'BEGIN { if (val ~ /^[0-9]+(\.[0-9]+)?$/ && val > 0) print 1; else print 0 }')
+
+if [ "$is_pos" != "1" ]; then
+    notify-send -u critical "Timer Error" "Invalid duration: '$raw_min'. Specify a positive number of minutes."
     exit 1
 fi
 
-MSG="${2:-"Timer for $1 mins is up!"}"
-seconds=$(echo "$1 * 60" | bc 2>/dev/null || awk "BEGIN {print int($1 * 60)}")
+MSG="${2:-"Timer for $raw_min mins is up!"}"
+seconds=$(awk -v val="$raw_min" 'BEGIN { printf "%.0f", val * 60 }')
 
 (sleep "$seconds" && notify-send -u critical "TIMER COMPLETE" "$MSG" --icon=dialog-warning) &
-notify-send -t 2500 "Timer Set" "Will alert in $1 minute(s) // $MSG"
+notify-send -t 2500 "Timer Set" "Will alert in $raw_min minute(s) // $MSG"

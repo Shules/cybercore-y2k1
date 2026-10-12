@@ -98,23 +98,38 @@ PlasmoidItem {
     property string mediaStatus: activePlayer ? (activePlayer.playbackStatus === Mpris.PlaybackStatus.Playing ? "Playing" : (activePlayer.playbackStatus === Mpris.PlaybackStatus.Paused ? "Paused" : "Stopped")) : "Stopped"
     property bool mediaPlaying: activePlayer ? (activePlayer.playbackStatus === Mpris.PlaybackStatus.Playing) : false
 
+    Timer {
+        id: weatherTimeoutTimer
+        interval: 10000
+        repeat: false
+        onTriggered: {
+            if (root.currentWeatherXhr) {
+                root.currentWeatherXhr.abort();
+                root.currentWeatherXhr = null;
+            }
+            root.weatherFetching = false;
+            if (root.weatherTemp === "--") {
+                root.weatherCondition = "Tiempo de espera agotado";
+            } else if (!root.weatherCondition.includes("[OFFLINE]")) {
+                root.weatherCondition = root.weatherCondition + " [OFFLINE]";
+            }
+        }
+    }
+
+    property var currentWeatherXhr: null
+
     function fetchWeather() {
         if (root.weatherFetching) return;
         root.weatherFetching = true;
+        weatherTimeoutTimer.start();
 
         var xhr = new XMLHttpRequest();
+        root.currentWeatherXhr = xhr;
         xhr.open("GET", "https://api.open-meteo.com/v1/forecast?latitude=-31.42&longitude=-64.19&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=America%2FArgentina%2FCordoba");
-        xhr.timeout = 10000;
-        xhr.ontimeout = function() {
-            root.weatherFetching = false;
-            if (root.weatherTemp === "--") {
-                root.weatherCondition = "Sin conexión";
-            } else {
-                root.weatherCondition = root.weatherCondition.replace(" [OFFLINE]", "") + " [OFFLINE]";
-            }
-        };
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
+                weatherTimeoutTimer.stop();
+                root.currentWeatherXhr = null;
                 root.weatherFetching = false;
                 if (xhr.status === 200) {
                     try {
@@ -172,8 +187,14 @@ PlasmoidItem {
                             root.weatherCondition = "Nublado";
                             root.weatherIcon = baseIcon + "cloud-light.svg";
                         }
-                    } catch(e) {}
-                } else {
+                    } catch(e) {
+                        if (root.weatherTemp === "--") {
+                            root.weatherCondition = "Datos inválidos";
+                        } else if (!root.weatherCondition.includes("[OFFLINE]")) {
+                            root.weatherCondition = root.weatherCondition + " [OFFLINE]";
+                        }
+                    }
+                } else if (xhr.status !== 0) { // status 0 is triggered on abort
                     if (root.weatherTemp === "--") {
                         root.weatherCondition = "Error al actualizar";
                     } else if (!root.weatherCondition.includes("[OFFLINE]")) {
