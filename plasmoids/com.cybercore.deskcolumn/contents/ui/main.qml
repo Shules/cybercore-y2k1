@@ -55,7 +55,9 @@ PlasmoidItem {
     property string weatherCondition: "Cargando clima..."
     property string weatherHumidity: "--%"
     property string weatherWind: "-- km/h"
-    property string weatherIcon: "file:///home/julian/cybercore-y2k1/icons/phosphor/cloud-sun-light.svg"
+    property string weatherUpdated: ""
+    property string weatherIcon: "file:///home/julian/.local/share/icons/phosphor/cloud-sun-light.svg"
+    property bool weatherFetching: false
 
     Timer {
         interval: 1000
@@ -96,66 +98,88 @@ PlasmoidItem {
     property string mediaStatus: activePlayer ? (activePlayer.playbackStatus === Mpris.PlaybackStatus.Playing ? "Playing" : (activePlayer.playbackStatus === Mpris.PlaybackStatus.Paused ? "Paused" : "Stopped")) : "Stopped"
     property bool mediaPlaying: activePlayer ? (activePlayer.playbackStatus === Mpris.PlaybackStatus.Playing) : false
 
-
-
     function fetchWeather() {
+        if (root.weatherFetching) return;
+        root.weatherFetching = true;
+
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "https://api.open-meteo.com/v1/forecast?latitude=-31.42&longitude=-64.19&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=America%2FArgentina%2FCordoba");
+        xhr.timeout = 10000;
+        xhr.ontimeout = function() {
+            root.weatherFetching = false;
+            if (root.weatherTemp === "--") {
+                root.weatherCondition = "Sin conexión";
+            } else {
+                root.weatherCondition = root.weatherCondition.replace(" [OFFLINE]", "") + " [OFFLINE]";
+            }
+        };
         xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                try {
-                    var data = JSON.parse(xhr.responseText);
-                    var cur = data.current;
-                    root.weatherTemp = Math.round(cur.temperature_2m) + "°C";
-                    root.weatherHumidity = cur.relative_humidity_2m + "%";
-                    root.weatherWind = Math.round(cur.wind_speed_10m) + " km/h";
-                    
-                    var code = cur.weather_code;
-                    var baseIcon = "file:///home/julian/cybercore-y2k1/icons/phosphor/";
-                    if (code === 0) {
-                        root.weatherCondition = "Despejado";
-                        root.weatherIcon = baseIcon + "sun-light.svg";
-                    } else if (code === 1) {
-                        root.weatherCondition = "Mayormente despejado";
-                        root.weatherIcon = baseIcon + "sun-dim-light.svg";
-                    } else if (code === 2) {
-                        root.weatherCondition = "Parcialmente nublado";
-                        root.weatherIcon = baseIcon + "cloud-sun-light.svg";
-                    } else if (code === 3) {
-                        root.weatherCondition = "Nublado";
-                        root.weatherIcon = baseIcon + "cloud-light.svg";
-                    } else if (code >= 45 && code <= 48) {
-                        root.weatherCondition = "Niebla";
-                        root.weatherIcon = baseIcon + "cloud-fog-light.svg";
-                    } else if (code >= 51 && code <= 55) {
-                        root.weatherCondition = "Llovizna";
-                        root.weatherIcon = baseIcon + "cloud-rain-light.svg";
-                    } else if (code >= 56 && code <= 57) {
-                        root.weatherCondition = "Llovizna helada";
-                        root.weatherIcon = baseIcon + "cloud-snow-light.svg";
-                    } else if (code >= 61 && code <= 65) {
-                        root.weatherCondition = "Lluvia";
-                        root.weatherIcon = baseIcon + "cloud-rain-light.svg";
-                    } else if (code >= 66 && code <= 67) {
-                        root.weatherCondition = "Lluvia helada";
-                        root.weatherIcon = baseIcon + "cloud-snow-light.svg";
-                    } else if (code >= 71 && code <= 77) {
-                        root.weatherCondition = "Nevada";
-                        root.weatherIcon = baseIcon + "cloud-snow-light.svg";
-                    } else if (code >= 80 && code <= 82) {
-                        root.weatherCondition = "Chubascos";
-                        root.weatherIcon = baseIcon + "cloud-rain-light.svg";
-                    } else if (code >= 85 && code <= 86) {
-                        root.weatherCondition = "Chubascos de nieve";
-                        root.weatherIcon = baseIcon + "cloud-snow-light.svg";
-                    } else if (code >= 95 && code <= 99) {
-                        root.weatherCondition = "Tormenta eléctrica";
-                        root.weatherIcon = baseIcon + "cloud-lightning-light.svg";
-                    } else {
-                        root.weatherCondition = "Nublado";
-                        root.weatherIcon = baseIcon + "cloud-light.svg";
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                root.weatherFetching = false;
+                if (xhr.status === 200) {
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                        var cur = data.current;
+                        root.weatherTemp = Math.round(cur.temperature_2m) + "°C";
+                        root.weatherHumidity = cur.relative_humidity_2m + "%";
+                        root.weatherWind = Math.round(cur.wind_speed_10m) + " km/h";
+                        
+                        var d = new Date();
+                        root.weatherUpdated = String(d.getHours()).padStart(2, '0') + ":" + String(d.getMinutes()).padStart(2, '0');
+
+                        var code = cur.weather_code;
+                        var baseIcon = "file:///home/julian/.local/share/icons/phosphor/";
+                        if (code === 0) {
+                            root.weatherCondition = "Despejado";
+                            root.weatherIcon = baseIcon + "sun-light.svg";
+                        } else if (code === 1) {
+                            root.weatherCondition = "Mayormente despejado";
+                            root.weatherIcon = baseIcon + "sun-dim-light.svg";
+                        } else if (code === 2) {
+                            root.weatherCondition = "Parcialmente nublado";
+                            root.weatherIcon = baseIcon + "cloud-sun-light.svg";
+                        } else if (code === 3) {
+                            root.weatherCondition = "Nublado";
+                            root.weatherIcon = baseIcon + "cloud-light.svg";
+                        } else if (code >= 45 && code <= 48) {
+                            root.weatherCondition = "Niebla";
+                            root.weatherIcon = baseIcon + "cloud-fog-light.svg";
+                        } else if (code >= 51 && code <= 55) {
+                            root.weatherCondition = "Llovizna";
+                            root.weatherIcon = baseIcon + "cloud-rain-light.svg";
+                        } else if (code >= 56 && code <= 57) {
+                            root.weatherCondition = "Llovizna helada";
+                            root.weatherIcon = baseIcon + "cloud-snow-light.svg";
+                        } else if (code >= 61 && code <= 65) {
+                            root.weatherCondition = "Lluvia";
+                            root.weatherIcon = baseIcon + "cloud-rain-light.svg";
+                        } else if (code >= 66 && code <= 67) {
+                            root.weatherCondition = "Lluvia helada";
+                            root.weatherIcon = baseIcon + "cloud-snow-light.svg";
+                        } else if (code >= 71 && code <= 77) {
+                            root.weatherCondition = "Nevada";
+                            root.weatherIcon = baseIcon + "cloud-snow-light.svg";
+                        } else if (code >= 80 && code <= 82) {
+                            root.weatherCondition = "Chubascos";
+                            root.weatherIcon = baseIcon + "cloud-rain-light.svg";
+                        } else if (code >= 85 && code <= 86) {
+                            root.weatherCondition = "Chubascos de nieve";
+                            root.weatherIcon = baseIcon + "cloud-snow-light.svg";
+                        } else if (code >= 95 && code <= 99) {
+                            root.weatherCondition = "Tormenta eléctrica";
+                            root.weatherIcon = baseIcon + "cloud-lightning-light.svg";
+                        } else {
+                            root.weatherCondition = "Nublado";
+                            root.weatherIcon = baseIcon + "cloud-light.svg";
+                        }
+                    } catch(e) {}
+                } else {
+                    if (root.weatherTemp === "--") {
+                        root.weatherCondition = "Error al actualizar";
+                    } else if (!root.weatherCondition.includes("[OFFLINE]")) {
+                        root.weatherCondition = root.weatherCondition + " [OFFLINE]";
                     }
-                } catch(e) {}
+                }
             }
         };
         xhr.send();
@@ -319,7 +343,7 @@ PlasmoidItem {
                         }
 
                         Text {
-                            text: root.weatherCondition
+                            text: root.weatherCondition + (root.weatherUpdated !== "" ? " (" + root.weatherUpdated + ")" : "")
                             font.family: "Exo 2"
                             font.pixelSize: 12
                             color: root.iceWhite
@@ -388,7 +412,7 @@ PlasmoidItem {
                     RowLayout {
                         Layout.fillWidth: true
                         Image {
-                            source: "file:///home/julian/cybercore-y2k1/icons/phosphor/disc-light.svg"
+                            source: "file:///home/julian/.local/share/icons/phosphor/disc-light.svg"
                             Layout.preferredWidth: 16
                             Layout.preferredHeight: 16
                             sourceSize: Qt.size(16, 16)

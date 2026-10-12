@@ -66,7 +66,7 @@ PlasmoidItem {
             RowLayout {
                 spacing: 6
                 Image {
-                    source: root.sinkMuted ? "file:///home/julian/cybercore-y2k1/icons/phosphor/speaker-slash-light.svg" : (root.sinkVolume > 50 ? "file:///home/julian/cybercore-y2k1/icons/phosphor/speaker-high-light.svg" : "file:///home/julian/cybercore-y2k1/icons/phosphor/speaker-low-light.svg")
+                    source: root.sinkMuted ? "file:///home/julian/.local/share/icons/phosphor/speaker-slash-light.svg" : (root.sinkVolume > 50 ? "file:///home/julian/.local/share/icons/phosphor/speaker-high-light.svg" : "file:///home/julian/.local/share/icons/phosphor/speaker-low-light.svg")
                     sourceSize.width: 18; sourceSize.height: 18
                     Layout.alignment: Qt.AlignVCenter
                     MouseArea {
@@ -105,7 +105,7 @@ PlasmoidItem {
             RowLayout {
                 spacing: 6
                 Image {
-                    source: root.sourceMuted ? "file:///home/julian/cybercore-y2k1/icons/phosphor/microphone-slash-light.svg" : "file:///home/julian/cybercore-y2k1/icons/phosphor/microphone-light.svg"
+                    source: root.sourceMuted ? "file:///home/julian/.local/share/icons/phosphor/microphone-slash-light.svg" : "file:///home/julian/.local/share/icons/phosphor/microphone-light.svg"
                     sourceSize.width: 18; sourceSize.height: 18
                     Layout.alignment: Qt.AlignVCenter
                     MouseArea {

@@ -1,0 +1,3 @@
+#!/bin/bash
+# Invokes KDE Plasma native Show Desktop shortcut (Meta+D)
+qdbus6 org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut "Show Desktop"

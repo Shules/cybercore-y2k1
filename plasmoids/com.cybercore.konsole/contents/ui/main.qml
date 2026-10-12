@@ -25,7 +25,7 @@ PlasmoidItem {
         
         Image {
             anchors.centerIn: parent
-            source: "file:///home/julian/cybercore-y2k1/icons/phosphor/terminal-window-light.svg"
+            source: "file:///home/julian/.local/share/icons/phosphor/terminal-window-light.svg"
             sourceSize.width: 18
             sourceSize.height: 18
         }

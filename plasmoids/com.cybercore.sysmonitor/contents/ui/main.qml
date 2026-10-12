@@ -41,7 +41,7 @@ PlasmoidItem {
             RowLayout {
                 spacing: 4
                 Image {
-                    source: "file:///home/julian/cybercore-y2k1/icons/phosphor/cpu-light.svg"
+                    source: "file:///home/julian/.local/share/icons/phosphor/cpu-light.svg"
                     Layout.preferredWidth: 14; Layout.preferredHeight: 14
                     sourceSize.width: 14; sourceSize.height: 14
                 }
@@ -60,7 +60,7 @@ PlasmoidItem {
             RowLayout {
                 spacing: 4
                 Image {
-                    source: "file:///home/julian/cybercore-y2k1/icons/phosphor/memory-light.svg"
+                    source: "file:///home/julian/.local/share/icons/phosphor/memory-light.svg"
                     Layout.preferredWidth: 14; Layout.preferredHeight: 14
                     sourceSize.width: 14; sourceSize.height: 14
                 }
@@ -79,7 +79,7 @@ PlasmoidItem {
             RowLayout {
                 spacing: 4
                 Image {
-                    source: "file:///home/julian/cybercore-y2k1/icons/phosphor/graphics-card-light.svg"
+                    source: "file:///home/julian/.local/share/icons/phosphor/graphics-card-light.svg"
                     Layout.preferredWidth: 14; Layout.preferredHeight: 14
                     sourceSize.width: 14; sourceSize.height: 14
                 }
@@ -98,7 +98,7 @@ PlasmoidItem {
             RowLayout {
                 spacing: 4
                 Image {
-                    source: "file:///home/julian/cybercore-y2k1/icons/phosphor/thermometer-light.svg"
+                    source: "file:///home/julian/.local/share/icons/phosphor/thermometer-light.svg"
                     Layout.preferredWidth: 14; Layout.preferredHeight: 14
                     sourceSize.width: 14; sourceSize.height: 14
                 }

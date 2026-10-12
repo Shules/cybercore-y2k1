@@ -1,0 +1,42 @@
+#!/bin/bash
+set -e
+
+BACKUP_DIR="$1"
+if [ -z "$BACKUP_DIR" ] || [ ! -d "$BACKUP_DIR" ]; then
+    echo "Usage: cybercore-restore <path-to-backup-dir>"
+    exit 1
+fi
+
+echo "=========================================="
+echo "Restoring Cybercore Y2K1 Environment"
+echo "Source: $BACKUP_DIR"
+echo "=========================================="
+
+# 1. Configs
+echo "[1] Restoring KDE and application configurations..."
+cp -r "$BACKUP_DIR"/config/* "$HOME/.config/" 2>/dev/null || true
+
+# 2. Systemd services
+echo "[2] Restoring systemd services..."
+mkdir -p "$HOME/.config/systemd/user"
+cp -r "$BACKUP_DIR"/systemd/* "$HOME/.config/systemd/user/" 2>/dev/null || true
+systemctl --user daemon-reload || true
+
+# 3. Plasmoids
+echo "[3] Restoring custom plasmoids..."
+mkdir -p "$HOME/.local/share/plasma/plasmoids"
+cp -r "$BACKUP_DIR"/plasma/plasmoids/* "$HOME/.local/share/plasma/plasmoids/" 2>/dev/null || true
+
+# 4. Binaries
+echo "[4] Restoring local executables..."
+mkdir -p "$HOME/.local/bin"
+cp -r "$BACKUP_DIR"/local_bin/* "$HOME/.local/bin/" 2>/dev/null || true
+chmod +x "$HOME"/.local/bin/cybercore* 2>/dev/null || true
+
+# 5. Reload session
+echo "[5] Reloading KWin compositor..."
+qdbus6 org.kde.KWin /KWin reconfigure 2>/dev/null || true
+
+echo "=========================================="
+echo "Restore complete! Restart your session if necessary."
+echo "=========================================="

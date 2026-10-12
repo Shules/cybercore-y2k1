@@ -2,5 +2,22 @@
 if [ -z "$1" ]; then
     exit 1
 fi
-killall -9 "$1"
-notify-send -u critical "Process Killed" "$1 has been terminated."
+
+target="$1"
+# Attempt graceful termination first (SIGTERM)
+killall "$target" 2>/dev/null
+
+# Check if process is still running after a grace period
+sleep 0.5
+if pgrep -x "$target" >/dev/null 2>&1; then
+    # Force kill if still lingering
+    killall -9 "$target" 2>/dev/null
+    sleep 0.2
+fi
+
+if pgrep -x "$target" >/dev/null 2>&1; then
+    notify-send -u critical "Kill Failed" "Could not terminate $target"
+    exit 1
+else
+    notify-send -t 2000 "Process Terminated" "$target was cleanly terminated."
+fi

@@ -1,9 +1,15 @@
 #!/bin/bash
 STATE=$(rfkill list bluetooth | grep -i "Soft blocked: yes")
 if [ -z "$STATE" ]; then
-    rfkill block bluetooth
-    notify-send -t 1500 "Bluetooth" "Disabled"
+    if rfkill block bluetooth; then
+        notify-send -t 1500 "Bluetooth" "Disabled"
+    else
+        notify-send -u critical "Bluetooth" "Failed to disable"
+    fi
 else
-    rfkill unblock bluetooth
-    notify-send -t 1500 "Bluetooth" "Enabled"
+    if rfkill unblock bluetooth; then
+        notify-send -t 1500 "Bluetooth" "Enabled"
+    else
+        notify-send -u critical "Bluetooth" "Failed to enable"
+    fi
 fi

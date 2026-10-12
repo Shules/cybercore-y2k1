@@ -26,7 +26,7 @@ PlasmoidItem {
             
             Image {
                 anchors.centerIn: parent
-                source: "file:///home/julian/cybercore-y2k1/icons/phosphor/caret-down-light.svg"
+                source: "file:///home/julian/.local/share/icons/phosphor/caret-down-light.svg"
                 sourceSize.width: 18
                 sourceSize.height: 18
                 opacity: parent.containsMouse ? 1.0 : 0.7

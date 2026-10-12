@@ -1,7 +1,17 @@
 #!/bin/bash
 if [ -z "$1" ]; then
+    notify-send -u critical "Timer Error" "Usage: tm <minutes> [label]"
     exit 1
 fi
-MSG=${2:-"Timer for $1 mins is up!"}
-(sleep $(($1 * 60)) && notify-send -u critical "TIMER COMPLETE" "$MSG" --icon=dialog-warning) &
-notify-send -t 2000 "Timer Set" "Will alert in $1 minute(s)"
+
+# Validate that $1 is a positive number
+if ! [[ "$1" =~ ^[0-9]+([.][0-9]+)?$ ]] || (( $(echo "$1 <= 0" | bc -l 2>/dev/null || [ "$1" -le 0 ] 2>/dev/null) )); then
+    notify-send -u critical "Timer Error" "Invalid duration: '$1'. Specify a positive number of minutes."
+    exit 1
+fi
+
+MSG="${2:-"Timer for $1 mins is up!"}"
+seconds=$(echo "$1 * 60" | bc 2>/dev/null || awk "BEGIN {print int($1 * 60)}")
+
+(sleep "$seconds" && notify-send -u critical "TIMER COMPLETE" "$MSG" --icon=dialog-warning) &
+notify-send -t 2500 "Timer Set" "Will alert in $1 minute(s) // $MSG"

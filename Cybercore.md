@@ -307,13 +307,13 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - [x] Lanzar automáticamente Conky, Glava, apps propias y servicios auxiliares (gestionados vía systemd user units: conky.service, glava.service, cybercore-gpu.service).
 
 ## Fase 17 — Backup / Restore final
-- [ ] Completar cybercore-backup.
-- [ ] Completar cybercore-restore.
-- [ ] El objetivo es poder reconstruir todo el entorno después de una reinstalación.
-- [ ] Flujo ideal:
-  - [ ] clonar el repo;
-  - [ ] ejecutar install.sh;
-  - [ ] ejecutar cybercore-restore.
+- [x] Completar cybercore-backup.
+- [x] Completar cybercore-restore.
+- [x] El objetivo es poder reconstruir todo el entorno después de una reinstalación.
+- [x] Flujo ideal:
+  - [x] clonar el repo;
+  - [x] ejecutar install.sh;
+  - [x] ejecutar cybercore-restore (o usar backups automáticos en ~/cybercore-backups/).
 
 ---
 
@@ -335,7 +335,7 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - [ ] 15. Reduced Motion.
 - [ ] 16. Boot Identity.
 - [ ] 17. Autostart / KWin Rules / monitores.
-- [ ] 18. Backup / Restore final.
+- [x] 18. Backup / Restore final.
 
 ---
 
@@ -370,8 +370,21 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - Se corrigió la advertencia de `invalid CPU number '(null)'` generada por la llamada sin índice a `${freq_g}`, especificando el núcleo correspondiente `${freq_g 1}`.
 - Se actualizaron las etiquetas fijas a los valores reales del sistema: Governor en `PERFORMANCE` (en lugar de `SCHEDUTIL`) y Driver de GPU en `NVIDIA 615.xx` (en lugar de `570.xx`).
 
-### 7. Pendientes y Deuda Técnica Registrada (Roadmap futuro)
-- **Telemetría Dinámica de Gobernador/Driver:** Las etiquetas en Conky actualmente reflejan valores fijos de configuración ajustados a la máquina del usuario. A futuro, evaluar lectura en vivo de `/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor` y driver vía daemon si se alternan perfiles dinámicos.
-- **Robustecimiento de `install.sh`:** El instalador actualmente contiene rutas relativas que asumen ejecución desde la raíz del repo, silencia warnings y aplica permisos globales sobre binarios locales. Se planifica en la Fase 17 una refactorización con resolución absoluta `$(dirname "$0")`, manejo de errores explícito y permisos dirigidos.
+### 7. Auditoría Integral y Robustecimiento del Sistema
+- **Sensor de Temperatura CPU:** Se migró `${hwmon 2 temp 1}` a `${hwmon k10temp temp 1}` para evitar depender del índice dinámico de hwmon que cambia entre reinicios o inserción de dispositivos.
+- **Capacidad de Almacenamiento en Conky:** Se clarificaron las etiquetas de `/` y `/home` como `BTRFS (ROOT/@)` y `BTRFS (@home)` para evidenciar que comparten el pool de almacenamiento NVMe de Btrfs.
+- **Ciclo de Vida de Servicios HUD:** Se configuraron `conky.service`, `glava.service` y `cybercore-gpu.service` con `PartOf=graphical-session.target` y `WantedBy=graphical-session.target` con reinicio condicional `Restart=on-failure`, asegurando que acompañen a la sesión gráfica y se detengan limpiamente al salir de ella sin bucles zombis.
+- **Timer de VCC (Vesktop):** Se configuró `autorepatch_interval="1h"` en `~/.vesktopCustomCommands/.config`, espaciando el repatch de VCC de 30 segundos a 1 hora y liberando ejecuciones innecesarias en segundo plano.
+- **Sincronización Kvantum:** Se igualó `reduce_window_opacity=25` en el repositorio para coincidir idénticamente con la configuración visual activa.
+- **Rutas Absolutas y Empaquetado de Recursos:** Se instaló la colección completa de iconos Phosphor en la ruta del sistema `~/.local/share/icons/phosphor/`, y se actualizaron todos los plasmoids (`com.cybercore.sliders`, `com.cybercore.sysmonitor`, `com.cybercore.deskcolumn`, `com.cybercore.konsole`, `com.cybercore.soundpanel`) para usar esta ruta universal independiente de la ubicación del clon del repositorio.
+- **Consolidación de Archivos:** Se eliminaron las carpetas duplicadas de plasmoids en la raíz del repo (`com.cybercore.sliders` y `com.cybercore.sysmonitor`) y se archivaron las 12 variantes de scripts experimentales de paneles en `scripts/archive/panels_experiments/`, documentando `panels_final.js` como el generador base.
+- **Comandos de KRunner:**
+  - `ka`: Implementó cierre limpio con `killall` (SIGTERM), periodo de gracia, fallback a `killall -9` si aún reside en memoria, y notificación de error si el proceso no pudo ser terminado.
+  - `tm`: Agregó validación estricta de tiempo para evitar ejecuciones fallidas ante parámetros vacíos o no numéricos.
+  - `bt`: Verificación de éxito en el retorno de `rfkill` antes de enviar la notificación.
+- **Clima sin Conexión:** `com.cybercore.deskcolumn` ahora cuenta con indicador de antigüedad de la última lectura `(HH:MM)`, timeout de red, retención de datos en memoria y bandera `weatherFetching` que previene peticiones solapadas.
+- **Instalador `install.sh`:** Refactorizado completamente con resolución absoluta `BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"`, verificación estricta de errores (`set -e`) y permisos `chmod +x` asignados exclusivamente a los scripts desplegados.
+- **Backup y Restauración:** Se crearon y verificaron los scripts `scripts/cybercore-backup` y `scripts/cybercore-restore`, cubriendo todas las configuraciones de KDE, KWin, Klassy, Kvantum, Conky, Glava, plasmoids propios, unidades de Systemd y scripts locales, preservando intacto el comportamiento funcional del mouse.
+
 
 

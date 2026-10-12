@@ -1,12 +1,13 @@
 [Unit]
 Description=GLava Audio Visualizer on DP-2
+PartOf=graphical-session.target
 After=graphical-session.target pipewire.service
 Wants=pipewire.service
 
 [Service]
 ExecStart=/usr/bin/glava
-Restart=always
+Restart=on-failure
 RestartSec=2
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical-session.target

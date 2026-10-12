@@ -1,0 +1,44 @@
+#!/bin/bash
+set -e
+
+BACKUP_DIR="${1:-$HOME/cybercore-backups/$(date +%Y%m%d_%H%M%S)}"
+echo "=========================================="
+echo "Creating Cybercore Y2K1 Full State Backup"
+echo "Target directory: $BACKUP_DIR"
+echo "=========================================="
+
+mkdir -p "$BACKUP_DIR"/{config,plasma,themes,systemd,local_bin}
+
+# 1. KDE & Plasma configs
+echo "[1] Backing up KDE, KWin, Klassy and Plasma configs..."
+for cfg in kdeglobals kwinrc dolphinrc krunnerrc kwinrulesrc kglobalshortcutsrc \
+           plasmashellrc plasma-org.kde.plasma.desktop-appletsrc; do
+    [ -f "$HOME/.config/$cfg" ] && cp "$HOME/.config/$cfg" "$BACKUP_DIR/config/"
+done
+[ -d "$HOME/.config/klassy" ] && cp -r "$HOME/.config/klassy" "$BACKUP_DIR/config/"
+[ -d "$HOME/.config/Kvantum" ] && cp -r "$HOME/.config/Kvantum" "$BACKUP_DIR/config/"
+[ -d "$HOME/.config/conky" ] && cp -r "$HOME/.config/conky" "$BACKUP_DIR/config/"
+[ -d "$HOME/.config/glava" ] && cp -r "$HOME/.config/glava" "$BACKUP_DIR/config/"
+
+# 2. Systemd User services
+echo "[2] Backing up systemd user services..."
+for svc in cybercore-gpu.service conky.service glava.service; do
+    [ -f "$HOME/.config/systemd/user/$svc" ] && cp "$HOME/.config/systemd/user/$svc" "$BACKUP_DIR/systemd/"
+done
+
+# 3. Custom Plasmoids
+echo "[3] Backing up custom Cybercore plasmoids..."
+mkdir -p "$BACKUP_DIR/plasma/plasmoids"
+for p in "$HOME"/.local/share/plasma/plasmoids/com.cybercore.*; do
+    [ -d "$p" ] && cp -r "$p" "$BACKUP_DIR/plasma/plasmoids/"
+done
+
+# 4. Custom Binaries
+echo "[4] Backing up custom cybercore scripts..."
+for bin in cybercore-gpu cybercore-gpu-daemon cybercore-toggle-desktop; do
+    [ -f "$HOME/.local/bin/$bin" ] && cp "$HOME/.local/bin/$bin" "$BACKUP_DIR/local_bin/"
+done
+
+echo "=========================================="
+echo "Backup successfully saved to: $BACKUP_DIR"
+echo "=========================================="
