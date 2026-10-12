@@ -24,8 +24,10 @@ while true; do
             memutil=$(( (memused * 100) / memtotal ))
         fi
         powerint="${power%.*}"
+        now_ts=$(date +%s)
 
         cat << EOF_INNER > "$CACHE.tmp"
+timestamp ${now_ts}
 temp ${temp:-0}
 util ${util:-0}
 memused ${memused:-0}

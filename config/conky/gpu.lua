@@ -5,15 +5,16 @@ local data = {
     memtotal = 0,
     memutil = 0,
     power = 0,
-    fan = 0
+    fan = 0,
+    timestamp = 0
 }
+local is_stale = true
 local last_attempt = 0
-local last_success = 0
 local STALE_TIMEOUT = 5
 
 local function update_data()
     local now = os.time()
-    -- Only attempt to read once per second
+    -- Throttle file reads to at most once per second across all Conky calls
     if now == last_attempt then
         return
     end
@@ -21,45 +22,59 @@ local function update_data()
 
     local f = io.open("/dev/shm/cybercore_gpu_conky", "r")
     if not f then
-        -- If file is missing for longer than timeout, reset values to 0
-        if now - last_success > STALE_TIMEOUT then
-            for k in pairs(data) do
-                data[k] = 0
-            end
-        end
+        is_stale = true
         return
     end
 
-    local found = false
+    local parsed_ts = 0
     for line in f:lines() do
         local k, v = line:match("(%w+)%s+(%d+)")
         if k and v then
-            data[k] = tonumber(v) or 0
-            found = true
+            local num = tonumber(v) or 0
+            data[k] = num
+            if k == "timestamp" then
+                parsed_ts = num
+            end
         end
     end
     f:close()
 
-    if found then
-        last_success = now
-    elseif now - last_success > STALE_TIMEOUT then
-        for k in pairs(data) do
-            data[k] = 0
-        end
+    -- Check freshness against the daemon's write timestamp
+    if parsed_ts > 0 and (now - parsed_ts) <= STALE_TIMEOUT then
+        is_stale = false
+    else
+        is_stale = true
     end
 end
 
 function conky_gpu_val(key)
     update_data()
-    return tostring(data[key] or 0)
+    if is_stale then
+        return "N/D"
+    end
+    return tostring(data[key] or "N/D")
+end
+
+function conky_gpu_status()
+    update_data()
+    if is_stale then
+        return "OFFLINE"
+    end
+    return "ONLINE"
 end
 
 function conky_gpu_util()
     update_data()
+    if is_stale then
+        return 0
+    end
     return data.util or 0
 end
 
 function conky_gpu_memutil()
     update_data()
+    if is_stale then
+        return 0
+    end
     return data.memutil or 0
 end

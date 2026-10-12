@@ -362,8 +362,9 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 
 ### 5. Optimización atómica de `cybercore-gpu-daemon` y robustez de `gpu.lua`
 - Se reemplazaron las llamadas externas en pipeline `echo | tr -d ' '` dentro del bucle del daemon de GPU por expansiones nativas de parámetros de Bash (`${var// /}` y `${power%.*}`), reduciendo la creación de subprocesos innecesarios en segundo plano.
-- En `config/conky/gpu.lua`, se implementó control de intentos con `last_attempt`. Si el archivo `/dev/shm/cybercore_gpu_conky` no está disponible o falla, las múltiples llamadas de Conky en el mismo segundo solo efectúan **1 intento** por segundo en vez de saturar llamadas a `io.open`.
-- Se añadió expiración de datos (`STALE_TIMEOUT = 5`): si la memoria compartida desaparece o no se actualiza por más de 5 segundos, los valores retornados se restablecen limpiamente a `0` para no retener lecturas congeladas.
+- El daemon inyecta una marca de tiempo Unix (`timestamp <epoch>`) en `/dev/shm/cybercore_gpu_conky` inmediatamente después de cada consulta exitosa a `nvidia-smi`.
+- En `config/conky/gpu.lua`, la frescura se calcula midiendo la diferencia directa entre `os.time()` y el timestamp emitido por el daemon (`now - parsed_ts > 5`). Si el daemon deja de escribir o el archivo se congela por más de 5 segundos, los valores de texto devuelven `"N/D"` (no disponible) y las barras/gráficas hacen fallback seguro a `0`.
+- Se conserva el límite estricto de máximo **1 lectura/intento por segundo** en Lua sin importar cuántas variables consulte Conky en el ciclo.
 
 ### 6. Corrección de advertencias y telemetría de hardware en `conky.conf`
 - Se eliminaron las configuraciones deprecadas/removidas de X11 en Plasma 6 (`own_window_transparent`, `own_window_argb_value`, `own_window_argb_visual`), estandarizando el canal alfa sobre `own_window_colour = '#00000000'`.
