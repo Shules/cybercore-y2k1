@@ -24,14 +24,15 @@ PlasmoidItem {
     property string dateStr: ""
     property string calendarHeader: ""
     property var calendarCells: []
-    property int lastCalendarDay: -1
+    property string lastCalendarDateKey: ""
 
     function updateCalendar(d) {
         var year = d.getFullYear();
         var month = d.getMonth();
         var day = d.getDate();
-        if (day === root.lastCalendarDay) return;
-        root.lastCalendarDay = day;
+        var dateKey = year + "-" + (month + 1) + "-" + day;
+        if (dateKey === root.lastCalendarDateKey) return;
+        root.lastCalendarDateKey = dateKey;
 
         var months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
         root.calendarHeader = months[month] + " " + year;

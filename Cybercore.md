@@ -358,14 +358,20 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 
 ### 4. Desacoplamiento del calendario respecto al reloj en `com.cybercore.deskcolumn`
 - **Causa raíz:** En `plasmoids/com.cybercore.deskcolumn/contents/ui/main.qml`, el reloj actualizaba el objeto `now: new Date()` cada 1000ms. El modelo del `Repeater` del calendario dependía directamente de `now`, obligando al motor QML a reconstruir dinámicamente un arreglo con los 35–42 días del mes cada segundo.
-- **Solución implementada:** Se desacopló la fecha del reloj de segundos. Ahora el calendario únicamente recalcula y reconstruye su cuadrícula cuando cambia el día del mes (`lastCalendarDay !== day`) o el mes en vista. Las celdas y la cabecera se almacenan en propiedades independientes (`calendarCells` y `calendarHeader`).
+- **Solución implementada:** Se desacopló la fecha del reloj de segundos. El calendario valida una clave de fecha completa compuesta por año, mes y día (`YYYY-M-D`). De este modo, únicamente reconstruye la cuadrícula cuando cambia el día real o tras suspensiones del sistema / cambios de fecha, eliminando trabajo innecesario del event-loop de Qt.
 
-### 5. Optimización atómica de `cybercore-gpu-daemon` y parser de `gpu.lua`
+### 5. Optimización atómica de `cybercore-gpu-daemon` y robustez de `gpu.lua`
 - Se reemplazaron las llamadas externas en pipeline `echo | tr -d ' '` dentro del bucle del daemon de GPU por expansiones nativas de parámetros de Bash (`${var// /}` y `${power%.*}`), reduciendo la creación de subprocesos innecesarios en segundo plano.
-- En `config/conky/gpu.lua`, se activó el control de caché mediante marca temporal `os.time() == last_read`. Conky consulta múltiples claves por ciclo (`gpu_val temp`, `power`, `fan`, `lua_bar`, `lua_graph`); con esta optimización, el archivo en memoria compartida se abre y parsea exactamente **una vez** por segundo en lugar de una vez por cada variable.
+- En `config/conky/gpu.lua`, se implementó control de intentos con `last_attempt`. Si el archivo `/dev/shm/cybercore_gpu_conky` no está disponible o falla, las múltiples llamadas de Conky en el mismo segundo solo efectúan **1 intento** por segundo en vez de saturar llamadas a `io.open`.
+- Se añadió expiración de datos (`STALE_TIMEOUT = 5`): si la memoria compartida desaparece o no se actualiza por más de 5 segundos, los valores retornados se restablecen limpiamente a `0` para no retener lecturas congeladas.
 
 ### 6. Corrección de advertencias y telemetría de hardware en `conky.conf`
 - Se eliminaron las configuraciones deprecadas/removidas de X11 en Plasma 6 (`own_window_transparent`, `own_window_argb_value`, `own_window_argb_visual`), estandarizando el canal alfa sobre `own_window_colour = '#00000000'`.
 - Se corrigió la advertencia de `invalid CPU number '(null)'` generada por la llamada sin índice a `${freq_g}`, especificando el núcleo correspondiente `${freq_g 1}`.
 - Se actualizaron las etiquetas fijas a los valores reales del sistema: Governor en `PERFORMANCE` (en lugar de `SCHEDUTIL`) y Driver de GPU en `NVIDIA 615.xx` (en lugar de `570.xx`).
+
+### 7. Pendientes y Deuda Técnica Registrada (Roadmap futuro)
+- **Telemetría Dinámica de Gobernador/Driver:** Las etiquetas en Conky actualmente reflejan valores fijos de configuración ajustados a la máquina del usuario. A futuro, evaluar lectura en vivo de `/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor` y driver vía daemon si se alternan perfiles dinámicos.
+- **Robustecimiento de `install.sh`:** El instalador actualmente contiene rutas relativas que asumen ejecución desde la raíz del repo, silencia warnings y aplica permisos globales sobre binarios locales. Se planifica en la Fase 17 una refactorización con resolución absoluta `$(dirname "$0")`, manejo de errores explícito y permisos dirigidos.
+
 
