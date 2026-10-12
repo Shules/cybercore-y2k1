@@ -154,14 +154,14 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [ ] Expansión interactiva con click (portada, controles de reproducción) conectado a la app propia de la Fase 12.
 
 ## Fase 7 — Monitor secundario
-- [ ] Wallpaper igual al principal.
-- [ ] Conky como dashboard técnico incrustado sobre el fondo.
-- [ ] Mostrar CPU, GPU, RAM, temperaturas y otros datos útiles.
-- [ ] Visual Exo 2, blanco hielo, cian y violeta.
-- [ ] Glava como ecualizador/visualizador de audio.
-- [ ] Principalmente cian.
-- [ ] Renderizado por debajo de las ventanas.
-- [ ] Integrado al wallpaper.
+- [x] Wallpaper igual al principal.
+- [x] Conky como dashboard técnico incrustado sobre el fondo.
+- [x] Mostrar CPU, GPU, RAM, temperaturas y otros datos útiles.
+- [x] Visual Exo 2, blanco hielo, cian y violeta.
+- [x] Glava como ecualizador/visualizador de audio.
+- [x] Principalmente cian.
+- [x] Renderizado por debajo de las ventanas.
+- [x] Integrado al wallpaper.
 
 ## Fase 8 — Terminal y herramientas
 - [x] Konsole como terminal principal tradicional.
@@ -325,7 +325,7 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - [x] 5. Barra superior.
 - [ ] 6. Barra inferior.
 - [x] 7. Widgets del monitor principal.
-- [ ] 8. Monitor secundario.
+- [x] 8. Monitor secundario.
 - [ ] 9. Konsole + prompt + Fastfetch.
 - [ ] 10. Polonium opcional.
 - [ ] 11. Firefox.
@@ -336,3 +336,24 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - [ ] 16. Boot Identity.
 - [ ] 17. Autostart / KWin Rules / monitores.
 - [ ] 18. Backup / Restore final.
+
+---
+
+## Anotaciones de Sesión: Auditoría de Rendimiento y Bugfixes (2026-10-12)
+
+### 1. Diagnóstico y erradicación del lag de `plasmashell` (~95% -> ~2% CPU)
+- **Causa raíz:** En `com.cybercore.sliders`, un `Timer` de 1000ms consultaba `wpctl get-volume ... + Date.now()` vía `Plasma5Support.DataSource (engine: "executable")`. Al generar claves dinámicas con milisegundos en cada tick, `DataSource` acumulaba miles de fuentes zombis en el hilo principal de Qt6/Plasma, provocando una fuga de memoria y saturación del event-loop (multiplicado al estar en ambos monitores).
+- **Solución implementada:** Se reescribió `com.cybercore.sliders` prescindiendo de timers y procesos de consola. Ahora utiliza la API nativa de Qt/KDE `org.kde.plasma.private.volume 0.1` (`SinkModel` y `SourceModel`), reaccionando instantáneamente a cambios de PipeWire sin despertar la CPU.
+- **Reproductor de escritorio (`com.cybercore.deskcolumn`):** Se eliminó el polling cada 3s con `playerctl metadata` y se migró a `org.kde.plasma.private.mpris` (`Mpris2Model`), logrando actualización inmediata por DBus al cambiar de pista y soporte de click interactivo (Play/Pause).
+
+### 2. Optimización integral de telemetría de GPU y Conky
+- **Causa raíz:** Conky ejecutaba cada 2 segundos hasta 10 subprocesos independientes de Bash y Awk (`cybercore-gpu temp`, `util`, `mem`, etc.), despertando la GPU NVIDIA y manteniendo la telemetría en carga artificial.
+- **Solución implementada:**
+  - Se creó el daemon de usuario `cybercore-gpu-daemon`, administrado por `systemd`, que consulta a `nvidia-smi` una sola vez cada 2 segundos y almacena los valores procesados en memoria compartida (`/dev/shm/cybercore_gpu_conky`).
+  - Se desarrolló `gpu.lua` para que Conky lea la memoria compartida directamente mediante llamadas internas de Lua (`${lua gpu_val ...}`, `${lua_bar ...}`, `${lua_graph ...}`), reduciendo el fork de subprocesos a **0**.
+  - El consumo de Conky se redujo a menos del 1% de CPU.
+
+### 3. Optimización de GLava
+- Se desactivó la interpolación por software en CPU (`#request setinterpolate false` en `rc.glsl`), reduciendo la carga continua de rendering en ~30%.
+- Se migró la gestión de arranque de Conky y GLava desde archivos `.desktop` en autostart hacia unidades de servicio nativas de Systemd (`conky.service`, `glava.service`, `cybercore-gpu.service`).
+

@@ -66,7 +66,7 @@ PlasmoidItem {
             }
             
             onClicked: {
-                executable.exec("qdbus6 org.kde.kglobalaccel /component/kwin invokeShortcut 'Show Desktop'")
+                executable.exec("/home/julian/.local/bin/cybercore-toggle-desktop")
             }
         }
     }

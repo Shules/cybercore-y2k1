@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.plasma.plasmoid
-import org.kde.plasma.plasma5support as Plasma5Support
+import org.kde.plasma.private.mpris as Mpris
 
 PlasmoidItem {
     id: root
@@ -31,12 +31,6 @@ PlasmoidItem {
     property string weatherWind: "-- km/h"
     property string weatherIcon: "file:///home/julian/cybercore-y2k1/icons/phosphor/cloud-sun-light.svg"
 
-    // Media Data
-    property string mediaTitle: "Reproductor inactivo"
-    property string mediaArtist: "Cybercore MPRIS"
-    property string mediaStatus: "Stopped"
-    property bool mediaPlaying: false
-
     Timer {
         interval: 1000
         running: true
@@ -64,37 +58,17 @@ PlasmoidItem {
         onTriggered: fetchWeather()
     }
 
-    Timer {
-        interval: 3000
-        running: true
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: {
-            execDataSource.exec("playerctl metadata --format '{{title}};;;{{artist}};;;{{status}}' 2>/dev/null || echo 'NONE'")
-        }
+    Mpris.Mpris2Model {
+        id: mprisModel
     }
 
-    Plasma5Support.DataSource {
-        id: execDataSource
-        engine: "executable"
-        connectedSources: []
-        onNewData: (sourceName, data) => {
-            disconnectSource(sourceName);
-            var out = data["stdout"] ? data["stdout"].trim() : "";
-            if (out && out !== "NONE" && out.indexOf(";;;") !== -1) {
-                var parts = out.split(";;;");
-                root.mediaTitle = parts[0] || "Pista en curso";
-                root.mediaArtist = parts[1] || "Artista desconocido";
-                root.mediaStatus = parts[2] || "Playing";
-                root.mediaPlaying = (root.mediaStatus.toLowerCase() === "playing");
-            } else {
-                root.mediaTitle = "Sin reproducción activa";
-                root.mediaArtist = "Módulo listo // Esperando MPRIS";
-                root.mediaPlaying = false;
-            }
-        }
-        function exec(cmd) { connectSource(cmd) }
-    }
+    readonly property var activePlayer: mprisModel.currentPlayer
+    property string mediaTitle: activePlayer && activePlayer.track ? activePlayer.track : "Sin reproducción activa"
+    property string mediaArtist: activePlayer && activePlayer.artist ? activePlayer.artist : (activePlayer ? (activePlayer.identity || "Cybercore MPRIS") : "Módulo listo // Esperando MPRIS")
+    property string mediaStatus: activePlayer ? (activePlayer.playbackStatus === Mpris.PlaybackStatus.Playing ? "Playing" : (activePlayer.playbackStatus === Mpris.PlaybackStatus.Paused ? "Paused" : "Stopped")) : "Stopped"
+    property bool mediaPlaying: activePlayer ? (activePlayer.playbackStatus === Mpris.PlaybackStatus.Playing) : false
+
+
 
     function fetchWeather() {
         var xhr = new XMLHttpRequest();
@@ -444,7 +418,18 @@ PlasmoidItem {
                         Layout.fillWidth: true
                     }
                 }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        if (root.activePlayer && typeof root.activePlayer.PlayPause === "function") {
+                            root.activePlayer.PlayPause();
+                        }
+                    }
+                }
             }
         }
     }
 }
+

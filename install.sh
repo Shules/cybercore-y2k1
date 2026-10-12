@@ -79,10 +79,35 @@ mkdir -p ~/.local/share/applications/krunner_cmds
 cp applications/krunner_cmds/*.desktop ~/.local/share/applications/krunner_cmds/ 2>/dev/null || true
 kbuildsycoca6 --noincremental >/dev/null 2>&1 || true
 
-# 6. Apply & Reload
-echo "[11] Reloading KWin and Plasma..."
+# 6. Secondary Monitor (Conky & Glava HUD Systemd Services)
+echo "[11] Configuring Secondary Monitor HUD (Conky, Glava & GPU Daemon)..."
+mkdir -p ~/.config/conky
+cp config/conky/conky.conf ~/.config/conky/ 2>/dev/null || true
+cp config/conky/gpu.lua ~/.config/conky/ 2>/dev/null || true
+
+mkdir -p ~/.config/glava
+cp -r config/glava/* ~/.config/glava/ 2>/dev/null || true
+
+mkdir -p ~/.local/bin
+cp scripts/cybercore-gpu ~/.local/bin/ 2>/dev/null || true
+cp scripts/cybercore-gpu-daemon ~/.local/bin/ 2>/dev/null || true
+chmod +x ~/.local/bin/cybercore-gpu ~/.local/bin/cybercore-gpu-daemon 2>/dev/null || true
+
+# Clean legacy autostarts
+rm -f ~/.config/autostart/conky.desktop ~/.config/autostart/glava.desktop 2>/dev/null || true
+
+# Install and enable systemd user services for HUD
+mkdir -p ~/.config/systemd/user
+cp config/systemd/*.service ~/.config/systemd/user/ 2>/dev/null || true
+systemctl --user daemon-reload || true
+systemctl --user enable --now cybercore-gpu.service conky.service glava.service 2>/dev/null || true
+
+# 7. Apply & Reload
+echo "[12] Reloading KWin and Plasma..."
 qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
 rm -rf ~/.cache/plasma* || true
 rm -rf ~/.cache/krunner* || true
 
-echo "Installation complete! Restart your session or run 'systemctl --user restart plasma-plasmashell' to apply all changes."
+echo "=========================================================================="
+echo "Installation complete! Restart your session to ensure all services run."
+echo "=========================================================================="

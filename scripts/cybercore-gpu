@@ -1,0 +1,19 @@
+#!/bin/bash
+CACHE="/dev/shm/cybercore_gpu"
+NOW=$(date +%s)
+FILE_TIME=$(stat -c %Y "$CACHE" 2>/dev/null || echo 0)
+
+if [ $((NOW - FILE_TIME)) -ge 2 ]; then
+    nvidia-smi --query-gpu=temperature.gpu,utilization.gpu,memory.used,memory.total,power.draw,fan.speed --format=csv,noheader,nounits > "$CACHE.tmp" 2>/dev/null && mv "$CACHE.tmp" "$CACHE"
+fi
+
+case "$1" in
+    temp) awk -F',' '{gsub(/ /,""); print $1}' "$CACHE" 2>/dev/null || echo "0" ;;
+    util) awk -F',' '{gsub(/ /,""); print $2}' "$CACHE" 2>/dev/null || echo "0" ;;
+    memused) awk -F',' '{gsub(/ /,""); print $3}' "$CACHE" 2>/dev/null || echo "0" ;;
+    memtotal) awk -F',' '{gsub(/ /,""); print $4}' "$CACHE" 2>/dev/null || echo "0" ;;
+    memutil) awk -F',' '{gsub(/ /,""); if ($4>0) printf "%.0f", ($3/$4)*100; else print "0"}' "$CACHE" 2>/dev/null || echo "0" ;;
+    power) awk -F',' '{gsub(/ /,""); printf "%.0f", $5}' "$CACHE" 2>/dev/null || echo "0" ;;
+    fan) awk -F',' '{gsub(/ /,""); print $6}' "$CACHE" 2>/dev/null || echo "0" ;;
+    *) cat "$CACHE" 2>/dev/null || echo "0,0,0,0,0,0" ;;
+esac

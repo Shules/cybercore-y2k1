@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=GLava Visualizer
+Comment=Cybercore Audio Visualizer on DP-2
+Exec=glava
+StartupNotify=false
+Terminal=false
+Hidden=false
+X-GNOME-Autostart-enabled=true

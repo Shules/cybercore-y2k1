@@ -1,0 +1,12 @@
+[Unit]
+Description=Conky Tactical HUD on DP-2
+After=graphical-session.target cybercore-gpu.service
+Wants=cybercore-gpu.service
+
+[Service]
+ExecStart=/usr/bin/conky -c /home/julian/.config/conky/conky.conf
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

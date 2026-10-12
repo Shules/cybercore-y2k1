@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Conky HUD
+Comment=Cybercore Cockpit HUD on DP-2
+Exec=conky -c /home/julian/.config/conky/conky.conf
+StartupNotify=false
+Terminal=false
+Hidden=false
+X-GNOME-Autostart-enabled=true
