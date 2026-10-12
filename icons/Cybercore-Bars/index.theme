@@ -1,0 +1,35 @@
+[Icon Theme]
+Name=Cybercore-Bars
+Comment=Phosphor icons for bars, Tango for the rest
+Inherits=Tango,breeze-dark
+Directories=scalable/apps,scalable/devices,scalable/status,scalable/actions,scalable/places
+
+[scalable/apps]
+Size=48
+MinSize=8
+MaxSize=512
+Type=Scalable
+
+[scalable/devices]
+Size=48
+MinSize=8
+MaxSize=512
+Type=Scalable
+
+[scalable/status]
+Size=48
+MinSize=8
+MaxSize=512
+Type=Scalable
+
+[scalable/actions]
+Size=48
+MinSize=8
+MaxSize=512
+Type=Scalable
+
+[scalable/places]
+Size=48
+MinSize=8
+MaxSize=512
+Type=Scalable

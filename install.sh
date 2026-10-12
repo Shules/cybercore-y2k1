@@ -15,9 +15,11 @@ cp -r ./applications/* ~/.local/share/applications/ 2>/dev/null || true
 
 mkdir -p ~/.local/share/icons
 cp -r ./icons/theme-overrides/* ~/.local/share/icons/ 2>/dev/null || true
+cp -r ./icons/Cybercore-Bars ~/.local/share/icons/ 2>/dev/null || true
 gtk-update-icon-cache ~/.local/share/icons/Tango 2>/dev/null || true
 gtk-update-icon-cache ~/.local/share/icons/breeze 2>/dev/null || true
 gtk-update-icon-cache ~/.local/share/icons/breeze-dark 2>/dev/null || true
+gtk-update-icon-cache ~/.local/share/icons/Cybercore-Bars 2>/dev/null || true
 rm -rf ~/.cache/icon-cache.kcache 2>/dev/null || true
 
 echo "[0.1] Installing Cybercore Fonts (Exo2, Share Tech Mono, Phosphor, Cyberfonts)..."
@@ -31,8 +33,9 @@ cp -r config/kde/* ~/.config/ 2>/dev/null || true
 cp -r config/kwin/* ~/.config/ 2>/dev/null || true
 cp -r config/krunner/* ~/.config/ 2>/dev/null || true
 
-echo "[2] Applying Panel Layout (HUD)..."
+echo "[2] Applying Panel Layout and Shell configs..."
 cp config/plasma-org.kde.plasma.desktop-appletsrc ~/.config/
+cp config/plasmashellrc ~/.config/ 2>/dev/null || true
 
 echo "[3] Applying Klassy settings..."
 mkdir -p ~/.config/klassy

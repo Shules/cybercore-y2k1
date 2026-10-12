@@ -106,29 +106,29 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 
 ## Fase 5 — Panel inferior estilo Windows
 - [x] Panel nativo de Plasma.
-- [ ] 100% del ancho.
+- [x] 100% del ancho.
 - [x] Siempre visible.
-- [ ] Estilo como el panel superior.
-- [ ] Panel Colorizer para integrarlo visualmente con el resto.
+- [x] Estilo como el panel superior.
+- [x] Panel Colorizer para integrarlo visualmente con el resto.
 
 **Izquierda**
-- [ ] Menú de inicio clásico.
-- [ ] Iconografía Tango/estética clásica.
-- [ ] Aplicaciones abiertas agrupadas.
-- [ ] Preferencia actual: solo iconos.
+- [x] Menú de inicio clásico.
+- [x] Iconografía Tango/estética clásica.
+- [x] Aplicaciones abiertas agrupadas.
+- [x] Preferencia actual: solo iconos.
 
 **Derecha**
-- [ ] Flecha de apps ocultas.
-- [ ] Wi-Fi.
-- [ ] Bluetooth.
-- [ ] Color Picker.
-- [ ] Reloj/calendario.
-- [ ] Mostrar escritorio.
-- [ ] Phosphor solo en los iconos técnicos de la derecha.
+- [x] Flecha de apps ocultas.
+- [x] Wi-Fi.
+- [x] Bluetooth.
+- [x] Color Picker.
+- [x] Reloj/calendario.
+- [x] Mostrar escritorio.
+- [x] Phosphor solo en los iconos técnicos de la derecha.
 
 ## Fase 6 — Escritorio principal
 - [x] Mantener el centro y la izquierda relativamente limpios.
-- [ ] Wallpaper aun por decidir.
+- [x] Wallpaper aun por decidir.
 - [x] Carpetas y archivos visibles con Tango 3D.
 - [x] Columna de widgets perfectamente alineada a la derecha (`com.cybercore.deskcolumn`).
 
@@ -167,7 +167,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Konsole como terminal principal tradicional.
 - [x] Fondo #15051A.
 - [x] Prácticamente opaco.
-- [ x Texto blanco hielo.
+- [x] Texto blanco hielo.
 - [x] Acentos violeta/cian.
 - [ ] Prompt con bloques sólidos y flechas.
 - [x] Fastfetch muy minimalista con OS, CPU, RAM y Uptime.

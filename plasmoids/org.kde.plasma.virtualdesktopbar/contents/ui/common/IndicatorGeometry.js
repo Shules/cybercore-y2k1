@@ -118,5 +118,8 @@ function _radius(args) {
     if (style === IndicatorStyles.Rounded)
         return 300;
 
+    if (style === IndicatorStyles.EdgeLine)
+        return Math.max(2, Math.round((config.IndicatorLineThickness || 3) / 2));
+
     return 0;
 }

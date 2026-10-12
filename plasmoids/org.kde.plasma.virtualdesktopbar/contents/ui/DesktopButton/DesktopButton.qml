@@ -326,21 +326,14 @@ Rectangle {
     function applyColorRules() {
         let indicatorColor = Kirigami.Theme.textColor;
 
-        if (isCurrent) {
-            //indicatorColor = config.IndicatorColorCurrent || Kirigami.Theme.highlightColor
-            indicatorColor = config.IndicatorColorCurrent || systemPalette.highlight
-        }
-        if (isEmpty && config.IndicatorColorIdle) {
-            indicatorColor = config.IndicatorColorIdle;
-        }
-        if (!isEmpty && config.IndicatorColorOccupied) {
-            indicatorColor = config.IndicatorColorOccupied;
-        }
         if (isUrgent) {
-            indicatorColor = "#e6520c"
-            if (config.IndicatorColorAttention) {
-                indicatorColor = config.IndicatorColorAttention;
-            }
+            indicatorColor = config.IndicatorColorAttention || "#e6520c";
+        } else if (isCurrent) {
+            indicatorColor = config.IndicatorColorCurrent || systemPalette.highlight;
+        } else if (!isEmpty && config.IndicatorColorOccupied) {
+            indicatorColor = config.IndicatorColorOccupied;
+        } else if (isEmpty && config.IndicatorColorIdle) {
+            indicatorColor = config.IndicatorColorIdle;
         }
 
         let labelColor = config.IndicatorStyle === IndicatorStyles.UseLabels ? indicatorColor :
