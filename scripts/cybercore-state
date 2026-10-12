@@ -1,0 +1,158 @@
+#!/usr/bin/env python3
+"""Verified file backups and transactional restores (not a filesystem snapshot)."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import signal
+import stat
+import sys
+import tempfile
+from datetime import datetime
+
+CONFIGS = 'kdeglobals kwinrc dolphinrc krunnerrc kwinrulesrc kglobalshortcutsrc plasmashellrc plasma-org.kde.plasma.desktop-appletsrc klassyrc konsolerc klassy Kvantum conky glava fastfetch'.split()
+SHARES = ['plasma/plasmoids', 'plasma/desktoptheme/Cybercore-Y2K1', 'color-schemes', 'konsole', 'fonts', 'icons/phosphor', 'icons/Cybercore-Bars', 'applications/krunner_cmds', 'applications/cybercore-toggle-desktop.desktop', 'kwin/scripts']
+BINS = 'cybercore-backup cybercore-restore cybercore-state cybercore-gpu cybercore-gpu-daemon cybercore-toggle-desktop br bt cl dd ka mc mnext mpause mplay mprev mz ss tm vl wf ws'.split() + ['br'+str(n) for n in [1,*range(10,101,10)]] + ['t'+str(n) for n in [1,5,10,15,20,30,45,60,90,120]] + ['v'+str(n) for n in range(0,101,5)] + ['w'+str(n) for n in range(1,11)]
+ROOTS = ['.config/'+n for n in CONFIGS] + ['.local/share/'+n for n in SHARES] + ['.local/bin/'+n for n in BINS] + ['.config/systemd/user/'+n+'.service' for n in ['conky','glava','cybercore-gpu']]
+REQUIRED = ['.config/conky/conky.conf', '.config/conky/gpu.lua', '.config/kwinrc', '.config/plasma-org.kde.plasma.desktop-appletsrc']
+
+def exists(p):
+    return os.path.lexists(p)
+
+def remove(p):
+    if p.is_symlink() or p.is_file(): p.unlink()
+    elif p.exists(): shutil.rmtree(p)
+
+def copy(src, dst):
+    if src.is_symlink(): dst.symlink_to(os.readlink(src))
+    elif src.is_dir(): shutil.copytree(src, dst, symlinks=True)
+    else: shutil.copy2(src, dst)
+
+def inventory(base):
+    result = {}
+    def walk(p):
+        s = p.lstat(); key = p.relative_to(base).as_posix()
+        item = {'mode': stat.S_IMODE(s.st_mode)}
+        if p.is_symlink(): item.update(type='link', target=os.readlink(p))
+        elif p.is_dir():
+            item['type'] = 'dir'
+        elif p.is_file():
+            item.update(type='file', sha256=hashlib.sha256(p.read_bytes()).hexdigest())
+        else: raise ValueError('Unsupported special file: '+str(p))
+        result[key] = item
+        if item['type'] == 'dir':
+            for child in sorted(p.iterdir()): walk(child)
+    for child in sorted(base.iterdir()): walk(child)
+    return result
+
+def validate(backup):
+    if backup.is_symlink() or not backup.is_dir(): raise ValueError('Backup must be a real directory')
+    manifest = json.loads((backup/'manifest.json').read_text())
+    roots = manifest.get('roots', [])
+    if manifest.get('version') != 1 or not roots or len(set(roots)) != len(roots):
+        raise ValueError('Invalid manifest version or roots')
+    if any(r not in ROOTS for r in roots): raise ValueError('Unapproved destination in manifest')
+    payload = backup/'payload'
+    if payload.is_symlink() or not payload.is_dir(): raise ValueError('Invalid payload')
+    actual = inventory(payload)
+    if actual != manifest.get('entries'): raise ValueError('Integrity check failed (content, type, mode or missing/extra files)')
+    for r in roots:
+        if r not in actual: raise ValueError('Missing root: '+r)
+        for parent in Path(r).parents:
+            if str(parent) != '.' and actual.get(parent.as_posix(), {}).get('type') != 'dir':
+                raise ValueError('Invalid ancestor: '+str(parent))
+    for key in actual:
+        if not any(key == r or key.startswith(r+'/') or r.startswith(key+'/') for r in roots):
+            raise ValueError('Unexpected payload path: '+key)
+    for key in REQUIRED:
+        if actual.get(key, {}).get('type') != 'file': raise ValueError('Required file missing: '+key)
+    return manifest
+
+def backup(home, target):
+    target = target.absolute()
+    if exists(target): raise ValueError('Destination already exists; choose a new name')
+    for key in REQUIRED:
+        if not (home/key).is_file() or (home/key).is_symlink(): raise ValueError('Required source missing: '+key)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    staging = Path(tempfile.mkdtemp(prefix='.'+target.name+'.tmp-', dir=target.parent))
+    try:
+        payload = staging/'payload'; payload.mkdir()
+        roots = []
+        for key in ROOTS:
+            src = home/key
+            if exists(src):
+                dst = payload/key; dst.parent.mkdir(parents=True, exist_ok=True); copy(src,dst); roots.append(key)
+        manifest = {'version':1,'created':datetime.now().isoformat(), 'roots':roots,'entries':inventory(payload)}
+        (staging/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+        validate(staging)
+        # Refuse an existing destination, including concurrent creators.
+        lock = target.with_name(target.name+'.publish-lock')
+        fd = os.open(lock, os.O_CREAT|os.O_EXCL|os.O_WRONLY, 0o600)
+        try:
+            if exists(target): raise ValueError('Destination appeared during backup')
+            os.rename(staging,target)
+        finally:
+            os.close(fd); lock.unlink()
+        print('Verified backup:',target)
+    finally:
+        if staging.exists(): shutil.rmtree(staging)
+
+def restore(home, source, apply):
+    manifest = validate(source)
+    if not apply:
+        print('Verified:',len(manifest['roots']),'roots. Use --apply to restore.'); return
+    staged=[]; applied=[]; committed=False
+    def interrupted(*args): raise InterruptedError('Restore interrupted')
+    signal.signal(signal.SIGTERM, interrupted)
+    signal.signal(signal.SIGINT, interrupted)
+    try:
+        # Stage on each destination filesystem, and reject symlink ancestors.
+        for key in manifest['roots']:
+            dest=home/key
+            for parent in dest.relative_to(home).parents:
+                if str(parent) != '.' and (home/parent).is_symlink(): raise ValueError('Symlink destination ancestor: '+str(parent))
+            dest.parent.mkdir(parents=True,exist_ok=True)
+            temp=Path(tempfile.mkdtemp(prefix='.cybercore-restore-',dir=dest.parent))
+            staged.append((dest,temp))
+            copy(source/'payload'/key,temp/'new')
+        # Verify the source again before the first live replacement.
+        validate(source)
+        for dest,temp in staged:
+            had_old=exists(dest)
+            if had_old: os.replace(dest,temp/'old')
+            applied.append((dest,temp,had_old))
+            os.replace(temp/'new',dest)
+        committed=True
+    except BaseException:
+        errors=[]
+        for dest,temp,had_old in reversed(applied):
+            try:
+                if exists(dest): remove(dest)
+                if had_old: os.replace(temp/'old',dest)
+            except BaseException as exc: errors.append(str(temp)+': '+str(exc))
+        if errors:
+            raise RuntimeError('Rollback incomplete; preserve recovery directories: '+'; '.join(errors))
+        raise
+    finally:
+        # Preserve any remaining old copy if rollback failed.
+        for dest,temp in staged:
+            if temp.exists() and (committed or not exists(temp/'old')): shutil.rmtree(temp)
+    print('Files restored. No compositor, shortcuts or services were restarted.')
+    print('Restart the session to load configs. For HUD services, run systemctl --user daemon-reload and reenable the three units if needed.')
+    print('This is a rollback-capable file restore, not an atomic whole-session or power-loss-safe snapshot.')
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('action',choices=['backup','restore']);p.add_argument('path',nargs='?')
+    p.add_argument('--home',type=Path,default=Path.home(),help='Explicit target home (isolated tests or offline restore)')
+    p.add_argument('--apply',action='store_true',help='Apply a validated restore; otherwise check only')
+    a=p.parse_args();home=a.home.absolute()
+    if a.action=='backup': backup(home,Path(a.path) if a.path else home/'cybercore-backups'/datetime.now().strftime('%Y%m%d_%H%M%S_%f'))
+    else:
+        if not a.path: p.error('restore requires a backup path')
+        restore(home,Path(a.path).absolute(),a.apply)
+if __name__=='__main__':
+    try: main()
+    except (Exception,KeyboardInterrupt) as exc: print('ERROR:',exc,file=sys.stderr);sys.exit(1)

@@ -1,20 +1,15 @@
 #!/bin/bash
-if [ -z "$1" ]; then
-    notify-send -u critical "Timer Error" "Usage: tm <minutes> [label]"
+set -euo pipefail
+minutes=${1:-}
+# Limit to seven days; ceil to one second minimum, never schedule zero seconds.
+if ! seconds=$(awk -v val="$minutes" 'BEGIN {
+    if (val !~ /^[0-9]+([.][0-9]+)?$/ || val+0 <= 0 || val+0 > 10080) exit 1;
+    n=val*60; whole=int(n); if (n>whole) whole++; if (whole<1) whole=1;
+    printf "%d", whole;
+}'); then
+    notify-send -u critical "Timer Error" "Use a positive duration up to 10080 minutes."
     exit 1
 fi
-
-raw_min="$1"
-# Check if $raw_min is a valid positive number using pure bash / awk
-is_pos=$(awk -v val="$raw_min" 'BEGIN { if (val ~ /^[0-9]+(\.[0-9]+)?$/ && val > 0) print 1; else print 0 }')
-
-if [ "$is_pos" != "1" ]; then
-    notify-send -u critical "Timer Error" "Invalid duration: '$raw_min'. Specify a positive number of minutes."
-    exit 1
-fi
-
-MSG="${2:-"Timer for $raw_min mins is up!"}"
-seconds=$(awk -v val="$raw_min" 'BEGIN { printf "%.0f", val * 60 }')
-
-(sleep "$seconds" && notify-send -u critical "TIMER COMPLETE" "$MSG" --icon=dialog-warning) &
-notify-send -t 2500 "Timer Set" "Will alert in $raw_min minute(s) // $MSG"
+message=${2:-"Timer for $minutes mins is up!"}
+(sleep "$seconds" && notify-send -u critical "TIMER COMPLETE" "$message" --icon=dialog-warning) &
+notify-send -t 2500 "Timer Set" "Will alert in $seconds seconds // $message"

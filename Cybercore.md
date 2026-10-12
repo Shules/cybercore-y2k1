@@ -7,7 +7,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Incluir README, instalador y desinstalador.
 - [x] Separar configuraciones de KDE, KWin, Plasma, Konsole, KRunner, atajos, temas, cursores, iconos, fuentes, Conky, Glava, Fastfetch, SDDM, Plymouth, GRUB, Firefox, Vencord, aplicaciones propias, scripts, wallpapers y sonidos.
 - [x] Preparar cybercore-backup y cybercore-restore.
-- [x] El backup debe contemplar Plasma, KWin, Klassy, Kvantum, Conky, Glava, Konsole, Fastfetch, Firefox, Vencord, scripts, wallpapers, configuración de monitores y personalizaciones generales.
+- [ ] Alcance extendido: Firefox, Vencord, wallpapers y configuración completa de monitores quedan fuera del respaldo actual; consultar REVIEW-FIXES.md.
 - [x] El objetivo es que toda la personalización pueda recuperarse sin depender de acordarse qué archivos se tocaron manualmente.
 
 ## Fase 1 — Identidad visual global
@@ -309,11 +309,11 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 ## Fase 17 — Backup / Restore final
 - [x] Completar cybercore-backup.
 - [x] Completar cybercore-restore.
-- [x] El objetivo es poder reconstruir todo el entorno después de una reinstalación.
+- [ ] Validar reconstrucción completa en una instalación nueva, incluyendo dependencias externas.
 - [x] Flujo ideal:
   - [x] clonar el repo;
   - [x] ejecutar install.sh;
-  - [x] ejecutar cybercore-restore (o usar backups automáticos en ~/cybercore-backups/).
+  - [x] validar con cybercore-restore RUTA y aplicar con cybercore-restore RUTA --apply. No hay programación automática de respaldos.
 
 ---
 
@@ -375,18 +375,50 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - **Gestión de Audio Dinámico (`com.cybercore.sliders`):** Se implementaron escuchas activas para `onRowsRemoved`, `onCountChanged` y reseteo de modelo en `SinkModel` y `SourceModel`, con reseteo de referencias a `null` y opacidad atenuada si se desconecta el dispositivo predeterminado (USB/Bluetooth), previniendo fallos en el motor QML.
 - **Sensor de Temperatura CPU:** Se migró `${hwmon 2 temp 1}` a `${hwmon k10temp temp 1}` para evitar depender del índice dinámico de hwmon que cambia entre reinicios o inserción de dispositivos.
 - **Capacidad de Almacenamiento en Conky:** Se clarificaron las etiquetas de `/` y `/home` como `BTRFS (ROOT/@)` y `BTRFS (@home)` para evidenciar que comparten el pool de almacenamiento NVMe de Btrfs.
-- **Ciclo de Vida de Servicios HUD:** Se configuraron `conky.service`, `glava.service` y `cybercore-gpu.service` con `PartOf=graphical-session.target` y `WantedBy=graphical-session.target`, y se migraron los symlinks activos de systemd desde `default.target.wants` hacia `graphical-session.target.wants`, garantizando detención limpia al cerrar sesión en Wayland.
+- **Ciclo de Vida de Servicios HUD:** Se configuraron `conky.service`, `glava.service` y `cybercore-gpu.service` con `PartOf=graphical-session.target` y `WantedBy=graphical-session.target`, y se migraron los symlinks activos de systemd desde `default.target.wants` hacia `graphical-session.target.wants`, vinculando su ciclo de vida a la sesión gráfica; verificar cierre real de sesión en el escritorio.
 - **Timer de VCC (Vesktop):** Se configuró `autorepatch_interval="1h"` en `~/.vesktopCustomCommands/.config`, espaciando el repatch de VCC de 30 segundos a 1 hora y liberando ejecuciones innecesarias en segundo plano.
 - **Sincronización Kvantum:** Se igualó `reduce_window_opacity=25` en el repositorio para coincidir idénticamente con la configuración visual activa.
 - **Rutas Absolutas y Empaquetado de Recursos:** Se instaló la colección completa de iconos Phosphor en la ruta del sistema `~/.local/share/icons/phosphor/`, y se actualizaron todos los plasmoids (`com.cybercore.sliders`, `com.cybercore.sysmonitor`, `com.cybercore.deskcolumn`, `com.cybercore.konsole`, `com.cybercore.soundpanel`) para usar esta ruta universal independiente de la ubicación del clon del repositorio.
 - **Consolidación de Archivos:** Se eliminaron las carpetas duplicadas de plasmoids en la raíz del repo (`com.cybercore.sliders` y `com.cybercore.sysmonitor`) y se archivaron las 12 variantes de scripts experimentales de paneles en `scripts/archive/panels_experiments/`, documentando `panels_final.js` como el generador base.
 - **Comandos de KRunner:**
-  - `ka`: Implementó comprobación previa de existencia (`pgrep -f`), intento limpio con `killall` (SIGTERM), fallback condicional a `killall -9` si aún reside en memoria, y mensajes OSD diferenciados según resultado real.
-  - `tm`: Agregó validación estricta de tiempo positivo en punto flotante usando `awk`, sin depender de `bc` ni fallar en casos límite.
+  - `ka`: Implementó comprobación por nombre (`pgrep -x`) y PID, intento limpio con SIGTERM, fallback condicional a SIGKILL si aún reside en memoria, y mensajes OSD diferenciados según resultado real.
+  - `tm`: Agregó validación estricta de tiempo positivo en punto flotante usando `awk`, sin depender de `bc`, con mínimo de un segundo y máximo de siete días.
   - `bt`: Verificación de éxito en el retorno de `rfkill` antes de enviar la notificación.
 - **Clima sin Conexión y Timeout Efectivo:** En `com.cybercore.deskcolumn` se reemplazó la asignación no estándar de timeout de XHR por un `Timer` nativo de QML de 10 segundos que ejecuta `xhr.abort()`, maneja excepciones en `JSON.parse` y retiene la última lectura con etiqueta `[OFFLINE]` y timestamp `(HH:MM)`.
 - **Instalador `install.sh`:** Refactorizado completamente con resolución absoluta `BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"`, verificación estricta de errores (`set -e`), despliegue de los scripts de backup/restore, habilitación limpia de servicios sin silenciar fallos y permisos `chmod +x` dirigidos.
-- **Backup y Restauración Atómicos:** Se ampliaron los scripts `scripts/cybercore-backup` y `scripts/cybercore-restore` para cubrir el snapshot completo de la configuración (KDE, KWin, Klassy, Kvantum, Conky, Glava, Fastfetch, plasmoids propios y de terceros como virtualdesktopbar, temas de escritorio, esquinas, colores, perfiles de Konsole, iconos, fuentes, servicios systemd y binarios), con staging temporal, validación de integridad previa a la confirmación y restauración con preservación de atributos (`cp -a`).
+- **Backup verificado y restore con rollback:** Manifiesto SHA-256, rechazo de destinos existentes y validación previa. Restore con --apply, staging por destino y reversión ante fallos capturables. No es una restauración global atómica ni un snapshot de aplicaciones abiertas. Alcance, límites y uso documentados en REVIEW-FIXES.md.
 
 
 
+
+
+## Cierre de correcciones — Codex — 12 de octubre de 2026
+
+Se actualizaron el repositorio y las copias instaladas, preservando los cambios previos de Antigravity.
+
+### Cambios aplicados
+
+- **Backup verificado:** nueva utilidad compartida `scripts/cybercore-state` (Python 3), invocada por `cybercore-backup` y `cybercore-restore`. Registra un manifiesto con SHA-256, tipos de archivo, permisos y enlaces; exige archivos centrales, propaga errores de copia y rechaza destinos existentes. Publica el respaldo mediante renombrado en el mismo sistema de archivos.
+- **Restauración con rollback:** `cybercore-restore RUTA` valida sin aplicar; `cybercore-restore RUTA --apply` restaura. Prepara cada destino y conserva los archivos anteriores para revertir cambios ante errores capturables. Se eliminó el chmod global sobre binarios ajenos. No reinicia automáticamente KWin, Conky ni servicios.
+- **Clima:** valida presencia, tipo y rango de los campos antes de reemplazar la lectura anterior. Respuestas incompletas ya no producen `NaN°C`; conserva los últimos datos válidos con indicador OFFLINE. El timeout QML aborta la petición y se descartan callbacks de solicitudes que ya no son actuales.
+- **Temporizadores (`tm`):** validación sin `bc`, duración positiva de hasta siete días y redondeo hacia arriba con mínimo efectivo de un segundo.
+- **Instalador:** comprueba Python 3, despliega `cybercore-state` y ambos wrappers de backup/restore, y usa `systemctl --user reenable` para migrar los enlaces de habilitación. No se ejecutó el instalador completo sobre la sesión.
+- **Documentación:** se corrigieron afirmaciones sobre atomicidad, alcance del respaldo, casos límite y automatización. Se añadió `REVIEW-FIXES.md` con instrucciones y límites. Se conservó la corrección por PID de `ka` realizada por Antigravity.
+
+### Verificación realizada
+
+- Pruebas aisladas de fuente vacía, destino existente, validación sin restauración, restauración normal y archivo de respaldo corrupto.
+- Fallo de reemplazo inyectado durante restore: se verificó que el rollback recupera el estado anterior.
+- Verificación de permisos restaurados y conservación de permisos de archivos ajenos.
+- Pruebas de clima con error de red, JSON malformado, campos ausentes y respuesta válida.
+- Pruebas de temporizadores inválidos y fraccionarios; comprobaciones de sintaxis y `git diff --check`.
+- Prueba reproducible del estado de archivos: `python tests/test_state.py`.
+- Se creó y validó un respaldo real de 101 raíces en `/home/julian/Documents/Codex/2026-10-12/che/outputs/cybercore-backup-verificado`. No se restauró sobre la sesión real.
+
+### Límites y estado final
+
+- La publicación del backup mediante renombrado no convierte la captura de aplicaciones abiertas en un snapshot coherente. El restore tiene rollback ante errores capturables, pero **no es atómico global ni protege contra cortes eléctricos o SIGKILL**.
+- El alcance exacto está enumerado en `cybercore-state` y documentado en `REVIEW-FIXES.md`; no equivale a un respaldo completo del equipo. Los backups antiguos sin manifiesto no son aceptados.
+- Las pruebas físicas de desconexión de audio y cierre de sesión siguen pendientes. El QML instalado se cargará al reiniciar la sesión de Plasma.
+- Se conservó `own_window_type = 'normal'` en Conky. La solución de "Mostrar escritorio" funciona mediante el script evaluador `scripts/cybercore-toggle-desktop`, el lanzador `applications/cybercore-toggle-desktop.desktop` y el mapeo del atajo `Meta+D`, que minimiza y restaura las ventanas de aplicaciones normales sin afectar la visibilidad ni la composición de Conky y GLava en DP-2.
+- Se desplegaron las copias sincronizadas en `~/.local/bin/` y `~/.local/share/applications/`, y se integró el paso en `install.sh`.

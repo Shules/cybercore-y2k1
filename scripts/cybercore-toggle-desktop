@@ -1,3 +1,34 @@
 #!/bin/bash
-# Invokes KDE Plasma native Show Desktop shortcut (Meta+D)
-qdbus6 org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut "Show Desktop"
+SCRIPT="/tmp/cybercore_td_$$.js"
+cat << 'JS' > "$SCRIPT"
+(function() {
+    var clients = workspace.windowList();
+    var normalClients = [];
+    var anyVisible = false;
+
+    for (var i = 0; i < clients.length; i++) {
+        var c = clients[i];
+        var cls = (c.resourceClass || "").toString();
+        // Skip conky and glava entirely
+        if (cls === "conky" || cls === "GLava" || c.keepBelow || c.skipTaskbar) {
+            continue;
+        }
+        if (c.normalWindow) {
+            normalClients.push(c);
+            if (!c.minimized) {
+                anyVisible = true;
+            }
+        }
+    }
+
+    // Toggle minimize
+    for (var j = 0; j < normalClients.length; j++) {
+        normalClients[j].minimized = anyVisible;
+    }
+})();
+JS
+
+qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.loadScript "$SCRIPT" "cybercore_td_$$" >/dev/null
+qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.start >/dev/null
+qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.unloadScript "cybercore_td_$$" >/dev/null
+rm -f "$SCRIPT"

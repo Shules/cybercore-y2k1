@@ -104,8 +104,9 @@ PlasmoidItem {
         repeat: false
         onTriggered: {
             if (root.currentWeatherXhr) {
-                root.currentWeatherXhr.abort();
+                var expired = root.currentWeatherXhr;
                 root.currentWeatherXhr = null;
+                expired.abort();
             }
             root.weatherFetching = false;
             if (root.weatherTemp === "--") {
@@ -127,6 +128,7 @@ PlasmoidItem {
         root.currentWeatherXhr = xhr;
         xhr.open("GET", "https://api.open-meteo.com/v1/forecast?latitude=-31.42&longitude=-64.19&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=America%2FArgentina%2FCordoba");
         xhr.onreadystatechange = function() {
+            if (root.currentWeatherXhr !== xhr) return;
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 weatherTimeoutTimer.stop();
                 root.currentWeatherXhr = null;
@@ -134,7 +136,13 @@ PlasmoidItem {
                 if (xhr.status === 200) {
                     try {
                         var data = JSON.parse(xhr.responseText);
-                        var cur = data.current;
+                        var cur = data && data.current;
+                        var keys = ["temperature_2m", "relative_humidity_2m", "wind_speed_10m", "weather_code"];
+                        if (!cur || keys.some(function(key) { return typeof cur[key] !== "number" || !isFinite(cur[key]); }) ||
+                            cur.relative_humidity_2m < 0 || cur.relative_humidity_2m > 100 || cur.wind_speed_10m < 0 ||
+                            cur.weather_code < 0 || cur.weather_code > 99 || Math.floor(cur.weather_code) !== cur.weather_code) {
+                            throw new Error("Invalid weather payload");
+                        }
                         root.weatherTemp = Math.round(cur.temperature_2m) + "°C";
                         root.weatherHumidity = cur.relative_humidity_2m + "%";
                         root.weatherWind = Math.round(cur.wind_speed_10m) + " km/h";
@@ -194,9 +202,10 @@ PlasmoidItem {
                             root.weatherCondition = root.weatherCondition + " [OFFLINE]";
                         }
                     }
-                } else if (xhr.status !== 0) { // status 0 is triggered on abort
+                } else {
+                    // Handles HTTP errors (4xx, 5xx) as well as network failures (status 0 when not aborted)
                     if (root.weatherTemp === "--") {
-                        root.weatherCondition = "Error al actualizar";
+                        root.weatherCondition = (xhr.status === 0 ? "Sin conexión" : "Error al actualizar");
                     } else if (!root.weatherCondition.includes("[OFFLINE]")) {
                         root.weatherCondition = root.weatherCondition + " [OFFLINE]";
                     }

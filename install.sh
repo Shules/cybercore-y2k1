@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e
+set -euo pipefail
+command -v python3 >/dev/null || { echo "python3 is required" >&2; exit 1; }
 
 # Always resolve repository directory regardless of where script is called from
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -104,9 +105,10 @@ cp -r "$BASEDIR"/config/glava/* ~/.config/glava/
 cp "$BASEDIR"/scripts/cybercore-gpu ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-gpu-daemon ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-toggle-desktop ~/.local/bin/
+cp "$BASEDIR"/scripts/cybercore-state ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-backup ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-restore ~/.local/bin/
-chmod +x ~/.local/bin/cybercore-gpu ~/.local/bin/cybercore-gpu-daemon ~/.local/bin/cybercore-toggle-desktop ~/.local/bin/cybercore-backup ~/.local/bin/cybercore-restore
+chmod +x ~/.local/bin/cybercore-state ~/.local/bin/cybercore-gpu ~/.local/bin/cybercore-gpu-daemon ~/.local/bin/cybercore-toggle-desktop ~/.local/bin/cybercore-backup ~/.local/bin/cybercore-restore
 
 # Clean legacy autostarts
 rm -f ~/.config/autostart/conky.desktop ~/.config/autostart/glava.desktop 2>/dev/null || true
@@ -115,8 +117,17 @@ rm -f ~/.config/autostart/conky.desktop ~/.config/autostart/glava.desktop 2>/dev
 mkdir -p ~/.config/systemd/user
 cp "$BASEDIR"/config/systemd/*.service ~/.config/systemd/user/
 systemctl --user daemon-reload
-systemctl --user enable conky.service glava.service cybercore-gpu.service
+systemctl --user reenable conky.service glava.service cybercore-gpu.service
 systemctl --user restart cybercore-gpu.service conky.service glava.service
+
+# Configure Cybercore Show Desktop handler and global shortcuts
+echo "[11.1] Configuring Cybercore Show Desktop shortcut and application..."
+mkdir -p ~/.local/share/applications
+cp "$BASEDIR"/applications/cybercore-toggle-desktop.desktop ~/.local/share/applications/
+kwriteconfig6 --file ~/.config/kglobalshortcutsrc --group kwin --key "Show Desktop" "none,none,Dar un vistazo al escritorio"
+kwriteconfig6 --file ~/.config/kglobalshortcutsrc --group services --group cybercore-toggle-desktop.desktop --key _launch "Meta+D,Meta+D,Cybercore Show Desktop"
+kbuildsycoca6 --noincremental >/dev/null 2>&1 || true
+systemctl --user restart plasma-kglobalaccel >/dev/null 2>&1 || true
 
 # 7. Apply & Reload
 echo "[12] Reloading KWin and Plasma..."
