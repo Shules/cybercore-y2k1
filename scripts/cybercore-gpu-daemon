@@ -12,20 +12,20 @@ while true; do
     raw=$(nvidia-smi --query-gpu=temperature.gpu,utilization.gpu,memory.used,memory.total,power.draw,fan.speed --format=csv,noheader,nounits 2>/dev/null)
     if [ -n "$raw" ]; then
         IFS=',' read -r temp util memused memtotal power fan <<< "$raw"
-        temp=$(echo "$temp" | tr -d ' ')
-        util=$(echo "$util" | tr -d ' ')
-        memused=$(echo "$memused" | tr -d ' ')
-        memtotal=$(echo "$memtotal" | tr -d ' ')
-        power=$(echo "$power" | tr -d ' ')
-        fan=$(echo "$fan" | tr -d ' ')
+        temp="${temp// /}"
+        util="${util// /}"
+        memused="${memused// /}"
+        memtotal="${memtotal// /}"
+        power="${power// /}"
+        fan="${fan// /}"
 
         memutil=0
         if [ "${memtotal:-0}" -gt 0 ] 2>/dev/null; then
             memutil=$(( (memused * 100) / memtotal ))
         fi
-        powerint=${power%.*}
+        powerint="${power%.*}"
 
-        cat << EOF > "$CACHE.tmp"
+        cat << EOF_INNER > "$CACHE.tmp"
 temp ${temp:-0}
 util ${util:-0}
 memused ${memused:-0}
@@ -33,7 +33,7 @@ memtotal ${memtotal:-0}
 memutil ${memutil:-0}
 power ${powerint:-0}
 fan ${fan:-0}
-EOF
+EOF_INNER
         mv "$CACHE.tmp" "$CACHE"
     fi
     sleep 2

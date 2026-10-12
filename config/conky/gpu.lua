@@ -10,6 +10,11 @@ local data = {
 local last_read = 0
 
 local function update_data()
+    local now = os.time()
+    if now == last_read then
+        return
+    end
+
     local f = io.open("/dev/shm/cybercore_gpu_conky", "r")
     if not f then return end
     for line in f:lines() do
@@ -19,6 +24,7 @@ local function update_data()
         end
     end
     f:close()
+    last_read = now
 end
 
 function conky_gpu_val(key)

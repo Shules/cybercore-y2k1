@@ -20,9 +20,34 @@ PlasmoidItem {
     readonly property color mutedViolet: "#8D7CA6"
 
     // Current Date/Time tracking
-    property var now: new Date()
     property string timeStr: "00:00:00"
     property string dateStr: ""
+    property string calendarHeader: ""
+    property var calendarCells: []
+    property int lastCalendarDay: -1
+
+    function updateCalendar(d) {
+        var year = d.getFullYear();
+        var month = d.getMonth();
+        var day = d.getDate();
+        if (day === root.lastCalendarDay) return;
+        root.lastCalendarDay = day;
+
+        var months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
+        root.calendarHeader = months[month] + " " + year;
+
+        var firstDay = new Date(year, month, 1).getDay();
+        var daysInMonth = new Date(year, month + 1, 0).getDate();
+        var cells = [];
+        
+        for (var i = 0; i < firstDay; i++) {
+            cells.push({ day: "", isCurrent: false });
+        }
+        for (var n = 1; n <= daysInMonth; n++) {
+            cells.push({ day: n, isCurrent: (n === day) });
+        }
+        root.calendarCells = cells;
+    }
 
     // Weather Data (Córdoba Capital)
     property string weatherTemp: "--"
@@ -37,16 +62,18 @@ PlasmoidItem {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            root.now = new Date();
-            var h = String(root.now.getHours()).padStart(2, '0');
-            var m = String(root.now.getMinutes()).padStart(2, '0');
-            var s = String(root.now.getSeconds()).padStart(2, '0');
+            var now = new Date();
+            var h = String(now.getHours()).padStart(2, '0');
+            var m = String(now.getMinutes()).padStart(2, '0');
+            var s = String(now.getSeconds()).padStart(2, '0');
             root.timeStr = h + ":" + m + ":" + s;
 
             var days = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
             var monthsShort = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
-            var dayNum = String(root.now.getDate()).padStart(2, '0');
-            root.dateStr = "SYS.DATE: " + dayNum + "-" + monthsShort[root.now.getMonth()] + " // " + days[root.now.getDay()];
+            var dayNum = String(now.getDate()).padStart(2, '0');
+            root.dateStr = "SYS.DATE: " + dayNum + "-" + monthsShort[now.getMonth()] + " // " + days[now.getDay()];
+
+            root.updateCalendar(now);
         }
     }
 
@@ -187,10 +214,7 @@ PlasmoidItem {
                 RowLayout {
                     Layout.fillWidth: true
                     Text {
-                        text: {
-                            var months = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
-                            return months[root.now.getMonth()] + " " + root.now.getFullYear();
-                        }
+                        text: root.calendarHeader
                         font.family: "Exo 2"
                         font.pixelSize: 14
                         font.bold: true
@@ -230,23 +254,8 @@ PlasmoidItem {
 
                     // Celdas del mes
                     Repeater {
-                        model: {
-                            var year = root.now.getFullYear();
-                            var month = root.now.getMonth();
-                            var firstDay = new Date(year, month, 1).getDay();
-                            var daysInMonth = new Date(year, month + 1, 0).getDate();
-                            var cells = [];
-                            
-                            // Días vacíos previos
-                            for (var i = 0; i < firstDay; i++) {
-                                cells.push({ day: "", isCurrent: false });
-                            }
-                            // Días reales
-                            for (var d = 1; d <= daysInMonth; d++) {
-                                cells.push({ day: d, isCurrent: (d === root.now.getDate()) });
-                            }
-                            return cells;
-                        }
+                        model: root.calendarCells
+
 
                         Rectangle {
                             Layout.preferredWidth: 32

@@ -304,7 +304,7 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - [ ] Crear scripts de startup.
 - [ ] Controlar orden de arranque.
 - [ ] Controlar dependencias.
-- [ ] Lanzar automáticamente Conky, Glava, apps propias y servicios auxiliares.
+- [x] Lanzar automáticamente Conky, Glava, apps propias y servicios auxiliares (gestionados vía systemd user units: conky.service, glava.service, cybercore-gpu.service).
 
 ## Fase 17 — Backup / Restore final
 - [ ] Completar cybercore-backup.
@@ -350,10 +350,22 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - **Causa raíz:** Conky ejecutaba cada 2 segundos hasta 10 subprocesos independientes de Bash y Awk (`cybercore-gpu temp`, `util`, `mem`, etc.), despertando la GPU NVIDIA y manteniendo la telemetría en carga artificial.
 - **Solución implementada:**
   - Se creó el daemon de usuario `cybercore-gpu-daemon`, administrado por `systemd`, que consulta a `nvidia-smi` una sola vez cada 2 segundos y almacena los valores procesados en memoria compartida (`/dev/shm/cybercore_gpu_conky`).
-  - Se desarrolló `gpu.lua` para que Conky lea la memoria compartida directamente mediante llamadas internas de Lua (`${lua gpu_val ...}`, `${lua_bar ...}`, `${lua_graph ...}`), reduciendo el fork de subprocesos a **0**.
   - El consumo de Conky se redujo a menos del 1% de CPU.
 
 ### 3. Optimización de GLava
 - Se desactivó la interpolación por software en CPU (`#request setinterpolate false` en `rc.glsl`), reduciendo la carga continua de rendering en ~30%.
 - Se migró la gestión de arranque de Conky y GLava desde archivos `.desktop` en autostart hacia unidades de servicio nativas de Systemd (`conky.service`, `glava.service`, `cybercore-gpu.service`).
+
+### 4. Desacoplamiento del calendario respecto al reloj en `com.cybercore.deskcolumn`
+- **Causa raíz:** En `plasmoids/com.cybercore.deskcolumn/contents/ui/main.qml`, el reloj actualizaba el objeto `now: new Date()` cada 1000ms. El modelo del `Repeater` del calendario dependía directamente de `now`, obligando al motor QML a reconstruir dinámicamente un arreglo con los 35–42 días del mes cada segundo.
+- **Solución implementada:** Se desacopló la fecha del reloj de segundos. Ahora el calendario únicamente recalcula y reconstruye su cuadrícula cuando cambia el día del mes (`lastCalendarDay !== day`) o el mes en vista. Las celdas y la cabecera se almacenan en propiedades independientes (`calendarCells` y `calendarHeader`).
+
+### 5. Optimización atómica de `cybercore-gpu-daemon` y parser de `gpu.lua`
+- Se reemplazaron las llamadas externas en pipeline `echo | tr -d ' '` dentro del bucle del daemon de GPU por expansiones nativas de parámetros de Bash (`${var// /}` y `${power%.*}`), reduciendo la creación de subprocesos innecesarios en segundo plano.
+- En `config/conky/gpu.lua`, se activó el control de caché mediante marca temporal `os.time() == last_read`. Conky consulta múltiples claves por ciclo (`gpu_val temp`, `power`, `fan`, `lua_bar`, `lua_graph`); con esta optimización, el archivo en memoria compartida se abre y parsea exactamente **una vez** por segundo en lugar de una vez por cada variable.
+
+### 6. Corrección de advertencias y telemetría de hardware en `conky.conf`
+- Se eliminaron las configuraciones deprecadas/removidas de X11 en Plasma 6 (`own_window_transparent`, `own_window_argb_value`, `own_window_argb_visual`), estandarizando el canal alfa sobre `own_window_colour = '#00000000'`.
+- Se corrigió la advertencia de `invalid CPU number '(null)'` generada por la llamada sin índice a `${freq_g}`, especificando el núcleo correspondiente `${freq_g 1}`.
+- Se actualizaron las etiquetas fijas a los valores reales del sistema: Governor en `PERFORMANCE` (en lugar de `SCHEDUTIL`) y Driver de GPU en `NVIDIA 615.xx` (en lugar de `570.xx`).
 
