@@ -26,6 +26,14 @@ Rows=1
 BlurStrength=15
 NoiseStrength=0
 
+[Plugins]
+cybercore-toggle-desktopEnabled=false
+kwin6_effect_tv_glitchEnabled=true
+magiclampEnabled=true
+scaleEnabled=false
+squashEnabled=false
+windowapertureEnabled=false
+
 [Tiling][25e900b0-6b26-4c35-8d4d-b94866f20d45][577c3065-3492-46ce-96a5-898249acaf1d]
 padding=4
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
@@ -105,6 +113,9 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 [Tiling][f4c4d408-9dd9-40f7-a05c-89a93337445d][96a01b90-e152-4024-9592-9717d53a7b2a]
 padding=4
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Wayland]
+VirtualKeyboardMode=1
 
 [Xwayland]
 Scale=1

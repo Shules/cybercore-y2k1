@@ -4,4 +4,6 @@ Exec=/home/julian/.local/bin/cybercore-toggle-desktop
 Icon=user-desktop
 Type=Application
 Terminal=false
+StartupNotify=false
+NoDisplay=true
 Categories=Utility;

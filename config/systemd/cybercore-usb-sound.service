@@ -1,0 +1,12 @@
+[Unit]
+Description=Cybercore USB Hardware Sound Daemon
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/home/julian/.local/bin/cybercore-usb-sound
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target

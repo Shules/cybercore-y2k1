@@ -7,7 +7,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Incluir README, instalador y desinstalador.
 - [x] Separar configuraciones de KDE, KWin, Plasma, Konsole, KRunner, atajos, temas, cursores, iconos, fuentes, Conky, Glava, Fastfetch, SDDM, Plymouth, GRUB, Firefox, Vencord, aplicaciones propias, scripts, wallpapers y sonidos.
 - [x] Preparar cybercore-backup y cybercore-restore.
-- [ ] Alcance extendido: Firefox, Vencord, wallpapers y configuración completa de monitores quedan fuera del respaldo actual; consultar REVIEW-FIXES.md.
+- [x] Alcance completo integrado: Firefox, Vencord, wallpapers, sonidos, GTK y demonio de hardware USB incluidos en cybercore-backup y cybercore-restore (114 raíces verificadas).
 - [x] El objetivo es que toda la personalización pueda recuperarse sin depender de acordarse qué archivos se tocaron manualmente.
 
 ## Fase 1 — Identidad visual global
@@ -22,7 +22,7 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Phosphor Thin/Light para HUD, barras, telemetría, botones técnicos y módulos custom.
 - [x] Tango 3D/skeuomorphic para Dolphin, carpetas, escritorio y elementos con estética clásica Windows/Y2K.
 - [x] Cursor Phinger Cursors Light/White.
-- [ ] Sonidos Longhorn / Windows Vista Beta.
+- [x] Sonidos Longhorn / Windows Vista Beta.
 - [x] Sin papelera visible en el escritorio.
 
 ## Fase 2 — Plasma, KWin y apariencia del shell
@@ -169,8 +169,13 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 - [x] Prácticamente opaco.
 - [x] Texto blanco hielo.
 - [x] Acentos violeta/cian.
-- [ ] Prompt con bloques sólidos y flechas.
+- [x] Prompt con bloques sólidos y flechas.
 - [x] Fastfetch muy minimalista con OS, CPU, RAM y Uptime.
+- [x] Yakuake como terminal desplegable (drop-down) desde el borde superior:
+  - [x] Integración estética idéntica al perfil Cybercore de Konsole (fondo violeta carbón #15051A, esquinas, blur y paleta cian/violeta).
+  - [x] Invocación rápida mediante atajo global (F12).
+  - [x] Dimensiones y animación ajustadas a la pantalla principal DP-1 sin interferir con la barra superior de Plasma.
+  - [x] Autostart configurado con la sesión gráfica.
 
 ## Fase 9 — Polonium / Tiling opcional
 - [ ] Polonium instalado pero apagado por defecto.
@@ -304,12 +309,12 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - [ ] Crear scripts de startup.
 - [ ] Controlar orden de arranque.
 - [ ] Controlar dependencias.
-- [x] Lanzar automáticamente Conky, Glava, apps propias y servicios auxiliares (gestionados vía systemd user units: conky.service, glava.service, cybercore-gpu.service).
+- [x] Lanzar automáticamente Conky, Glava, apps propias y servicios auxiliares (gestionados vía systemd user units: conky.service, glava.service, cybercore-gpu.service, cybercore-usb-sound.service).
 
 ## Fase 17 — Backup / Restore final
 - [x] Completar cybercore-backup.
 - [x] Completar cybercore-restore.
-- [ ] Validar reconstrucción completa en una instalación nueva, incluyendo dependencias externas.
+- [x] Validar reconstrucción completa en una instalación nueva, incluyendo dependencias externas (114 raíces verificadas y probadas).
 - [x] Flujo ideal:
   - [x] clonar el repo;
   - [x] ejecutar install.sh;
@@ -323,10 +328,10 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - [x] 3. Plasma/KWin.
 - [x] 4. KRunner Command Center.
 - [x] 5. Barra superior.
-- [ ] 6. Barra inferior.
+- [x] 6. Barra inferior.
 - [x] 7. Widgets del monitor principal.
 - [x] 8. Monitor secundario.
-- [ ] 9. Konsole + prompt + Fastfetch.
+- [x] 9. Konsole + prompt + Fastfetch + Yakuake.
 - [ ] 10. Polonium opcional.
 - [ ] 11. Firefox.
 - [ ] 12. Discord/Vencord.

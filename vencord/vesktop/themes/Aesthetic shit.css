@@ -1,0 +1,41 @@
+/**
+* @name full4k
+* @version Auto Update
+* @description Wallpaper made by Sebica<3
+* @author Full credits go to Gibbu
+* @invite 
+* @Source https://github.com/DiscordStyles/FrostedGlass
+* @website https://betterdiscord.app/theme/Frosted%20Glass
+*/
+@import url("https://discordstyles.github.io/FrostedGlass/dist/FrostedGlass.css");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono');
+:root {
+--background-image: url('https://i.imgur.com/A9Hhm6r.jpg');
+--background-image-blur: 0px;
+--background-image-size: cover;
+--background-image-position: center;
+--popout-modal-image: url('https://i.imgur.com/Wz2izE4.jpg');
+--popout-modal-blur: 0px;
+--popout-modal-size: cover;
+--popout-modal-position: bottom;
+--home-button-image: url('https://i.imgur.com/XCrsTY0.jpg');
+--home-button-size: cover;
+--home-button-position: bottom;
+--serverlist-brightness: 0.2;
+--left-brightness: 0.2;
+--middle-brightness: 0.25;
+--right-brightness: 0.2;
+--popout-modal-brightness: 0.25;
+--gradient-primary: 98,183,171;
+--gradient-secondary: 98,183,171;
+--gradient-direction: 200deg;
+--tint-colour: 98,183,171;
+--tint-brightness: 0.05;
+--window-padding: 22px;
+--window-roundness: 10px;
+--scrollbar-colour: #62B7ABFF;
+--link-colour: #F49B9EFF;
+--show-gift-gif-buttons: no-repeat;
+--font: 'Roboto Mono';
+--update-notice-1: none;
+}

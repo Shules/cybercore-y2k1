@@ -36,12 +36,41 @@ mkdir -p ~/.local/share/fonts
 cp -r "$BASEDIR"/fonts/* ~/.local/share/fonts/
 fc-cache -f ~/.local/share/fonts/ 2>/dev/null || true
 
+echo "[0.2] Installing Cybercore Sound Theme (Windows Longhorn / Vista Beta)..."
+mkdir -p ~/.local/share/sounds
+cp -r "$BASEDIR"/sounds/* ~/.local/share/sounds/
+
+echo "[0.3] Installing Cybercore Wallpapers..."
+mkdir -p ~/.local/share/wallpapers/Cybercore
+cp -r "$BASEDIR"/wallpapers/* ~/.local/share/wallpapers/Cybercore/
+
 # 1. Configs
 echo "[1] Applying KDE configs (kdeglobals, kwinrc, dolphinrc, krunnerrc, kwinrulesrc)..."
 mkdir -p ~/.config
 cp -r "$BASEDIR"/config/kde/* ~/.config/
 cp -r "$BASEDIR"/config/kwin/* ~/.config/
 cp -r "$BASEDIR"/config/krunner/* ~/.config/
+
+echo "[1.1] Applying GTK and Notification settings..."
+mkdir -p ~/.config/gtk-3.0 ~/.config/gtk-4.0
+cp -r "$BASEDIR"/config/gtk-3.0/* ~/.config/gtk-3.0/
+cp -r "$BASEDIR"/config/gtk-4.0/* ~/.config/gtk-4.0/
+cp "$BASEDIR"/config/plasmanotifyrc ~/.config/
+gsettings set org.gnome.desktop.sound theme-name 'Cybercore-Longhorn' 2>/dev/null || true
+gsettings set org.gnome.desktop.sound event-sounds true 2>/dev/null || true
+
+echo "[1.2] Deploying Firefox configuration..."
+mkdir -p ~/.config/mozilla/firefox
+cp "$BASEDIR"/firefox/profiles.ini ~/.config/mozilla/firefox/ 2>/dev/null || true
+cp "$BASEDIR"/firefox/installs.ini ~/.config/mozilla/firefox/ 2>/dev/null || true
+
+echo "[1.3] Deploying Vesktop / Vencord configuration and custom commands..."
+mkdir -p ~/.config/vesktop/themes
+cp -r "$BASEDIR"/vencord/vesktop/* ~/.config/vesktop/ 2>/dev/null || true
+if [ -d "$BASEDIR"/vencord/.vesktopCustomCommands ]; then
+    cp -r "$BASEDIR"/vencord/.vesktopCustomCommands ~/
+    chmod +x ~/.vesktopCustomCommands/*.sh 2>/dev/null || true
+fi
 
 echo "[2] Applying Panel Layout and Shell configs..."
 cp "$BASEDIR"/config/plasma-org.kde.plasma.desktop-appletsrc ~/.config/
@@ -104,21 +133,22 @@ cp -r "$BASEDIR"/config/glava/* ~/.config/glava/
 
 cp "$BASEDIR"/scripts/cybercore-gpu ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-gpu-daemon ~/.local/bin/
+cp "$BASEDIR"/scripts/cybercore-usb-sound ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-toggle-desktop ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-state ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-backup ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-restore ~/.local/bin/
-chmod +x ~/.local/bin/cybercore-state ~/.local/bin/cybercore-gpu ~/.local/bin/cybercore-gpu-daemon ~/.local/bin/cybercore-toggle-desktop ~/.local/bin/cybercore-backup ~/.local/bin/cybercore-restore
+chmod +x ~/.local/bin/cybercore-state ~/.local/bin/cybercore-gpu ~/.local/bin/cybercore-gpu-daemon ~/.local/bin/cybercore-usb-sound ~/.local/bin/cybercore-toggle-desktop ~/.local/bin/cybercore-backup ~/.local/bin/cybercore-restore
 
 # Clean legacy autostarts
 rm -f ~/.config/autostart/conky.desktop ~/.config/autostart/glava.desktop 2>/dev/null || true
 
-# Install and enable systemd user services for HUD
+# Install and enable systemd user services for HUD & System Audio
 mkdir -p ~/.config/systemd/user
 cp "$BASEDIR"/config/systemd/*.service ~/.config/systemd/user/
 systemctl --user daemon-reload
-systemctl --user reenable conky.service glava.service cybercore-gpu.service
-systemctl --user restart cybercore-gpu.service conky.service glava.service
+systemctl --user reenable conky.service glava.service cybercore-gpu.service cybercore-usb-sound.service
+systemctl --user restart cybercore-gpu.service conky.service glava.service cybercore-usb-sound.service
 
 # Configure Cybercore Show Desktop handler and global shortcuts
 echo "[11.1] Configuring Cybercore Show Desktop shortcut and application..."
@@ -127,6 +157,13 @@ cp "$BASEDIR"/applications/cybercore-toggle-desktop.desktop ~/.local/share/appli
 kwriteconfig6 --file ~/.config/kglobalshortcutsrc --group kwin --key "Show Desktop" "none,none,Dar un vistazo al escritorio"
 kwriteconfig6 --file ~/.config/kglobalshortcutsrc --group services --group cybercore-toggle-desktop.desktop --key _launch "Meta+D,Meta+D,Cybercore Show Desktop"
 kbuildsycoca6 --noincremental >/dev/null 2>&1 || true
+
+# 7. Yakuake Drop-Down Terminal
+echo "[11.2] Configuring Yakuake Drop-Down Terminal..."
+mkdir -p ~/.config ~/.config/autostart
+cp "$BASEDIR"/config/yakuake/yakuakerc ~/.config/
+cp "$BASEDIR"/config/autostart/org.kde.yakuake.desktop ~/.config/autostart/
+kwriteconfig6 --file ~/.config/kglobalshortcutsrc --group yakuake --key "toggle-window-state" "Meta+Y	Ctrl+Alt+T	F12,F12,Abrir/retraer Yakuake"
 systemctl --user restart plasma-kglobalaccel >/dev/null 2>&1 || true
 
 # 7. Apply & Reload

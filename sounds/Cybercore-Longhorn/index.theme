@@ -1,0 +1,8 @@
+[Sound Theme]
+Name=Cybercore Longhorn
+Comment=Windows Longhorn and Vista Beta Sound Theme for Cybercore Y2K1
+Directories=stereo
+Example=theme-demo
+
+[stereo]
+OutputProfile=stereo

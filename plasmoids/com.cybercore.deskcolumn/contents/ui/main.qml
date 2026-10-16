@@ -228,118 +228,126 @@ PlasmoidItem {
             // ==========================================
             // 1. RELOJ FLOTANTE
             // ==========================================
-            ColumnLayout {
+            Rectangle {
                 Layout.fillWidth: true
-                spacing: 4
+                implicitHeight: clockCol.implicitHeight + 20
+                color: root.bgCard
+                opacity: 0.88
+                border.color: root.electricCyan
+                border.width: 1
+                radius: 4
 
-                Text {
-                    text: "[ " + root.timeStr + " ]"
-                    font.family: "Share Tech Mono"
-                    font.pixelSize: 44
-                    color: root.iceWhite
-                    Layout.alignment: Qt.AlignRight
-                }
+                ColumnLayout {
+                    id: clockCol
+                    anchors.fill: parent
+                    anchors.margins: 10
+                    spacing: 4
 
-                Text {
-                    text: root.dateStr
-                    font.family: "Share Tech Mono"
-                    font.pixelSize: 13
-                    color: root.neonViolet
-                    Layout.alignment: Qt.AlignRight
-                }
+                    Text {
+                        text: "[ " + root.timeStr + " ]"
+                        font.family: "Share Tech Mono"
+                        font.pixelSize: 42
+                        font.bold: true
+                        color: root.iceWhite
+                        Layout.alignment: Qt.AlignRight
+                    }
 
-                // Línea técnica separadora
-                Rectangle {
-                    Layout.fillWidth: true
-                    height: 1
-                    color: root.electricCyan
-                    opacity: 0.4
-                    Layout.topMargin: 8
+                    Text {
+                        text: root.dateStr
+                        font.family: "Share Tech Mono"
+                        font.pixelSize: 13
+                        font.bold: true
+                        color: root.electricCyan
+                        Layout.alignment: Qt.AlignRight
+                    }
                 }
             }
 
             // ==========================================
             // 2. CALENDARIO MINIMALISTA
             // ==========================================
-            ColumnLayout {
+            Rectangle {
                 Layout.fillWidth: true
-                spacing: 12
+                implicitHeight: calCol.implicitHeight + 20
+                color: root.bgCard
+                opacity: 0.88
+                border.color: root.neonViolet
+                border.width: 1
+                radius: 4
 
-                // Mes / Año
-                RowLayout {
-                    Layout.fillWidth: true
-                    Text {
-                        text: root.calendarHeader
-                        font.family: "Exo 2"
-                        font.pixelSize: 14
-                        font.bold: true
-                        color: root.neonViolet
-                    }
-                    Item { Layout.fillWidth: true }
-                    Text {
-                        text: "CYBERCORE CAL"
-                        font.family: "Exo 2"
-                        font.pixelSize: 10
-                        font.bold: true
-                        color: root.iceWhite
-                        opacity: 0.7
-                    }
-                }
+                ColumnLayout {
+                    id: calCol
+                    anchors.fill: parent
+                    anchors.margins: 10
+                    spacing: 12
 
-                // Días semana
-                GridLayout {
-                    columns: 7
-                    columnSpacing: 6
-                    rowSpacing: 6
-                    Layout.fillWidth: true
-
-                    Repeater {
-                        model: ["D", "L", "M", "M", "J", "V", "S"]
+                    // Mes / Año
+                    RowLayout {
+                        Layout.fillWidth: true
                         Text {
-                            text: modelData
+                            text: root.calendarHeader
                             font.family: "Exo 2"
-                            font.pixelSize: 11
+                            font.pixelSize: 14
+                            font.bold: true
+                            color: root.electricCyan
+                        }
+                        Item { Layout.fillWidth: true }
+                        Text {
+                            text: "CYBERCORE CAL"
+                            font.family: "Exo 2"
+                            font.pixelSize: 10
                             font.bold: true
                             color: root.iceWhite
-                            opacity: 0.85
-                            horizontalAlignment: Text.AlignHCenter
-                            Layout.fillWidth: true
+                            opacity: 0.9
                         }
                     }
 
-                    // Celdas del mes
-                    Repeater {
-                        model: root.calendarCells
+                    // Días semana
+                    GridLayout {
+                        columns: 7
+                        columnSpacing: 6
+                        rowSpacing: 6
+                        Layout.fillWidth: true
 
-
-                        Rectangle {
-                            Layout.preferredWidth: 32
-                            Layout.preferredHeight: 28
-                            Layout.alignment: Qt.AlignCenter
-                            color: modelData.isCurrent ? root.neonViolet : "transparent"
-                            border.color: modelData.isCurrent ? root.electricCyan : "transparent"
-                            border.width: modelData.isCurrent ? 1 : 0
-                            radius: modelData.isCurrent ? 2 : 0
-
+                        Repeater {
+                            model: ["D", "L", "M", "M", "J", "V", "S"]
                             Text {
-                                anchors.centerIn: parent
-                                text: modelData.day
+                                text: modelData
                                 font.family: "Exo 2"
-                                font.pixelSize: 12
-                                font.bold: modelData.isCurrent
-                                color: root.iceWhite
-                                opacity: modelData.isCurrent ? 1.0 : 0.85
+                                font.pixelSize: 11
+                                font.bold: true
+                                color: root.electricCyan
+                                opacity: 0.95
+                                horizontalAlignment: Text.AlignHCenter
+                                Layout.fillWidth: true
+                            }
+                        }
+
+                        // Celdas del mes
+                        Repeater {
+                            model: root.calendarCells
+
+                            Rectangle {
+                                Layout.preferredWidth: 32
+                                Layout.preferredHeight: 28
+                                Layout.alignment: Qt.AlignCenter
+                                color: modelData.isCurrent ? root.neonViolet : (modelData.day !== "" ? "#15051A66" : "transparent")
+                                border.color: modelData.isCurrent ? root.electricCyan : "transparent"
+                                border.width: modelData.isCurrent ? 1 : 0
+                                radius: 2
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: modelData.day
+                                    font.family: "Exo 2"
+                                    font.pixelSize: 12
+                                    font.bold: modelData.isCurrent
+                                    color: root.iceWhite
+                                    opacity: modelData.isCurrent ? 1.0 : 0.95
+                                }
                             }
                         }
                     }
-                }
-
-                Rectangle {
-                    Layout.fillWidth: true
-                    height: 1
-                    color: root.electricCyan
-                    opacity: 0.4
-                    Layout.topMargin: 4
                 }
             }
 

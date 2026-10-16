@@ -59,7 +59,7 @@ MoveZoomRight=none,none,Mover área ampliada a la derecha
 MoveZoomUp=none,none,Mover área ampliada hacia arriba
 Overview=Meta+W,Meta+W,Conmutar a la vista general
 Setup Window Shortcut=none,none,Configurar el atajo de teclado de la ventana
-Show Desktop=Meta+D,Meta+D,Dar un vistazo al escritorio
+Show Desktop=none,Meta+D,Dar un vistazo al escritorio
 Switch One Desktop Down=Meta+Ctrl+Down,Meta+Ctrl+Down,Cambiar al escritorio inferior
 Switch One Desktop Up=Meta+Ctrl+Up,Meta+Ctrl+Up,Cambiar al escritorio superior
 Switch One Desktop to the Left=Meta+Ctrl+Left,Meta+Ctrl+Left,Cambiar al escritorio de la izquierda
@@ -275,13 +275,14 @@ switch to previous activity=none,none,Cambiar a la actividad anterior
 toggle do not disturb=none,none,Conmutar no molestar
 
 [services][cybercore-toggle-desktop.desktop]
-_launch=none,none,Cybercore Show Desktop
+_launch=Meta+D, Meta+D
 
 [services][net.local.spectacle.desktop]
 _launch=Meta+S
 
 [services][org.kde.konsole.desktop]
 NewWindow=Meta+Return
+_launch=none
 
 [services][org.kde.spectacle.desktop]
 RectangularRegionScreenShot=Meta+Shift+S\tMeta+Shift+Print
@@ -295,3 +296,7 @@ previous_wallpaper=none,none,Previous wallpaper in playlist
 reload_wallpaper=none,none,Reload current wallpaper
 toggle_mute=none,none,Toggle wallpaper audio mute
 toggle_pause=none,none,Pause / resume wallpaper
+
+[yakuake]
+_k_friendly_name=Yakuake
+toggle-window-state=F12\tCtrl+Alt+T\tCtrl+Alt+Y\tMeta+Y,F12,Abrir/retraer Yakuake

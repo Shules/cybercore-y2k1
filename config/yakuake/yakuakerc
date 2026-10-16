@@ -1,0 +1,17 @@
+[Appearance]
+Skin=default
+
+[Dialog]
+FirstRun=false
+
+[Favorite Profiles]
+Favorites=Cybercore
+
+[Window]
+Height=55
+Width=70
+Position=50
+Screen=1
+ShowTabBar=true
+KeepOpen=false
+PollMouse=false

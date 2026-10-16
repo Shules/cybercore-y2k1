@@ -17,13 +17,14 @@ No cambia permisos de ejecutables ajenos, ni reinicia KWin, Conky o servicios.
 Cerrar aplicaciones antes de restaurar; reiniciar sesión después. La habilitación
 de servicios y las cachés son pasos separados, no parte del rollback de archivos.
 
-Alcance explícito en ROOTS de cybercore-state: configuraciones enumeradas de KDE,
-Kvantum, Conky, GLava, Fastfetch, perfiles Konsole, fuentes, temas e iconos propios,
-plasmoids instalados, scripts KWin, entradas KRunner, ejecutables enumerados y unidades
-HUD. No respalda todo el home, paquetes del sistema, Firefox, Vencord, wallpapers,
-credenciales ni firmware/configuración interna del mouse. El manifiesto es verificable,
-no una firma de autenticidad: usar respaldos de confianza. Los respaldos antiguos sin
-manifiesto no son aceptados; crear uno nuevo.
+Alcance explícito en ROOTS de cybercore-state (114 raíces verificadas): configuraciones
+de KDE, Kvantum, Conky, GLava, Fastfetch, GTK-3.0/4.0, plasmanotifyrc, perfiles Konsole,
+fuentes, temas e iconos propios, plasmoids instalados, scripts KWin, entradas KRunner,
+ejecutables y unidades HUD, demonio cybercore-usb-sound, colección de wallpapers Cybercore,
+tema de sonidos Cybercore-Longhorn, perfiles y extensiones de Firefox, y configuración/temas
+de Vesktop/Vencord (.vesktopCustomCommands). No respalda todo el home indiscriminadamente,
+paquetes globales del sistema, credenciales sensibles de sesión ni firmware interno del mouse.
+El manifiesto SHA-256 es verificable y cuenta con staging y rollback automático ante errores.
 
 ## Widgets y comandos
 
