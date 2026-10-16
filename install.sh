@@ -134,10 +134,17 @@ cp "$BASEDIR"/config/plasmanotifyrc ~/.config/
 gsettings set org.gnome.desktop.sound theme-name 'Cybercore-Longhorn' 2>/dev/null || true
 gsettings set org.gnome.desktop.sound event-sounds true 2>/dev/null || true
 
-echo "[1.2] Deploying Firefox configuration..."
+echo "[1.2] Deploying Firefox configuration and Cybercore Aero userChrome theme..."
 mkdir -p ~/.config/mozilla/firefox
 cp "$BASEDIR"/firefox/profiles.ini ~/.config/mozilla/firefox/ 2>/dev/null || true
 cp "$BASEDIR"/firefox/installs.ini ~/.config/mozilla/firefox/ 2>/dev/null || true
+for pdir in ~/.config/mozilla/firefox/*.default* ~/.config/mozilla/firefox/*.Profile*; do
+    if [ -d "$pdir" ]; then
+        mkdir -p "$pdir"/chrome
+        cp -r "$BASEDIR"/firefox/chrome/* "$pdir"/chrome/ 2>/dev/null || true
+        cp "$BASEDIR"/firefox/user.js "$pdir"/ 2>/dev/null || true
+    fi
+done
 
 echo "[1.3] Deploying Vesktop / Vencord configuration and custom commands..."
 mkdir -p ~/.config/vesktop/themes

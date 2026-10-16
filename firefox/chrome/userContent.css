@@ -1,0 +1,12 @@
+/* ==========================================================================
+   Cybercore Y2K1 - Native Content Theme (userContent.css)
+   Applies Cybercore aesthetics to internal Firefox pages (about:blank, newtab, etc.)
+   ========================================================================== */
+
+@-moz-document url("about:home"), url("about:newtab"), url("about:blank") {
+  body {
+    background-color: #0E0918 !important;
+    color: #E2E8F0 !important;
+    font-family: "Exo 2", sans-serif !important;
+  }
+}

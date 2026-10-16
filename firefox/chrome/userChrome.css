@@ -1,0 +1,277 @@
+/* ==========================================================================
+   Cybercore Y2K1 - Native Aero Theme for Firefox (userChrome.css)
+   Aesthetic: Carbon Violet (#0E0918), Structure Violet (#BD00FF),
+   Electric Cyan (#00F0FF), Ice White (#E2E8F0), Hard-Edges & Aero Depth
+   Matches Dolphin & Klassy Native Breeze/Cybercore Rice
+   ========================================================================== */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+:root {
+  /* Core Cybercore Palette */
+  --cyber-bg: #0E0918;
+  --cyber-bg-alt: #140C21;
+  --cyber-bg-subtle: #1A102B;
+  --cyber-border: rgba(189, 0, 255, 0.35);
+  --cyber-border-active: #BD00FF;
+  --cyber-cyan: #00F0FF;
+  --cyber-cyan-dim: rgba(0, 240, 255, 0.25);
+  --cyber-text: #E2E8F0;
+  --cyber-text-dim: #8D7CA6;
+  --cyber-accent: #A200FF;
+
+  /* Native Firefox Theme Overrides */
+  --toolbar-bgcolor: var(--cyber-bg) !important;
+  --toolbar-color: var(--cyber-text) !important;
+  --toolbarseparator-color: var(--cyber-border) !important;
+  --lwt-accent-color: var(--cyber-bg) !important;
+  --lwt-text-color: var(--cyber-text) !important;
+  --arrowpanel-background: var(--cyber-bg-alt) !important;
+  --arrowpanel-color: var(--cyber-text) !important;
+  --arrowpanel-border-color: var(--cyber-border-active) !important;
+  --panel-separator-color: var(--cyber-border) !important;
+  --autocomplete-popup-background: var(--cyber-bg-alt) !important;
+  
+  /* Hard Edge Geometry (Dolphin style) */
+  --tab-border-radius: 0px !important;
+  --arrowpanel-border-radius: 0px !important;
+  --urlbar-border-radius: 0px !important;
+  --button-border-radius: 0px !important;
+}
+
+/* ==========================================================================
+   1. Global Window & Layout Styling
+   ========================================================================== */
+#main-window,
+#browser,
+#appcontent {
+  background-color: var(--cyber-bg) !important;
+  font-family: "Exo 2", sans-serif !important;
+}
+
+/* Hard edges everywhere - Kill modern rounded bubbles */
+* {
+  border-radius: 0px !important;
+}
+
+/* ==========================================================================
+   2. Titlebar & Tab Bar (Aero Glass + Cybercore Tabs)
+   ========================================================================== */
+#titlebar {
+  background: linear-gradient(180deg, #180F29 0%, #0E0918 100%) !important;
+  border-bottom: 1px solid var(--cyber-border) !important;
+}
+
+/* Inactive Tabs */
+.tabbrowser-tab {
+  padding-inline: 4px !important;
+}
+
+.tabbrowser-tab .tab-background {
+  background-color: transparent !important;
+  border-left: 1px solid rgba(189, 0, 255, 0.15) !important;
+  border-right: 1px solid rgba(189, 0, 255, 0.15) !important;
+  border-top: 2px solid transparent !important;
+  border-bottom: none !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.tabbrowser-tab:hover .tab-background {
+  background-color: rgba(189, 0, 255, 0.12) !important;
+  border-top: 2px solid rgba(0, 240, 255, 0.5) !important;
+}
+
+/* Active Tab (Matches Dolphin highlighted panel/folder) */
+.tabbrowser-tab[selected="true"] .tab-background {
+  background: linear-gradient(180deg, rgba(162, 0, 255, 0.25) 0%, rgba(14, 9, 24, 0.95) 100%) !important;
+  border-left: 1px solid var(--cyber-border-active) !important;
+  border-right: 1px solid var(--cyber-border-active) !important;
+  border-top: 2px solid var(--cyber-cyan) !important;
+  box-shadow: inset 0 1px 0 rgba(0, 240, 255, 0.4) !important;
+}
+
+.tabbrowser-tab[selected="true"] .tab-label {
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.4) !important;
+}
+
+.tabbrowser-tab .tab-label {
+  color: var(--cyber-text) !important;
+  font-family: "Exo 2", sans-serif !important;
+  font-size: 12px !important;
+}
+
+/* Audio Playing Indicator in Tab */
+.tab-icon-sound[soundplaying="true"],
+.tab-icon-sound[muted="true"] {
+  fill: var(--cyber-cyan) !important;
+}
+
+/* ==========================================================================
+   3. Navigation Bar (URL Bar & Toolbar)
+   ========================================================================== */
+#nav-bar {
+  background-color: var(--cyber-bg) !important;
+  border-top: none !important;
+  border-bottom: 1px solid var(--cyber-border) !important;
+  box-shadow: none !important;
+  padding: 4px 6px !important;
+}
+
+/* URL Bar (Omnibox) - Native Input Style */
+#urlbar-background,
+#urlbar[focused="true"] #urlbar-background {
+  background-color: var(--cyber-bg-alt) !important;
+  border: 1px solid var(--cyber-border) !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+#urlbar[focused="true"] #urlbar-background {
+  border-color: var(--cyber-cyan) !important;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.35) !important;
+}
+
+#urlbar-input,
+.urlbar-input-box {
+  color: var(--cyber-text) !important;
+  font-family: "Exo 2", monospace !important;
+  font-size: 13px !important;
+}
+
+/* Navigation Buttons (Back, Forward, Refresh) */
+#nav-bar toolbarbutton {
+  border-radius: 0px !important;
+  transition: background-color 0.12s ease !important;
+}
+
+#nav-bar toolbarbutton:hover:not([disabled="true"]) {
+  background-color: rgba(0, 240, 255, 0.15) !important;
+  fill: var(--cyber-cyan) !important;
+}
+
+#nav-bar toolbarbutton:hover:not([disabled="true"]) image {
+  fill: var(--cyber-cyan) !important;
+}
+
+/* Identity Box / Tracking Protection */
+#identity-box {
+  border-right: 1px solid var(--cyber-border) !important;
+  margin-right: 6px !important;
+}
+
+#identity-box:hover {
+  background-color: rgba(189, 0, 255, 0.15) !important;
+}
+
+/* ==========================================================================
+   4. Bookmarks Bar
+   ========================================================================== */
+#PersonalToolbar {
+  background-color: var(--cyber-bg-alt) !important;
+  color: var(--cyber-text) !important;
+  border-bottom: 1px solid var(--cyber-border) !important;
+  padding: 2px 4px !important;
+}
+
+#PersonalToolbar toolbarbutton {
+  color: var(--cyber-text) !important;
+  border-radius: 0px !important;
+}
+
+#PersonalToolbar toolbarbutton:hover {
+  background-color: rgba(0, 240, 255, 0.12) !important;
+  color: var(--cyber-cyan) !important;
+}
+
+/* ==========================================================================
+   5. Native Menus, Popups & Autocomplete
+   ========================================================================== */
+menupopup,
+panelmultiview,
+.panel-subview-body,
+#urlbar-results,
+.autocomplete-richlistbox {
+  background-color: #120A1F !important;
+  border: 1px solid var(--cyber-border-active) !important;
+  border-radius: 0px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), 0 0 10px rgba(189, 0, 255, 0.25) !important;
+  color: var(--cyber-text) !important;
+}
+
+menuitem,
+menupopup menu,
+.urlbarView-row {
+  border-radius: 0px !important;
+  transition: background-color 0.1s ease !important;
+}
+
+menuitem:hover,
+menupopup menu:hover,
+.urlbarView-row[selected] {
+  background: linear-gradient(90deg, rgba(162, 0, 255, 0.6) 0%, rgba(0, 240, 255, 0.2) 100%) !important;
+  color: #FFFFFF !important;
+}
+
+.urlbarView-url {
+  color: var(--cyber-cyan) !important;
+}
+
+/* ==========================================================================
+   6. Sidebar (Bookmarks, History, Synced Tabs) - Dolphin Sidebar Look
+   ========================================================================== */
+#sidebar-box {
+  background-color: #110A1C !important;
+  border-right: 1px solid var(--cyber-border) !important;
+}
+
+#sidebar-header {
+  background-color: #160D24 !important;
+  border-bottom: 1px solid var(--cyber-border) !important;
+  font-family: "Exo 2", sans-serif !important;
+  font-weight: 600 !important;
+  color: var(--cyber-cyan) !important;
+}
+
+#sidebar-splitter {
+  width: 2px !important;
+  background-color: var(--cyber-border) !important;
+  border: none !important;
+}
+
+#sidebar-splitter:hover {
+  background-color: var(--cyber-cyan) !important;
+}
+
+/* ==========================================================================
+   7. Findbar (Ctrl+F)
+   ========================================================================== */
+findbar {
+  background-color: var(--cyber-bg-alt) !important;
+  border-top: 1px solid var(--cyber-border-active) !important;
+  color: var(--cyber-text) !important;
+  border-radius: 0px !important;
+}
+
+findbar .findbar-textbox {
+  background-color: var(--cyber-bg) !important;
+  color: var(--cyber-text) !important;
+  border: 1px solid var(--cyber-border) !important;
+  border-radius: 0px !important;
+}
+
+findbar .findbar-textbox:focus {
+  border-color: var(--cyber-cyan) !important;
+}
+
+/* ==========================================================================
+   8. Scrollbars (Rigid, Thin Cybercore Aero)
+   ========================================================================== */
+:root {
+  scrollbar-color: #381E57 #0E0918 !important;
+  scrollbar-width: thin !important;
+}

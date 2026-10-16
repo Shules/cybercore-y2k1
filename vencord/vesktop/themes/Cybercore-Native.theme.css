@@ -1,0 +1,309 @@
+/**
+ * @name Cybercore-Native
+ * @version 1.0.0
+ * @description Native Cybercore Y2K1 Aero theme for Vesktop / Discord. Matches KDE Dolphin & Klassy system aesthetic.
+ * @author Cybercore Y2K1
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Core Cybercore Native Palette */
+  --cyber-bg: #0E0918;
+  --cyber-bg-alt: #140C21;
+  --cyber-bg-panel: #1A102B;
+  --cyber-border: rgba(189, 0, 255, 0.35);
+  --cyber-border-active: #BD00FF;
+  --cyber-cyan: #00F0FF;
+  --cyber-cyan-dim: rgba(0, 240, 255, 0.2);
+  --cyber-text: #E2E8F0;
+  --cyber-text-dim: #8D7CA6;
+  --cyber-accent: #A200FF;
+
+  /* Typography */
+  --font-primary: 'Exo 2', sans-serif !important;
+  --font-display: 'Exo 2', sans-serif !important;
+  --font-code: 'Share Tech Mono', monospace !important;
+
+  /* Discord Theme Variables Overrides */
+  --background-primary: var(--cyber-bg) !important;
+  --background-secondary: var(--cyber-bg-alt) !important;
+  --background-secondary-alt: #110A1C !important;
+  --background-tertiary: #0A0612 !important;
+  --background-accent: var(--cyber-accent) !important;
+  --background-floating: #160E24 !important;
+  
+  --channeltextarea-background: var(--cyber-bg-alt) !important;
+  
+  --text-normal: var(--cyber-text) !important;
+  --text-muted: var(--cyber-text-dim) !important;
+  --header-primary: #FFFFFF !important;
+  --header-secondary: var(--cyber-text) !important;
+  --interactive-normal: var(--cyber-text-dim) !important;
+  --interactive-hover: var(--cyber-cyan) !important;
+  --interactive-active: #FFFFFF !important;
+  --interactive-muted: #56486D !important;
+  
+  /* Status Colors */
+  --status-positive: #00F5D4 !important;
+  --status-warning: #FFBE0B !important;
+  --status-danger: #FF007F !important;
+  --brand-experiment: var(--cyber-accent) !important;
+  --brand-experiment-500: var(--cyber-accent) !important;
+}
+
+/* ==========================================================================
+   1. Window & Hard Edge Structure (Kill Modern Rounded Bubbles)
+   ========================================================================== */
+*, *::before, *::after {
+  border-radius: 0px !important;
+  font-family: var(--font-primary) !important;
+}
+
+/* ==========================================================================
+   2. Titlebar & Window Headers
+   ========================================================================== */
+/* Titlebar / Electron Header */
+[class*="typeWindows_"],
+[class*="wordmarkWindows_"],
+[class*="titleBar_"] {
+  background: linear-gradient(180deg, #180F29 0%, #0E0918 100%) !important;
+  border-bottom: 1px solid var(--cyber-border) !important;
+  height: 28px !important;
+}
+
+/* ==========================================================================
+   3. Server List & Channel Sidebar (Matches Dolphin "Lugares" Panel)
+   ========================================================================== */
+/* Guilds / Server Sidebar */
+nav[class*="guilds_"] {
+  background-color: #0A0612 !important;
+  border-right: 1px solid var(--cyber-border) !important;
+}
+
+/* Server Icons */
+[class*="guilds_"] [class*="wrapper_"] {
+  border-radius: 0px !important;
+}
+
+[class*="guilds_"] foreignObject {
+  mask: none !important;
+  border-radius: 0px !important;
+}
+
+[class*="guilds_"] [class*="childWrapper_"] {
+  border-radius: 0px !important;
+  background-color: var(--cyber-bg-alt) !important;
+  color: var(--cyber-text) !important;
+  border: 1px solid var(--cyber-border) !important;
+  transition: all 0.12s ease !important;
+}
+
+[class*="guilds_"] [class*="childWrapper_"]:hover,
+[class*="guilds_"] [class*="selected_"] [class*="childWrapper_"] {
+  border-color: var(--cyber-cyan) !important;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.4) !important;
+  color: var(--cyber-cyan) !important;
+}
+
+/* Server Pill (Unread/Selected Indicator) */
+[class*="item_"][style*="height"] {
+  background-color: var(--cyber-cyan) !important;
+  border-radius: 0px !important;
+  width: 3px !important;
+}
+
+/* Channel Sidebar */
+div[class*="sidebar_"] {
+  background-color: #110A1C !important;
+  border-right: 1px solid var(--cyber-border) !important;
+}
+
+/* Channel Categories */
+[class*="wrapper_"][class*="container_"] h3 {
+  color: var(--cyber-cyan) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+}
+
+/* Channel Item */
+[class*="channel_"] [class*="content_"] {
+  border-radius: 0px !important;
+  border-left: 2px solid transparent !important;
+  transition: all 0.12s ease !important;
+}
+
+[class*="channel_"]:hover [class*="content_"] {
+  background-color: rgba(0, 240, 255, 0.08) !important;
+  border-left-color: var(--cyber-cyan) !important;
+}
+
+[class*="channel_"][class*="modeSelected_"] [class*="content_"],
+[class*="channel_"][class*="selected_"] [class*="content_"] {
+  background: linear-gradient(90deg, rgba(162, 0, 255, 0.3) 0%, rgba(14, 9, 24, 0.6) 100%) !important;
+  border-left-color: var(--cyber-cyan) !important;
+}
+
+[class*="channel_"][class*="modeSelected_"] [class*="name_"],
+[class*="channel_"][class*="selected_"] [class*="name_"] {
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   4. Chat Area & Message Stream
+   ========================================================================== */
+[class*="chat_"] {
+  background-color: var(--cyber-bg) !important;
+}
+
+[class*="chatContent_"] {
+  background-color: var(--cyber-bg) !important;
+}
+
+/* Messages */
+[class*="message_"] {
+  transition: background-color 0.1s ease !important;
+}
+
+[class*="message_"]:hover {
+  background-color: rgba(189, 0, 255, 0.05) !important;
+}
+
+/* Mentioned Message (@user / @role) */
+[class*="mentioned_"] {
+  background: rgba(162, 0, 255, 0.15) !important;
+  border-left: 3px solid var(--cyber-cyan) !important;
+}
+
+[class*="mentioned_"]::before {
+  display: none !important;
+}
+
+/* Mention Pill Inline */
+[class*="mention"] {
+  background-color: rgba(0, 240, 255, 0.15) !important;
+  color: var(--cyber-cyan) !important;
+  border: 1px solid var(--cyber-cyan) !important;
+  padding: 1px 4px !important;
+  font-weight: 600 !important;
+}
+
+[class*="mention"]:hover {
+  background-color: var(--cyber-cyan) !important;
+  color: var(--cyber-bg) !important;
+}
+
+/* Chat Input Bar (Omnibox style) */
+[class*="channelBottom_"] [class*="channelTextArea_"] {
+  background-color: var(--cyber-bg-alt) !important;
+  border: 1px solid var(--cyber-border) !important;
+  border-radius: 0px !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+[class*="channelBottom_"] [class*="channelTextArea_"]:focus-within {
+  border-color: var(--cyber-cyan) !important;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.35) !important;
+}
+
+[class*="channelBottom_"] [class*="scrollableContainer_"] {
+  background-color: transparent !important;
+}
+
+/* ==========================================================================
+   5. Member List (Right Sidebar)
+   ========================================================================== */
+[class*="membersWrap_"],
+[class*="members_"] {
+  background-color: #110A1C !important;
+  border-left: 1px solid var(--cyber-border) !important;
+}
+
+[class*="membersGroup_"] {
+  color: var(--cyber-cyan) !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.05em !important;
+}
+
+[class*="member_"] [class*="layout_"] {
+  border-radius: 0px !important;
+  border-left: 2px solid transparent !important;
+  transition: all 0.1s ease !important;
+}
+
+[class*="member_"]:hover [class*="layout_"] {
+  background-color: rgba(0, 240, 255, 0.08) !important;
+  border-left-color: var(--cyber-cyan) !important;
+}
+
+/* Avatars */
+[class*="avatar_"],
+[class*="avatar_"] svg foreignObject {
+  mask: none !important;
+  border-radius: 0px !important;
+}
+
+/* ==========================================================================
+   6. Modals, Context Menus & Popouts
+   ========================================================================== */
+[class*="menu_"],
+[class*="modal_"],
+[class*="root_"][class*="small_"],
+[class*="popout_"] {
+  background-color: #120A1F !important;
+  border: 1px solid var(--cyber-border-active) !important;
+  border-radius: 0px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 10px rgba(189, 0, 255, 0.3) !important;
+}
+
+[class*="item_"][role="menuitem"] {
+  border-radius: 0px !important;
+  transition: background-color 0.1s ease !important;
+}
+
+[class*="item_"][role="menuitem"]:hover,
+[class*="item_"][class*="focused_"] {
+  background: linear-gradient(90deg, rgba(162, 0, 255, 0.6) 0%, rgba(0, 240, 255, 0.2) 100%) !important;
+  color: #FFFFFF !important;
+}
+
+/* Buttons */
+button[class*="button_"] {
+  border-radius: 0px !important;
+  transition: all 0.15s ease !important;
+}
+
+button[class*="lookFilled_"][class*="colorBrand_"] {
+  background-color: var(--cyber-accent) !important;
+  border: 1px solid var(--cyber-border-active) !important;
+}
+
+button[class*="lookFilled_"][class*="colorBrand_"]:hover {
+  background-color: #BF00FF !important;
+  box-shadow: 0 0 8px rgba(189, 0, 255, 0.5) !important;
+}
+
+/* ==========================================================================
+   7. Scrollbars
+   ========================================================================== */
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cyber-bg) !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #381E57 !important;
+  border-radius: 0px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyber-cyan) !important;
+}

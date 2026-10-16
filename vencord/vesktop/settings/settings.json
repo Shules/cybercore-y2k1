@@ -5,14 +5,14 @@
     "themeLinks": [],
     "eagerPatches": false,
     "enabledThemes": [
-        "Aesthetic shit.css"
+        "Cybercore-Native.theme.css"
     ],
     "enableReactDevtools": true,
     "frameless": false,
     "transparent": false,
     "winCtrlQ": false,
     "disableMinSize": false,
-    "winNativeTitleBar": false,
+    "winNativeTitleBar": true,
     "plugins": {
         "ChatInputButtonAPI": {
             "enabled": false

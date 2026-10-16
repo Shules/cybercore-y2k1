@@ -50,9 +50,9 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 *Nota: Prohibido inyectar opacidades fuertes (ej: 85%) globales porque vuelve inusable la UI.*
 
 **Microinteracciones**
-- [ ] Burn My Windows con efecto Glitch únicamente.
-- [ ] Duración objetivo: 150 ms.
-- [ ] Aplicarlo a abrir, cerrar y minimizar.
+- [x] Burn My Windows con efecto Glitch únicamente.
+- [x] Duración objetivo: 150 ms.
+- [x] Aplicarlo a abrir, cerrar y minimizar.
 - [x] Menús contextuales con cristal oscuro, blur moderado, esquinas rectas, borde violeta de 1.5 px y selección en cian sólido.
 - [x] Scrollbars como línea fina rígida, violeta/carbón en estado normal y cian en hover.
 - [x] Caja de selección con relleno violeta translúcido y borde cian de 1 px.
@@ -185,20 +185,20 @@ La idea es seguirlo en este orden para no terminar rehaciendo configuraciones po
 
 ## Fase 10 — Firefox
 - [x] Migrar/importar lo necesario desde Edge.
-- [ ] Aplicar userChrome.css.
-- [ ] Forzar esquinas rectas.
-- [ ] Integrar violeta/cian.
-- [ ] Reducir elementos modernos que choquen con el rice.
-- [ ] Adaptar visualmente la UI al estilo Cybercore.
-- [ ] Integrarlo con Klassy/KWin.
+- [x] Aplicar userChrome.css.
+- [x] Forzar esquinas rectas.
+- [x] Integrar violeta/cian.
+- [x] Reducir elementos modernos que choquen con el rice.
+- [x] Adaptar visualmente la UI al estilo Cybercore.
+- [x] Integrarlo con Klassy/KWin.
 
 ## Fase 11 — Discord / Vencord
-- [ ] CSS custom.
-- [ ] Base violeta carbón.
-- [ ] Transparencia donde corresponda.
-- [ ] Integración con KWin.
-- [ ] Bordes estilizados.
-- [ ] Menciones y estados resaltados en cian.
+- [x] CSS custom.
+- [x] Base violeta carbón.
+- [x] Transparencia donde corresponda.
+- [x] Integración con KWin.
+- [x] Bordes estilizados.
+- [x] Menciones y estados resaltados en cian.
 
 ## Fase 12 — Reproductor de audio propio
 - [ ] Aplicación separada.
