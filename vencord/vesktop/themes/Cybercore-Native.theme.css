@@ -77,3 +77,89 @@
   border-color: #00F0FF !important;
   box-shadow: 0 0 10px rgba(0, 240, 255, 0.5) !important;
 }
+
+
+/* ==========================================================================
+   Clean & Simple Styling for Settings Modal and Profile Popouts
+   ========================================================================== */
+/* User Settings Modal (Ventana de Configuración) */
+.standardSidebarView__1129a,
+.sidebarRegion__23e45,
+.sidebarRegionScroller__1fa7e,
+.contentRegion__0828a,
+.contentRegionScroller__86c61 {
+  background: #100A1A !important;
+}
+
+/* Sidebar navigation in Settings */
+.sidebarRegion__23e45 {
+  border-right: 1px solid rgba(189, 0, 255, 0.25) !important;
+}
+
+.sidebar__9e3e2 .item__48dda {
+  border-radius: 4px !important;
+  color: #9D8CB6 !important;
+  transition: all 0.12s ease !important;
+}
+
+.sidebar__9e3e2 .item__48dda:hover {
+  background: rgba(0, 240, 255, 0.1) !important;
+  color: #00F0FF !important;
+}
+
+.sidebar__9e3e2 .selected_a523ff.item__48dda {
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.3) 0%, rgba(20, 12, 33, 0.6) 100%) !important;
+  color: #FFFFFF !important;
+  border-left: 2px solid #00F0FF !important;
+}
+
+/* Settings Cards & Form Elements */
+.card__842f9,
+.accountProfileCard__22589,
+.background_b61f68,
+.fieldList_aab0de {
+  background: #160E24 !important;
+  border: 1px solid rgba(189, 0, 255, 0.25) !important;
+  border-radius: 4px !important;
+}
+
+/* Close Button in Settings */
+.closeButton__34340 {
+  border: 1px solid rgba(189, 0, 255, 0.3) !important;
+  border-radius: 4px !important;
+  transition: all 0.12s ease !important;
+}
+
+.closeButton__34340:hover {
+  background: rgba(255, 0, 127, 0.2) !important;
+  border-color: #FF007F !important;
+}
+
+/* User Profile Modal & Popout Card (Tarjeta de Perfil) */
+.userProfileModalOuter__3fe6b,
+.userProfileModalInner__7c87d,
+.userPopoutOuter_d739f2,
+.userPopoutInner_f5445c {
+  background: #120A1F !important;
+  border: 1px solid #BD00FF !important;
+  border-radius: 6px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 12px rgba(189, 0, 255, 0.35) !important;
+}
+
+.overlayBackground__86b9c {
+  background: #160E26 !important;
+  border: 1px solid rgba(189, 0, 255, 0.2) !important;
+  border-radius: 4px !important;
+}
+
+/* Clean Simple Action Buttons inside modals */
+.button__57d93 {
+  border-radius: 4px !important;
+  border: 1px solid rgba(189, 0, 255, 0.3) !important;
+  transition: all 0.12s ease !important;
+}
+
+.button__57d93:hover {
+  border-color: #00F0FF !important;
+  color: #00F0FF !important;
+}
