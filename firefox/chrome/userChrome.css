@@ -1,64 +1,67 @@
 /* ==========================================================================
-   Cybercore Y2K1 - Native Aero Theme for Firefox (userChrome.css)
-   Aesthetic: Subtle Dark Glass Aero, Refined Radii (4px-6px),
-   Electric Cyan (#00F0FF) & Structure Violet (#BD00FF) Accents
+   Cybercore Y2K1 - Tactical HUD Console (Option A) for Firefox
+   Aesthetic: Unified Tactical Header, Share Tech Mono Telemetry,
+   Dark Glass Panels, Electric Cyan Accents & Cybercore Y2K Identity
    ========================================================================== */
 
 :root {
-  /* Core Cybercore Palette */
+  /* Cybercore Palette */
   --cyber-bg: #0E0918;
-  --cyber-bg-trans: rgba(14, 9, 24, 0.75);
-  --cyber-bg-alt: rgba(20, 12, 33, 0.65);
-  --cyber-border: rgba(189, 0, 255, 0.35);
-  --cyber-border-active: #BD00FF;
+  --cyber-bg-trans: rgba(14, 9, 24, 0.70);
+  --cyber-bg-alt: rgba(22, 14, 38, 0.65);
+  
+  --cyber-violet: #BD00FF;
+  --cyber-violet-dim: rgba(189, 0, 255, 0.35);
+  --cyber-violet-glow: rgba(189, 0, 255, 0.5);
+  
   --cyber-cyan: #00F0FF;
   --cyber-cyan-dim: rgba(0, 240, 255, 0.25);
+  --cyber-cyan-glow: rgba(0, 240, 255, 0.6);
+  
   --cyber-text: #E2E8F0;
-  --cyber-text-dim: #8D7CA6;
-  --cyber-accent: #A200FF;
+  --cyber-text-dim: #9D8CB6;
+  --cyber-text-bright: #FFFFFF;
 
-  /* Native Firefox Theme Overrides */
+  /* Typography */
+  --font-hud: "Share Tech Mono", monospace;
+  --font-body: "Exo 2", sans-serif;
+
+  /* Overrides */
   --toolbar-bgcolor: transparent !important;
   --toolbar-color: var(--cyber-text) !important;
-  --toolbarseparator-color: var(--cyber-border) !important;
+  --toolbarseparator-color: var(--cyber-violet-dim) !important;
   --lwt-accent-color: transparent !important;
   --lwt-text-color: var(--cyber-text) !important;
-  --arrowpanel-background: #140C22 !important;
-  --arrowpanel-color: var(--cyber-text) !important;
-  --arrowpanel-border-color: var(--cyber-border-active) !important;
-  --panel-separator-color: var(--cyber-border) !important;
-  --autocomplete-popup-background: #140C22 !important;
   
-  /* Refined Aero Radii (4px to 6px, never ugly 0px rigid boxes on small icons) */
   --tab-border-radius: 4px !important;
-  --arrowpanel-border-radius: 6px !important;
-  --urlbar-border-radius: 6px !important;
+  --urlbar-border-radius: 4px !important;
 }
 
 /* ==========================================================================
-   1. Window & Main Layout (Aero Glass Background)
+   1. Window & Main Layout (Aero Glass Transparency)
    ========================================================================== */
 #main-window,
 #browser {
   background-color: transparent !important;
-  font-family: "Exo 2", sans-serif !important;
+  font-family: var(--font-body) !important;
 }
 
 #appcontent {
-  background-color: var(--cyber-bg) !important;
+  background-color: transparent !important;
 }
 
 /* ==========================================================================
-   2. Titlebar & Tab Bar
+   2. Tactical Unified Top Header (HUD Console)
    ========================================================================== */
 #titlebar {
-  background: linear-gradient(180deg, rgba(24, 15, 41, 0.85) 0%, rgba(14, 9, 24, 0.8) 100%) !important;
-  backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid var(--cyber-border) !important;
+  background: linear-gradient(180deg, rgba(22, 13, 38, 0.85) 0%, rgba(14, 9, 24, 0.75) 100%) !important;
+  backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid var(--cyber-violet-dim) !important;
 }
 
+/* Tabs */
 .tabbrowser-tab {
-  padding-inline: 4px !important;
+  padding-inline: 2px !important;
 }
 
 .tabbrowser-tab .tab-background {
@@ -66,93 +69,87 @@
   border-left: 1px solid rgba(189, 0, 255, 0.15) !important;
   border-right: 1px solid rgba(189, 0, 255, 0.15) !important;
   border-top: 2px solid transparent !important;
-  border-bottom: none !important;
   border-radius: 4px 4px 0 0 !important;
-  box-shadow: none !important;
   transition: all 0.15s ease-in-out !important;
 }
 
 .tabbrowser-tab:hover .tab-background {
-  background-color: rgba(189, 0, 255, 0.15) !important;
+  background-color: rgba(189, 0, 255, 0.18) !important;
   border-top: 2px solid rgba(0, 240, 255, 0.5) !important;
 }
 
 .tabbrowser-tab[selected="true"] .tab-background {
-  background: linear-gradient(180deg, rgba(162, 0, 255, 0.3) 0%, rgba(14, 9, 24, 0.9) 100%) !important;
-  border-left: 1px solid var(--cyber-border-active) !important;
-  border-right: 1px solid var(--cyber-border-active) !important;
+  background: linear-gradient(180deg, rgba(189, 0, 255, 0.35) 0%, rgba(14, 9, 24, 0.85) 100%) !important;
+  border-left: 1px solid var(--cyber-violet) !important;
+  border-right: 1px solid var(--cyber-violet) !important;
   border-top: 2px solid var(--cyber-cyan) !important;
-  box-shadow: inset 0 1px 0 rgba(0, 240, 255, 0.4) !important;
+  box-shadow: 0 0 10px var(--cyber-cyan-dim), inset 0 1px 0 rgba(0, 240, 255, 0.4) !important;
 }
 
 .tabbrowser-tab[selected="true"] .tab-label {
-  color: #FFFFFF !important;
+  color: var(--cyber-text-bright) !important;
   font-weight: 600 !important;
-  text-shadow: 0 0 6px rgba(0, 240, 255, 0.4) !important;
+  text-shadow: 0 0 6px var(--cyber-cyan-glow) !important;
 }
 
 .tabbrowser-tab .tab-label {
   color: var(--cyber-text) !important;
-  font-family: "Exo 2", sans-serif !important;
+  font-family: var(--font-hud) !important;
   font-size: 12px !important;
 }
 
-/* Tab Close Button */
-.tab-close-button {
-  border-radius: 4px !important;
-}
-
 /* ==========================================================================
-   3. Navigation Bar & URL Bar (Omnibox)
+   3. Tactical Navigation Bar & Command URL Bar
    ========================================================================== */
 #nav-bar {
-  background: rgba(14, 9, 24, 0.78) !important;
-  backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid var(--cyber-border) !important;
-  padding: 4px 6px !important;
+  background: rgba(14, 9, 24, 0.70) !important;
+  backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid var(--cyber-violet-dim) !important;
+  padding: 3px 6px !important;
 }
 
-/* URL Bar container with sleek 6px border-radius */
+/* URL Bar - Tactical Terminal Look */
 #urlbar-background {
   background: rgba(22, 14, 38, 0.75) !important;
-  border: 1px solid var(--cyber-border) !important;
-  border-radius: 6px !important;
+  border: 1px solid var(--cyber-violet-dim) !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6) !important;
   transition: all 0.15s ease !important;
 }
 
 #urlbar[focused="true"] #urlbar-background {
   border-color: var(--cyber-cyan) !important;
-  box-shadow: 0 0 8px rgba(0, 240, 255, 0.35) !important;
+  box-shadow: 0 0 12px var(--cyber-cyan-glow), inset 0 1px 3px rgba(0, 0, 0, 0.6) !important;
 }
 
 #urlbar-input,
 .urlbar-input-box {
-  color: var(--cyber-text) !important;
-  font-family: "Exo 2", monospace !important;
+  color: var(--cyber-cyan) !important;
+  font-family: var(--font-hud) !important;
   font-size: 13px !important;
+  letter-spacing: 0.04em !important;
 }
 
-/* Identity box & Search engine logo (preserve nice subtle 4px radius) */
-#identity-box,
-#identity-permission-box,
-#tracking-protection-icon-container {
-  border-radius: 4px !important;
-  border-right: 1px solid rgba(189, 0, 255, 0.2) !important;
-  margin-inline-end: 4px !important;
+/* Identity & Protocol Box */
+#identity-box {
+  border-radius: 3px !important;
+  border-right: 1px solid var(--cyber-violet-dim) !important;
+  margin-inline-end: 6px !important;
 }
 
 #identity-box:hover {
-  background: rgba(189, 0, 255, 0.15) !important;
+  background: rgba(0, 240, 255, 0.15) !important;
 }
 
-/* Toolbar Buttons (Back, Forward, Extensions) */
+/* Navigation Buttons with 3D Aero depth */
 #nav-bar toolbarbutton {
   border-radius: 4px !important;
-  transition: background-color 0.12s ease !important;
+  transition: all 0.12s ease !important;
 }
 
 #nav-bar toolbarbutton:hover:not([disabled="true"]) {
-  background: rgba(0, 240, 255, 0.12) !important;
+  background: rgba(0, 240, 255, 0.15) !important;
+  box-shadow: 0 0 8px var(--cyber-cyan-dim) !important;
   fill: var(--cyber-cyan) !important;
 }
 
@@ -160,24 +157,44 @@
    4. Bookmarks Bar
    ========================================================================== */
 #PersonalToolbar {
-  background: rgba(17, 10, 28, 0.8) !important;
-  backdrop-filter: blur(10px) !important;
+  background: rgba(17, 10, 28, 0.70) !important;
+  backdrop-filter: blur(12px) !important;
   color: var(--cyber-text) !important;
-  border-bottom: 1px solid var(--cyber-border) !important;
+  border-bottom: 1px solid var(--cyber-violet-dim) !important;
   padding: 2px 4px !important;
 }
 
 #PersonalToolbar toolbarbutton {
-  border-radius: 4px !important;
+  border-radius: 3px !important;
+  font-family: var(--font-hud) !important;
+  font-size: 11px !important;
 }
 
 #PersonalToolbar toolbarbutton:hover {
-  background: rgba(0, 240, 255, 0.12) !important;
+  background: rgba(0, 240, 255, 0.15) !important;
   color: var(--cyber-cyan) !important;
 }
 
 /* ==========================================================================
-   5. Menus & Popups
+   5. Tactical Sidebar (Vertical Tabs / Docking Bay)
+   ========================================================================== */
+#sidebar-box {
+  background: rgba(17, 10, 28, 0.75) !important;
+  backdrop-filter: blur(14px) !important;
+  border-right: 1px solid var(--cyber-violet-dim) !important;
+}
+
+#sidebar-header {
+  background: rgba(22, 13, 38, 0.85) !important;
+  border-bottom: 1px solid var(--cyber-violet-dim) !important;
+  color: var(--cyber-cyan) !important;
+  font-family: var(--font-hud) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* ==========================================================================
+   6. Menus & Autocomplete Popups
    ========================================================================== */
 menupopup,
 panelmultiview,
@@ -185,40 +202,24 @@ panelmultiview,
 #urlbar-results,
 .autocomplete-richlistbox {
   background: #140C22 !important;
-  border: 1px solid var(--cyber-border-active) !important;
-  border-radius: 6px !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), 0 0 10px rgba(189, 0, 255, 0.25) !important;
+  border: 1px solid var(--cyber-violet) !important;
+  border-radius: 4px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 12px var(--cyber-violet-glow) !important;
   color: var(--cyber-text) !important;
 }
 
 menuitem,
 menupopup menu,
 .urlbarView-row {
-  border-radius: 4px !important;
+  border-radius: 3px !important;
   transition: background-color 0.1s ease !important;
 }
 
 menuitem:hover,
 menupopup menu:hover,
 .urlbarView-row[selected] {
-  background: linear-gradient(90deg, rgba(162, 0, 255, 0.5) 0%, rgba(0, 240, 255, 0.2) 100%) !important;
-  color: #FFFFFF !important;
-}
-
-/* ==========================================================================
-   6. Sidebar (Bookmarks, History, Synced Tabs)
-   ========================================================================== */
-#sidebar-box {
-  background: rgba(17, 10, 28, 0.85) !important;
-  backdrop-filter: blur(12px) !important;
-  border-right: 1px solid var(--cyber-border) !important;
-}
-
-#sidebar-header {
-  background: rgba(22, 13, 36, 0.9) !important;
-  border-bottom: 1px solid var(--cyber-border) !important;
-  color: var(--cyber-cyan) !important;
-  font-weight: 600 !important;
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.45) 0%, rgba(0, 240, 255, 0.25) 100%) !important;
+  color: var(--cyber-text-bright) !important;
 }
 
 /* ==========================================================================

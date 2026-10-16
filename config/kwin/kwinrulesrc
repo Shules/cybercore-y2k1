@@ -54,17 +54,7 @@ wmclassmatch = 1
 
 [General]
 count = 5
-rules = 1,2,3,4,5
-
-[4]
-description = Cybercore Aero Blur en Firefox
-wmclass = firefox
-wmclasscomplete = false
-wmclassmatch = 1
-opacityactive = 98
-opacityactiverule = 2
-opacityinactive = 96
-opacityinactiverule = 2
+rules = 1,2,3,5,4
 
 [5]
 description = Cybercore Aero Blur en Vesktop
@@ -74,5 +64,15 @@ wmclassmatch = 1
 opacityactive = 96
 opacityactiverule = 2
 opacityinactive = 93
+opacityinactiverule = 2
+
+[4]
+description = Transparencia Leve Cybercore en Firefox
+wmclass = firefox
+wmclasscomplete = false
+wmclassmatch = 1
+opacityactive = 94
+opacityactiverule = 2
+opacityinactive = 90
 opacityinactiverule = 2
 
