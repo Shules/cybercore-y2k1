@@ -11,8 +11,83 @@ echo "Installing Cybercore Y2K1 Environment"
 echo "Working Directory: $BASEDIR"
 echo "======================================"
 
-# 0. Base Dependencies (Plasmoids, Icons, Apps)
-echo "[0] Installing Plasmoids, Icons and Custom App Entries..."
+# Check for dependency installation skip flag
+SKIP_DEPS="${CYBERCORE_SKIP_DEPS:-0}"
+
+# 0. System & AUR Package Dependencies
+if [ "$SKIP_DEPS" = "1" ] || [ "${1:-}" = "--no-deps" ]; then
+    echo "[0] Skipping package dependency installation (CYBERCORE_SKIP_DEPS=1 or --no-deps passed)."
+else
+    echo "[0] Checking package dependencies..."
+
+    PACMAN_DEPS=(
+        conky
+        fastfetch
+        yakuake
+        kvantum
+        ffmpeg
+        libcanberra
+        pipewire
+        pipewire-audio
+        wireplumber
+    )
+
+    AUR_DEPS=(
+        glava
+        klassy
+        phinger-cursors
+    )
+
+    MISSING_PACMAN=()
+    for pkg in "${PACMAN_DEPS[@]}"; do
+        if ! pacman -Qi "$pkg" >/dev/null 2>&1; then
+            MISSING_PACMAN+=("$pkg")
+        fi
+    done
+
+    MISSING_AUR=()
+    for pkg in "${AUR_DEPS[@]}"; do
+        if ! pacman -Qi "$pkg" >/dev/null 2>&1; then
+            MISSING_AUR+=("$pkg")
+        fi
+    done
+
+    # Helper detection: yay or paru
+    AUR_HELPER=""
+    if command -v yay >/dev/null 2>&1; then
+        AUR_HELPER="yay"
+    elif command -v paru >/dev/null 2>&1; then
+        AUR_HELPER="paru"
+    fi
+
+    if [ ${#MISSING_PACMAN[@]} -gt 0 ]; then
+        echo "Installing missing official packages: ${MISSING_PACMAN[*]}"
+        if [ -n "$AUR_HELPER" ]; then
+            "$AUR_HELPER" -S --needed --noconfirm "${MISSING_PACMAN[@]}"
+        elif command -v sudo >/dev/null 2>&1; then
+            sudo pacman -S --needed --noconfirm "${MISSING_PACMAN[@]}"
+        else
+            pacman -S --needed --noconfirm "${MISSING_PACMAN[@]}"
+        fi
+    fi
+
+    if [ ${#MISSING_AUR[@]} -gt 0 ]; then
+        echo "Installing missing AUR packages: ${MISSING_AUR[*]}"
+        if [ -n "$AUR_HELPER" ]; then
+            "$AUR_HELPER" -S --needed --noconfirm "${MISSING_AUR[@]}"
+        else
+            echo "WARNING: Missing AUR packages (${MISSING_AUR[*]}), but neither yay nor paru was found in PATH." >&2
+            echo "Please install an AUR helper (yay or paru) or install these packages manually." >&2
+        fi
+    fi
+
+    if [ ${#MISSING_PACMAN[@]} -eq 0 ] && [ ${#MISSING_AUR[@]} -eq 0 ]; then
+        echo "All system and AUR dependencies are already satisfied."
+    fi
+fi
+
+# 0.1 Base Assets (Plasmoids, Icons, Apps)
+echo "[0.1] Installing Plasmoids, Icons and Custom App Entries..."
 mkdir -p ~/.local/share/plasma/plasmoids
 cp -r "$BASEDIR"/plasmoids/* ~/.local/share/plasma/plasmoids/
 
