@@ -1,309 +1,364 @@
 /**
- * @name Cybercore-Native
- * @version 1.0.0
- * @description Native Cybercore Y2K1 Aero theme for Vesktop / Discord. Matches KDE Dolphin & Klassy system aesthetic.
+ * @name Cybercore Aero Y2K1
  * @author Cybercore Y2K1
+ * @version 2.0.0
+ * @description Authentic Cybercore Aero theme for Vesktop / Discord. Features dark glass, subtle backdrop blur, neon violet borders, electric cyan telemetry accents and refined Y2K aesthetic.
+ * @source https://github.com/Shules/cybercore-y2k1
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
 
 :root {
-  /* Core Cybercore Native Palette */
+  /* ========================================================================
+     CYBERCORE PALETTE
+     ======================================================================== */
   --cyber-bg: #0E0918;
-  --cyber-bg-alt: #140C21;
-  --cyber-bg-panel: #1A102B;
-  --cyber-border: rgba(189, 0, 255, 0.35);
-  --cyber-border-active: #BD00FF;
+  --cyber-bg-trans: rgba(14, 9, 24, 0.72);
+  --cyber-sidebar-trans: rgba(17, 10, 28, 0.78);
+  --cyber-card: rgba(22, 14, 38, 0.65);
+  
+  --cyber-violet: #BD00FF;
+  --cyber-violet-dim: rgba(189, 0, 255, 0.28);
+  --cyber-violet-glow: rgba(189, 0, 255, 0.45);
+  
   --cyber-cyan: #00F0FF;
   --cyber-cyan-dim: rgba(0, 240, 255, 0.2);
+  --cyber-cyan-glow: rgba(0, 240, 255, 0.5);
+  
   --cyber-text: #E2E8F0;
   --cyber-text-dim: #8D7CA6;
-  --cyber-accent: #A200FF;
+  --cyber-text-bright: #FFFFFF;
 
   /* Typography */
   --font-primary: 'Exo 2', sans-serif !important;
   --font-display: 'Exo 2', sans-serif !important;
   --font-code: 'Share Tech Mono', monospace !important;
 
-  /* Discord Theme Variables Overrides */
-  --background-primary: var(--cyber-bg) !important;
-  --background-secondary: var(--cyber-bg-alt) !important;
-  --background-secondary-alt: #110A1C !important;
-  --background-tertiary: #0A0612 !important;
-  --background-accent: var(--cyber-accent) !important;
-  --background-floating: #160E24 !important;
-  
-  --channeltextarea-background: var(--cyber-bg-alt) !important;
+  /* Discord Core Overrides */
+  --background-primary: transparent !important;
+  --background-secondary: transparent !important;
+  --background-secondary-alt: transparent !important;
+  --background-tertiary: transparent !important;
+  --background-floating: #160E26 !important;
+  --channeltextarea-background: rgba(26, 16, 43, 0.65) !important;
   
   --text-normal: var(--cyber-text) !important;
   --text-muted: var(--cyber-text-dim) !important;
-  --header-primary: #FFFFFF !important;
+  --header-primary: var(--cyber-text-bright) !important;
   --header-secondary: var(--cyber-text) !important;
+  
   --interactive-normal: var(--cyber-text-dim) !important;
   --interactive-hover: var(--cyber-cyan) !important;
-  --interactive-active: #FFFFFF !important;
-  --interactive-muted: #56486D !important;
-  
-  /* Status Colors */
-  --status-positive: #00F5D4 !important;
-  --status-warning: #FFBE0B !important;
-  --status-danger: #FF007F !important;
-  --brand-experiment: var(--cyber-accent) !important;
-  --brand-experiment-500: var(--cyber-accent) !important;
+  --interactive-active: var(--cyber-text-bright) !important;
+  --interactive-muted: #4F3F66 !important;
+
+  /* Glass Roundness (Refined 4px-8px, never ugly rigid boxes) */
+  --radius-avatar: 6px;
+  --radius-card: 4px;
+  --radius-button: 4px;
 }
 
 /* ==========================================================================
-   1. Window & Hard Edge Structure (Kill Modern Rounded Bubbles)
+   1. Window Background & Aero Blur Engine
    ========================================================================== */
-*, *::before, *::after {
-  border-radius: 0px !important;
-  font-family: var(--font-primary) !important;
+#app-mount {
+  background: var(--cyber-bg) url('/home/julian/cybercore-y2k1/wallpapers/y2k-cyber-girl.jpg') center/cover no-repeat fixed !important;
+}
+
+/* Deep Dark Glass Tint Overlay across app */
+#app-mount::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(14, 9, 24, 0.88) 0%, rgba(20, 10, 32, 0.85) 100%) !important;
+  backdrop-filter: blur(16px) saturate(120%) !important;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[class*="app_"],
+[class*="layers_"],
+[class*="layer_"],
+[class*="container_"][class*="fixClipping_"] {
+  background: transparent !important;
+  z-index: 1;
 }
 
 /* ==========================================================================
-   2. Titlebar & Window Headers
+   2. Titlebar & Klassy Aero Integration
    ========================================================================== */
-/* Titlebar / Electron Header */
 [class*="typeWindows_"],
-[class*="wordmarkWindows_"],
 [class*="titleBar_"] {
-  background: linear-gradient(180deg, #180F29 0%, #0E0918 100%) !important;
-  border-bottom: 1px solid var(--cyber-border) !important;
+  background: rgba(20, 12, 33, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid var(--cyber-violet-dim) !important;
   height: 28px !important;
 }
 
 /* ==========================================================================
-   3. Server List & Channel Sidebar (Matches Dolphin "Lugares" Panel)
+   3. Server Rail (Guilds Sidebar)
    ========================================================================== */
-/* Guilds / Server Sidebar */
 nav[class*="guilds_"] {
-  background-color: #0A0612 !important;
-  border-right: 1px solid var(--cyber-border) !important;
+  background: rgba(10, 6, 18, 0.75) !important;
+  backdrop-filter: blur(20px) !important;
+  border-right: 1px solid var(--cyber-violet-dim) !important;
+  margin: 0 !important;
 }
 
-/* Server Icons */
-[class*="guilds_"] [class*="wrapper_"] {
-  border-radius: 0px !important;
-}
-
+/* Server Icons with smooth 6px corners */
 [class*="guilds_"] foreignObject {
   mask: none !important;
-  border-radius: 0px !important;
+  border-radius: var(--radius-avatar) !important;
+}
+
+[class*="guilds_"] [class*="wrapper_"] {
+  border-radius: var(--radius-avatar) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+[class*="guilds_"] [class*="wrapper_"]:hover {
+  transform: scale(1.06);
 }
 
 [class*="guilds_"] [class*="childWrapper_"] {
-  border-radius: 0px !important;
-  background-color: var(--cyber-bg-alt) !important;
+  background: rgba(30, 18, 50, 0.7) !important;
+  border: 1px solid var(--cyber-violet-dim) !important;
+  border-radius: var(--radius-avatar) !important;
   color: var(--cyber-text) !important;
-  border: 1px solid var(--cyber-border) !important;
-  transition: all 0.12s ease !important;
+  transition: all 0.15s ease !important;
 }
 
 [class*="guilds_"] [class*="childWrapper_"]:hover,
 [class*="guilds_"] [class*="selected_"] [class*="childWrapper_"] {
   border-color: var(--cyber-cyan) !important;
-  box-shadow: 0 0 8px rgba(0, 240, 255, 0.4) !important;
+  box-shadow: 0 0 10px var(--cyber-cyan-glow) !important;
   color: var(--cyber-cyan) !important;
 }
 
-/* Server Pill (Unread/Selected Indicator) */
+/* Active Server Pill */
 [class*="item_"][style*="height"] {
-  background-color: var(--cyber-cyan) !important;
-  border-radius: 0px !important;
+  background: var(--cyber-cyan) !important;
+  border-radius: 2px !important;
   width: 3px !important;
+  box-shadow: 0 0 8px var(--cyber-cyan) !important;
 }
 
-/* Channel Sidebar */
+/* ==========================================================================
+   4. Channels Sidebar (Aero Glass Panel)
+   ========================================================================== */
 div[class*="sidebar_"] {
-  background-color: #110A1C !important;
-  border-right: 1px solid var(--cyber-border) !important;
+  background: var(--cyber-sidebar-trans) !important;
+  backdrop-filter: blur(14px) !important;
+  border-right: 1px solid var(--cyber-violet-dim) !important;
 }
 
-/* Channel Categories */
+/* Category Headers */
 [class*="wrapper_"][class*="container_"] h3 {
   color: var(--cyber-cyan) !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.05em !important;
-  text-transform: uppercase !important;
+  font-family: 'Share Tech Mono', monospace !important;
   font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
 }
 
-/* Channel Item */
+/* Channels */
 [class*="channel_"] [class*="content_"] {
-  border-radius: 0px !important;
+  border-radius: var(--radius-card) !important;
   border-left: 2px solid transparent !important;
-  transition: all 0.12s ease !important;
+  transition: background-color 0.12s ease, border-left-color 0.12s ease !important;
+  padding-left: 6px !important;
 }
 
 [class*="channel_"]:hover [class*="content_"] {
-  background-color: rgba(0, 240, 255, 0.08) !important;
+  background: rgba(0, 240, 255, 0.08) !important;
   border-left-color: var(--cyber-cyan) !important;
 }
 
 [class*="channel_"][class*="modeSelected_"] [class*="content_"],
 [class*="channel_"][class*="selected_"] [class*="content_"] {
-  background: linear-gradient(90deg, rgba(162, 0, 255, 0.3) 0%, rgba(14, 9, 24, 0.6) 100%) !important;
-  border-left-color: var(--cyber-cyan) !important;
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.25) 0%, rgba(20, 12, 33, 0.4) 100%) !important;
+  border-left: 2px solid var(--cyber-cyan) !important;
+  border-top: 1px solid rgba(189, 0, 255, 0.2) !important;
+  border-bottom: 1px solid rgba(189, 0, 255, 0.2) !important;
 }
 
 [class*="channel_"][class*="modeSelected_"] [class*="name_"],
 [class*="channel_"][class*="selected_"] [class*="name_"] {
-  color: #FFFFFF !important;
+  color: var(--cyber-text-bright) !important;
   font-weight: 600 !important;
+  text-shadow: 0 0 6px var(--cyber-cyan-dim) !important;
+}
+
+/* Bottom User Bar */
+section[class*="panels_"] {
+  background: rgba(14, 9, 24, 0.8) !important;
+  border-top: 1px solid var(--cyber-violet-dim) !important;
 }
 
 /* ==========================================================================
-   4. Chat Area & Message Stream
+   5. Chat Area & Message Feed
    ========================================================================== */
-[class*="chat_"] {
-  background-color: var(--cyber-bg) !important;
-}
-
+[class*="chat_"],
 [class*="chatContent_"] {
-  background-color: var(--cyber-bg) !important;
+  background: var(--cyber-bg-trans) !important;
+  backdrop-filter: blur(12px) !important;
 }
 
 /* Messages */
 [class*="message_"] {
-  transition: background-color 0.1s ease !important;
+  margin-inline: 8px !important;
+  border-radius: var(--radius-card) !important;
+  transition: background-color 0.12s ease !important;
 }
 
 [class*="message_"]:hover {
-  background-color: rgba(189, 0, 255, 0.05) !important;
+  background: rgba(189, 0, 255, 0.06) !important;
 }
 
-/* Mentioned Message (@user / @role) */
+/* Mentions */
 [class*="mentioned_"] {
-  background: rgba(162, 0, 255, 0.15) !important;
+  background: rgba(189, 0, 255, 0.14) !important;
   border-left: 3px solid var(--cyber-cyan) !important;
+  border-radius: var(--radius-card) !important;
 }
 
 [class*="mentioned_"]::before {
   display: none !important;
 }
 
-/* Mention Pill Inline */
 [class*="mention"] {
-  background-color: rgba(0, 240, 255, 0.15) !important;
+  background: rgba(0, 240, 255, 0.15) !important;
   color: var(--cyber-cyan) !important;
-  border: 1px solid var(--cyber-cyan) !important;
-  padding: 1px 4px !important;
+  border: 1px solid rgba(0, 240, 255, 0.4) !important;
+  border-radius: 3px !important;
+  padding: 1px 5px !important;
   font-weight: 600 !important;
+  box-shadow: 0 0 6px var(--cyber-cyan-dim) !important;
 }
 
-[class*="mention"]:hover {
-  background-color: var(--cyber-cyan) !important;
-  color: var(--cyber-bg) !important;
-}
-
-/* Chat Input Bar (Omnibox style) */
+/* Chat Input Bar */
 [class*="channelBottom_"] [class*="channelTextArea_"] {
-  background-color: var(--cyber-bg-alt) !important;
-  border: 1px solid var(--cyber-border) !important;
-  border-radius: 0px !important;
+  background: var(--channeltextarea-background) !important;
+  border: 1px solid var(--cyber-violet-dim) !important;
+  border-radius: var(--radius-card) !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5) !important;
   transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
 }
 
 [class*="channelBottom_"] [class*="channelTextArea_"]:focus-within {
   border-color: var(--cyber-cyan) !important;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.35) !important;
+  box-shadow: 0 0 10px var(--cyber-cyan-glow), inset 0 1px 3px rgba(0, 0, 0, 0.5) !important;
 }
 
 [class*="channelBottom_"] [class*="scrollableContainer_"] {
-  background-color: transparent !important;
+  background: transparent !important;
 }
 
 /* ==========================================================================
-   5. Member List (Right Sidebar)
+   6. Member List & Friend Cards
    ========================================================================== */
 [class*="membersWrap_"],
 [class*="members_"] {
-  background-color: #110A1C !important;
-  border-left: 1px solid var(--cyber-border) !important;
+  background: var(--cyber-sidebar-trans) !important;
+  backdrop-filter: blur(14px) !important;
+  border-left: 1px solid var(--cyber-violet-dim) !important;
 }
 
 [class*="membersGroup_"] {
   color: var(--cyber-cyan) !important;
-  font-weight: 700 !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-weight: 600 !important;
   font-size: 11px !important;
-  letter-spacing: 0.05em !important;
 }
 
-[class*="member_"] [class*="layout_"] {
-  border-radius: 0px !important;
-  border-left: 2px solid transparent !important;
-  transition: all 0.1s ease !important;
-}
-
-[class*="member_"]:hover [class*="layout_"] {
-  background-color: rgba(0, 240, 255, 0.08) !important;
-  border-left-color: var(--cyber-cyan) !important;
-}
-
-/* Avatars */
+/* User & Friend Avatars (6px rounded corners) */
 [class*="avatar_"],
 [class*="avatar_"] svg foreignObject {
   mask: none !important;
-  border-radius: 0px !important;
+  border-radius: var(--radius-avatar) !important;
+}
+
+[class*="member_"] [class*="layout_"] {
+  border-radius: var(--radius-card) !important;
+  transition: background-color 0.12s ease !important;
+}
+
+[class*="member_"]:hover [class*="layout_"] {
+  background: rgba(0, 240, 255, 0.08) !important;
+}
+
+/* Friend List Items (Amigos / Activo ahora) */
+[class*="peopleListItem_"] {
+  border-radius: var(--radius-card) !important;
+  border-bottom: 1px solid rgba(189, 0, 255, 0.1) !important;
+  transition: background-color 0.12s ease, border-color 0.12s ease !important;
+}
+
+[class*="peopleListItem_"]:hover {
+  background: rgba(189, 0, 255, 0.1) !important;
+  border-bottom-color: var(--cyber-cyan-dim) !important;
 }
 
 /* ==========================================================================
-   6. Modals, Context Menus & Popouts
+   7. Modals, Context Menus & Buttons
    ========================================================================== */
 [class*="menu_"],
 [class*="modal_"],
 [class*="root_"][class*="small_"],
 [class*="popout_"] {
-  background-color: #120A1F !important;
-  border: 1px solid var(--cyber-border-active) !important;
-  border-radius: 0px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 10px rgba(189, 0, 255, 0.3) !important;
+  background: #140C22 !important;
+  border: 1px solid var(--cyber-violet) !important;
+  border-radius: 4px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 12px var(--cyber-violet-glow) !important;
 }
 
 [class*="item_"][role="menuitem"] {
-  border-radius: 0px !important;
-  transition: background-color 0.1s ease !important;
+  border-radius: 3px !important;
+  transition: all 0.1s ease !important;
 }
 
 [class*="item_"][role="menuitem"]:hover,
 [class*="item_"][class*="focused_"] {
-  background: linear-gradient(90deg, rgba(162, 0, 255, 0.6) 0%, rgba(0, 240, 255, 0.2) 100%) !important;
-  color: #FFFFFF !important;
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.45) 0%, rgba(0, 240, 255, 0.25) 100%) !important;
+  color: var(--cyber-text-bright) !important;
 }
 
 /* Buttons */
 button[class*="button_"] {
-  border-radius: 0px !important;
+  border-radius: var(--radius-button) !important;
   transition: all 0.15s ease !important;
 }
 
 button[class*="lookFilled_"][class*="colorBrand_"] {
-  background-color: var(--cyber-accent) !important;
-  border: 1px solid var(--cyber-border-active) !important;
+  background: linear-gradient(135deg, #A200FF 0%, #BD00FF 100%) !important;
+  border: 1px solid var(--cyber-violet) !important;
+  box-shadow: 0 0 8px var(--cyber-violet-dim) !important;
 }
 
 button[class*="lookFilled_"][class*="colorBrand_"]:hover {
-  background-color: #BF00FF !important;
-  box-shadow: 0 0 8px rgba(189, 0, 255, 0.5) !important;
+  background: linear-gradient(135deg, #BD00FF 0%, #00F0FF 100%) !important;
+  box-shadow: 0 0 12px var(--cyber-cyan-glow) !important;
+  color: #0E0918 !important;
 }
 
 /* ==========================================================================
-   7. Scrollbars
+   8. Scrollbars
    ========================================================================== */
 ::-webkit-scrollbar {
-  width: 6px !important;
-  height: 6px !important;
+  width: 5px !important;
+  height: 5px !important;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--cyber-bg) !important;
+  background: transparent !important;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #381E57 !important;
-  border-radius: 0px !important;
+  background: rgba(189, 0, 255, 0.35) !important;
+  border-radius: 3px !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--cyber-cyan) !important;
+  box-shadow: 0 0 6px var(--cyber-cyan) !important;
 }
