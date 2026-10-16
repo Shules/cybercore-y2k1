@@ -1,8 +1,8 @@
 /**
  * @name Cybercore Aero Y2K1
  * @author Cybercore Y2K1
- * @version 8.0.0
- * @description Native Cybercore Y2K1 Aero theme for Vesktop / Discord. Complete visual coverage with custom cyberpunk background, dark glass blur, neon violet and electric cyan styling across chats, channels, settings, and profile popouts.
+ * @version 9.0.0
+ * @description Comprehensive Cybercore Aero theme for Vesktop / Discord with full dark glass styling across chats, channels, complete settings window, and user profile popouts.
  * @source https://github.com/Shules/cybercore-y2k1
  */
 
@@ -11,6 +11,7 @@
 :root {
   --cyber-bg: #0E0918;
   --cyber-bg-alt: #140C22;
+  --cyber-card: #1A102C;
   --cyber-violet: #BD00FF;
   --cyber-violet-dim: rgba(189, 0, 255, 0.35);
   --cyber-cyan: #00F0FF;
@@ -21,13 +22,12 @@
   --font-primary: 'Exo 2', sans-serif !important;
 }
 
-/* 1. Guaranteed Fullscreen Backdrop */
-#app-mount {
+/* ==========================================================================
+   1. FIXED BACKGROUND ENGINE & OPACITY FIX
+   ========================================================================== */
+html, body, #app-mount {
   background: transparent !important;
-}
-
-body {
-  background: transparent !important;
+  font-family: var(--font-primary) !important;
 }
 
 body::before {
@@ -48,7 +48,7 @@ body::after {
   pointer-events: none !important;
 }
 
-/* Clear all opaque wrappers */
+/* Punch out solid wrappers */
 .theme-dark,
 [class*="app_"],
 [class*="layers_"],
@@ -62,7 +62,9 @@ body::after {
   background: transparent !important;
 }
 
-/* 2. Sidebars */
+/* ==========================================================================
+   2. SIDEBARS: GUILDS, CHANNELS, MEMBERS
+   ========================================================================== */
 nav[class*="guilds_"] {
   background: rgba(10, 6, 18, 0.65) !important;
   backdrop-filter: blur(14px) !important;
@@ -90,7 +92,9 @@ div[class*="sidebar_"] {
   border-left: 2px solid var(--cyber-cyan) !important;
 }
 
-/* 3. Chat and Messages */
+/* ==========================================================================
+   3. CHAT AND MESSAGES
+   ========================================================================== */
 [class*="message_"]:hover {
   background: rgba(189, 0, 255, 0.10) !important;
 }
@@ -118,19 +122,31 @@ div[class*="sidebar_"] {
   box-shadow: 0 0 12px var(--cyber-cyan-dim) !important;
 }
 
-/* 4. Complete Settings Window (Dark Violet Solid Glass) */
+/* ==========================================================================
+   4. SETTINGS MODAL: FULL OPAQUE COHESIVE CYBERCORE STYLING
+   ========================================================================== */
+/* The entire settings view must be a real solid dark glass surface */
 [class*="standardSidebarView_"] {
-  background: rgba(14, 9, 24, 0.90) !important;
-  backdrop-filter: blur(16px) !important;
+  background: #10091D !important;
+  border: 1px solid var(--cyber-violet) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95), 0 0 16px rgba(189, 0, 255, 0.35) !important;
 }
 
+/* Settings Left Navigation Sidebar */
 [class*="sidebarRegion_"] {
-  background: rgba(17, 10, 28, 0.95) !important;
+  background: #140C24 !important;
   border-right: 1px solid var(--cyber-violet-dim) !important;
+}
+
+[class*="sidebarRegionScroller_"] {
+  background: transparent !important;
 }
 
 [class*="sidebarRegion_"] [class*="item_"] {
   border-radius: 4px !important;
+  color: #9D8CB6 !important;
+  transition: all 0.12s ease !important;
 }
 
 [class*="sidebarRegion_"] [class*="item_"]:hover {
@@ -139,70 +155,170 @@ div[class*="sidebar_"] {
 }
 
 [class*="sidebarRegion_"] [class*="selected_"][class*="item_"] {
-  background: linear-gradient(90deg, rgba(189, 0, 255, 0.4) 0%, rgba(20, 12, 33, 0.7) 100%) !important;
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.4) 0%, rgba(20, 12, 33, 0.8) 100%) !important;
   color: #FFFFFF !important;
   border-left: 3px solid var(--cyber-cyan) !important;
 }
 
+/* Settings Content Body */
 [class*="contentRegion_"] {
-  background: rgba(14, 9, 24, 0.90) !important;
+  background: #10091D !important;
 }
 
+[class*="contentRegionScroller_"] {
+  background: transparent !important;
+}
+
+/* Settings Form Sections, Cards, and Fields (Profile Card, Passwords, etc) */
 [class*="accountProfileCard_"],
-[class*="card_"] {
-  background: rgba(26, 16, 44, 0.8) !important;
+[class*="card_"][class*="outline_"],
+[class*="background_"][class*="outline_"],
+[class*="fieldList_"] {
+  background: #160E28 !important;
+  border: 1px solid rgba(189, 0, 255, 0.3) !important;
+  border-radius: 6px !important;
+}
+
+/* Profile Preview Banner inside Account Settings */
+[class*="profileCustomizationSection_"] {
+  background: #160E28 !important;
   border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 6px !important;
 }
 
-/* 5. Complete Profile Popout Card (Dark Violet Glass & Cybercore Accents) */
-[class*="userProfileModalOuter_"],
-[class*="userPopoutOuter_"],
-[class*="userProfileModalInner_"],
-[class*="userPopoutInner_"] {
-  background: #140C22 !important;
-  border: 1px solid var(--cyber-violet) !important;
-  border-radius: 6px !important;
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.9), 0 0 14px var(--cyber-violet-dim) !important;
-}
-
-[class*="userPopoutOuter_"] [class*="overlayBackground_"],
-[class*="userProfileModalOuter_"] [class*="overlayBackground_"] {
-  background: #1A102C !important;
-  border: 1px solid rgba(189, 0, 255, 0.3) !important;
+/* Close ESC Button */
+[class*="closeButton_"] {
+  border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 4px !important;
 }
 
-/* Profile Header Colors */
-[class*="userPopoutOuter_"] [class*="banner_"] {
+[class*="closeButton_"]:hover {
+  background: rgba(255, 0, 127, 0.25) !important;
+  border-color: #FF007F !important;
+}
+
+/* ==========================================================================
+   5. COMPLETE USER PROFILE POPOUT & MODAL (FIX BLUE BANNER & GREY CARDS)
+   ========================================================================== */
+/* The entire outer wrapper of the user popout */
+div[class*="userPopoutOuter_"],
+div[class*="userProfileModalOuter_"] {
+  background: #10091D !important;
+  border: 1px solid var(--cyber-violet) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95), 0 0 16px rgba(189, 0, 255, 0.4) !important;
+  overflow: hidden !important;
+}
+
+div[class*="userPopoutInner_"],
+div[class*="userProfileModalInner_"] {
+  background: transparent !important;
+}
+
+/* Profile Header / Banner: Apply Cybercore Gradient instead of default Discord Blue */
+div[class*="userPopoutOuter_"] [class*="banner_"]:not([style*="background-image"]),
+div[class*="userProfileModalOuter_"] [class*="banner_"]:not([style*="background-image"]) {
+  background: linear-gradient(135deg, #180D2C 0%, #BD00FF 60%, #00F0FF 100%) !important;
   border-bottom: 1px solid var(--cyber-violet-dim) !important;
 }
 
-/* 6. Modals, Menus and Buttons */
-[role="menu"],
-[class*="menu_"],
-[class*="modal_"] {
-  background: #140C22 !important;
-  border: 1px solid var(--cyber-violet) !important;
+/* Status Bubble ('¿Qué he jugado últimamente?') */
+div[class*="userPopoutOuter_"] [class*="statusBubbleOuter_"],
+div[class*="userPopoutOuter_"] [class*="statusBubble_"] {
+  background: #180E28 !important;
+  border: 1px solid rgba(189, 0, 255, 0.35) !important;
   border-radius: 6px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85) !important;
 }
 
-button[class*="button_"]:not([class*="lookBlank_"]) {
+/* Status Bubble Arrow */
+div[class*="userPopoutOuter_"] [class*="statusBubbleOuter_"]::before,
+div[class*="userPopoutOuter_"] [class*="statusBubbleOuter_"]::after {
+  display: none !important;
+}
+
+/* Inner Details Surface (Game Collection, Roles, Bio) */
+div[class*="userPopoutOuter_"] [class*="overlayBackground_"],
+div[class*="userProfileModalOuter_"] [class*="overlayBackground_"] {
+  background: #160E28 !important;
+  border: 1px solid rgba(189, 0, 255, 0.25) !important;
+  border-radius: 6px !important;
+}
+
+/* Game & App Activity Cards inside Profile Popout */
+div[class*="userPopoutOuter_"] [class*="activity_"] {
+  background: #180E2A !important;
+  border: 1px solid rgba(189, 0, 255, 0.25) !important;
+  border-radius: 6px !important;
+}
+
+/* Profile Popout Action Items (Editar perfil, No molestar, Cambiar cuentas) */
+div[class*="userPopoutOuter_"] [class*="item_"] {
+  border-radius: 4px !important;
+  transition: all 0.12s ease !important;
+}
+
+div[class*="userPopoutOuter_"] [class*="item_"]:hover {
+  background: rgba(0, 240, 255, 0.15) !important;
+  color: var(--cyber-cyan) !important;
+}
+
+/* Role Badges */
+[class*="rolePill_"],
+[class*="role_"] {
+  background: rgba(189, 0, 255, 0.2) !important;
+  border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 4px !important;
 }
 
+/* ==========================================================================
+   6. GLOBAL ACTION BUTTONS, MENUS & MODALS
+   ========================================================================== */
+/* All solid action buttons (Editar, Configurar, etc) */
+button[class*="button_"]:not([class*="lookBlank_"]) {
+  background: #160E28 !important;
+  border: 1px solid var(--cyber-violet-dim) !important;
+  border-radius: 4px !important;
+  color: var(--cyber-text) !important;
+  transition: all 0.12s ease !important;
+}
+
+button[class*="button_"]:not([class*="lookBlank_"]):hover {
+  background: rgba(0, 240, 255, 0.15) !important;
+  border-color: var(--cyber-cyan) !important;
+  color: var(--cyber-cyan) !important;
+  box-shadow: 0 0 8px var(--cyber-cyan-dim) !important;
+}
+
+/* Primary Brand Filled Buttons */
 button[class*="lookFilled_"][class*="colorBrand_"] {
   background: linear-gradient(135deg, #A200FF 0%, #BD00FF 100%) !important;
   border: 1px solid var(--cyber-violet) !important;
+  color: #FFFFFF !important;
 }
 
 button[class*="lookFilled_"][class*="colorBrand_"]:hover {
   background: linear-gradient(135deg, #BD00FF 0%, #00F0FF 100%) !important;
   color: #0E0918 !important;
+  box-shadow: 0 0 12px var(--cyber-cyan-dim) !important;
 }
 
-/* 7. Scrollbars */
+/* Universal Context Menus & Popouts */
+[role="menu"],
+[class*="menu_"],
+[class*="modal_"] {
+  background: #120920 !important;
+  border: 1px solid var(--cyber-violet) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 12px var(--cyber-violet-dim) !important;
+}
+
+[class*="item_"][role="menuitem"]:hover,
+[class*="item_"][class*="focused_"] {
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.45) 0%, rgba(0, 240, 255, 0.25) 100%) !important;
+  color: #FFFFFF !important;
+}
+
+/* Scrollbars */
 ::-webkit-scrollbar {
   width: 5px !important;
   height: 5px !important;
