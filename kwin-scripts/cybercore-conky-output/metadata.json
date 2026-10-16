@@ -1,0 +1,12 @@
+{
+    "KPackageStructure": "KWin/Script",
+    "KPlugin": {
+        "Id": "cybercore-conky-output",
+        "Name": "Cybercore Conky on DP-2",
+        "Description": "Keep Conky on its named output across startup and display changes.",
+        "Version": "1.0",
+        "License": "MIT"
+    },
+    "X-Plasma-API": "javascript",
+    "X-Plasma-MainScript": "code/main.js"
+}

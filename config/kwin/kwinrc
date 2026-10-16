@@ -27,6 +27,7 @@ BlurStrength=15
 NoiseStrength=0
 
 [Plugins]
+cybercore-conky-outputEnabled=true
 cybercore-toggle-desktopEnabled=false
 kwin6_effect_tv_glitchEnabled=true
 magiclampEnabled=true
