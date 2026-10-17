@@ -1,23 +1,24 @@
 /**
  * @name Cybercore Aero Y2K1
  * @author Cybercore Y2K1
- * @version 11.0.0
- * @description Master Cybercore Aero theme for Vesktop / Discord. Features crisp wallpaper backdrop (zero blur) across channels & chat, elegant deep carbon grey surfaces on popouts/settings, and vibrant neon violet/electric cyan accents.
+ * @version 12.0.0
+ * @description Master Cybercore Aero theme for Vesktop / Discord. Features seamless open borders, crisp cyberpunk artwork, tasteful electric cyan accents across categories/icons, and elegant carbon grey popouts.
  * @source https://github.com/Shules/cybercore-y2k1
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
 
 :root {
-  /* Refined Carbon Palette (No ugly Discord greenish-grey) */
+  /* Refined Carbon Palette */
   --cyber-bg: #0E0918;
   --cyber-carbon: #181424;
   --cyber-carbon-alt: #1E192E;
   --cyber-carbon-card: #231E34;
   --cyber-violet: #BD00FF;
-  --cyber-violet-dim: rgba(189, 0, 255, 0.40);
+  --cyber-violet-dim: rgba(189, 0, 255, 0.25);
   --cyber-cyan: #00F0FF;
   --cyber-cyan-dim: rgba(0, 240, 255, 0.25);
+  --cyber-cyan-glow: rgba(0, 240, 255, 0.60);
   --cyber-text: #E2E8F0;
   --cyber-text-dim: #A89CBD;
   --cyber-text-bright: #FFFFFF;
@@ -32,7 +33,6 @@ html, body, #app-mount {
   font-family: var(--font-primary) !important;
 }
 
-/* Crisp backdrop with pure 50% opacity and NO BLUR so the art is 100% sharp */
 body::before {
   content: "" !important;
   position: fixed !important;
@@ -50,7 +50,6 @@ body::after {
   pointer-events: none !important;
 }
 
-/* Transparent wrappers across the entire main window */
 .theme-dark,
 [class*="app_"],
 [class*="layers_"],
@@ -65,43 +64,90 @@ body::after {
 }
 
 /* ==========================================================================
-   2. GUILDS & CHANNELS SIDEBAR: CRISP 50% TRANSPARENCY (SAME ARTWORK)
+   2. GUILDS & CHANNELS SIDEBAR: OPEN NATURAL EDGES (NO BOXED IN FEEL)
    ========================================================================== */
 nav[class*="guilds_"] {
   background: rgba(10, 6, 18, 0.50) !important;
-  border-right: 1px solid var(--cyber-violet-dim) !important;
+  border-right: 1px solid rgba(189, 0, 255, 0.20) !important;
 }
 
-/* Ensure the channel panel is completely transparent to reveal the artwork */
+/* Channel sidebar: remove hard top/bottom borders and lighten side divider */
 div[class*="sidebar_"] {
-  background: rgba(14, 9, 24, 0.45) !important;
-  border-right: 1px solid var(--cyber-violet-dim) !important;
+  background: rgba(14, 9, 24, 0.40) !important;
+  border-right: 1px solid rgba(189, 0, 255, 0.20) !important;
+  border-top: none !important;
+  border-bottom: none !important;
 }
 
 div[class*="sidebar_"] > nav,
 div[class*="sidebar_"] [class*="container_"] {
   background: transparent !important;
+  border: none !important;
 }
 
+/* Server Header Bar (e.g. 'Geimers') */
+[class*="header_"][class*="container_"] {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(189, 0, 255, 0.18) !important;
+}
+
+/* Tasteful Cyan Detail 1: Category Names in Electric Cyan */
+[class*="wrapper_"][class*="container_"] h3,
+[class*="wrapper_"][class*="container_"] [class*="headerText_"] {
+  color: var(--cyber-cyan) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  opacity: 0.9 !important;
+}
+
+/* Tasteful Cyan Detail 2: Category Collapse Arrows & Add Channel Icons */
+[class*="wrapper_"][class*="container_"] svg {
+  color: var(--cyber-cyan) !important;
+  opacity: 0.8 !important;
+}
+
+/* Channel Items */
 [class*="channel_"] [class*="content_"] {
   border-radius: 4px !important;
   border-left: 2px solid transparent !important;
 }
 
 [class*="channel_"]:hover [class*="content_"] {
-  background: rgba(0, 240, 255, 0.15) !important;
+  background: rgba(0, 240, 255, 0.12) !important;
   border-left-color: var(--cyber-cyan) !important;
 }
 
+/* Tasteful Cyan Detail 3: Selected Channel Glowing Indicator and Icon */
 [class*="channel_"][class*="selected_"] [class*="content_"] {
-  background: linear-gradient(90deg, rgba(189, 0, 255, 0.4) 0%, rgba(30, 25, 46, 0.6) 100%) !important;
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.35) 0%, rgba(30, 25, 46, 0.5) 100%) !important;
   border-left: 2px solid var(--cyber-cyan) !important;
 }
 
-/* Channel text */
+[class*="channel_"][class*="selected_"] svg {
+  color: var(--cyber-cyan) !important;
+}
+
 [class*="channel_"][class*="selected_"] [class*="name_"] {
   color: #FFFFFF !important;
   font-weight: 600 !important;
+}
+
+/* Tasteful Cyan Detail 4: Unread Channel Notification Pill in Cyan */
+[class*="unread__"] {
+  background-color: var(--cyber-cyan) !important;
+  box-shadow: 0 0 6px var(--cyber-cyan-glow) !important;
+}
+
+/* Tasteful Cyan Detail 5: Bottom User Control Bar Active Status & Mute/Deafen Icons */
+section[class*="panels_"] {
+  background: rgba(14, 9, 24, 0.65) !important;
+  border-top: 1px solid rgba(189, 0, 255, 0.20) !important;
+}
+
+section[class*="panels_"] button:hover {
+  color: var(--cyber-cyan) !important;
 }
 
 /* ==========================================================================
@@ -123,6 +169,21 @@ div[class*="sidebar_"] [class*="container_"] {
   border-radius: 3px !important;
 }
 
+/* Chat Header Bar (e.g. '# general-priv') */
+section[class*="title_"] {
+  background: rgba(14, 9, 24, 0.55) !important;
+  border-bottom: 1px solid rgba(189, 0, 255, 0.18) !important;
+}
+
+section[class*="title_"] [class*="title_"] {
+  color: #FFFFFF !important;
+}
+
+section[class*="title_"] [class*="icon_"] {
+  color: var(--cyber-cyan) !important;
+}
+
+/* Chat Text Input */
 [class*="channelTextArea_"] {
   background: rgba(24, 20, 36, 0.70) !important;
   border: 1px solid var(--cyber-violet-dim) !important;
@@ -135,9 +196,8 @@ div[class*="sidebar_"] [class*="container_"] {
 }
 
 /* ==========================================================================
-   4. SETTINGS MODAL: ELEGANT SOLID CARBON (PURGED DISCORD GREY)
+   4. SETTINGS MODAL: ELEGANT SOLID CARBON
    ========================================================================== */
-/* Outer frame: solid dark carbon grey with violet border */
 div[class*="standardSidebarView_"] {
   background: var(--cyber-carbon) !important;
   border: 1px solid var(--cyber-violet) !important;
@@ -180,7 +240,7 @@ div[class*="contentRegionScroller_"] {
   background: transparent !important;
 }
 
-/* Form Cards & Inputs inside settings: Elegant deep carbon card */
+/* Form Cards & Inputs inside settings */
 div[class*="accountProfileCard_"],
 div[class*="card_"][class*="outline_"],
 div[class*="background_"][class*="outline_"],
@@ -205,9 +265,8 @@ div[class*="closeButton_"]:hover {
 }
 
 /* ==========================================================================
-   5. PROFILE POPOUT & MODAL: ELEGANT DARK CARBON (ZERO DISCORD GREY)
+   5. PROFILE POPOUT & MODAL: ELEGANT DARK CARBON
    ========================================================================== */
-/* The entire outer popout card */
 [id^="popout_"],
 div[class*="userPopoutOuter_"],
 div[class*="userProfileModalOuter_"],
@@ -242,7 +301,7 @@ div[class*="statusBubbleOuter_"]::after {
   display: none !important;
 }
 
-/* Body Container (Collection of games, details, bio) - Carbon Card */
+/* Body Container (Collection of games, details, bio) */
 div[class*="overlayBackground_"],
 div[class*="body_"][class*="userProfile_"] {
   background: var(--cyber-carbon-alt) !important;
@@ -288,7 +347,7 @@ div[class*="userPopoutOuter_"] [class*="item_"]:hover {
 }
 
 /* ==========================================================================
-   6. GLOBAL BUTTONS & MENUS (POLISHED CARBON + CYBER ACCENTS)
+   6. GLOBAL BUTTONS & MENUS
    ========================================================================== */
 /* Standard Action Buttons ('Editar', 'Configurar', etc) */
 button[class*="button_"]:not([class*="lookBlank_"]) {
