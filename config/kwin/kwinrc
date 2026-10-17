@@ -23,13 +23,15 @@ Number=10
 Rows=1
 
 [Effect-better-blur-dx]
-BlurMatching=true
-BlurNonMatching=false
+BlurDecorations=true
+BlurMatching=false
+BlurMenus=true
+BlurNonMatching=true
 BlurStrength=15
 Contrast=105
 NoiseStrength=2
 Saturation=160
-WindowClasses=firefox\nfirefox-default\nvesktop\ndiscord
+WindowClasses=
 
 [Effect-blur]
 BlurStrength=15

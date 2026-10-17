@@ -23,6 +23,25 @@
   --cyber-text-dim: #A89CBD;
   --cyber-text-bright: #FFFFFF;
   --font-primary: 'Exo 2', sans-serif !important;
+
+  /* Discord Core Transparency Overrides */
+  --background-primary: transparent !important;
+  --background-secondary: transparent !important;
+  --background-secondary-alt: transparent !important;
+  --background-tertiary: transparent !important;
+  --background-accent: rgba(189, 0, 255, 0.20) !important;
+  --background-floating: var(--cyber-carbon) !important;
+  --background-nested-floating: var(--cyber-carbon-alt) !important;
+  --background-mobile-primary: transparent !important;
+  --background-mobile-secondary: transparent !important;
+  --bg-base-primary: transparent !important;
+  --bg-base-secondary: transparent !important;
+  --bg-base-tertiary: transparent !important;
+  --bg-surface-raised: var(--cyber-carbon) !important;
+  --bg-surface-overlay: var(--cyber-carbon) !important;
+  --bg-mod-faint: rgba(189, 0, 255, 0.10) !important;
+  --bg-mod-subtle: rgba(189, 0, 255, 0.15) !important;
+  --channeltextarea-background: rgba(24, 20, 36, 0.70) !important;
 }
 
 /* ==========================================================================
@@ -51,6 +70,7 @@ body::after {
 }
 
 .theme-dark,
+.theme-light,
 [class*="app_"],
 [class*="layers_"],
 [class*="layer_"],
@@ -58,9 +78,83 @@ body::after {
 [class*="chat_"],
 [class*="chatContent_"],
 [class*="messagesWrapper_"],
-[class*="container_"][class*="fixClipping_"],
+[class*="container_"],
+[class*="pageWrapper_"],
+[class*="tabBody_"],
+[class*="tabContainer_"],
+[class*="peopleColumn_"],
+[class*="peopleList_"],
+[class*="nowPlayingColumn_"],
+[class*="nowPlayingScroller_"],
+[class*="scrollerBase_"],
+[class*="privateChannels_"],
+ul[class*="content_"][class*="privateChannels_"],
+[class*="applicationStore_"],
+[class*="shop_"],
+[class*="homeWrapperNormal_"],
+[class*="directoryModal_"],
 [class*="bg_"] {
   background: transparent !important;
+}
+
+/* Semi-translucent dark backing for friends list & private channels for text clarity */
+div[class*="peopleColumn_"] {
+  background: rgba(14, 9, 24, 0.35) !important;
+}
+
+div[class*="privateChannels_"] {
+  background: rgba(14, 9, 24, 0.45) !important;
+}
+
+/* Friends list rows & action buttons */
+[class*="peopleListItem_"] {
+  border-top: 1px solid rgba(189, 0, 255, 0.12) !important;
+  border-radius: 4px !important;
+  margin-inline: 16px !important;
+  padding-inline: 8px !important;
+  transition: all 0.12s ease !important;
+}
+
+[class*="peopleListItem_"]:hover {
+  background: rgba(0, 240, 255, 0.10) !important;
+  border-color: var(--cyber-cyan) !important;
+}
+
+[class*="peopleListItem_"] [class*="actionButton_"] {
+  background: var(--cyber-carbon-card) !important;
+  border: 1px solid var(--cyber-violet-dim) !important;
+}
+
+[class*="peopleListItem_"] [class*="actionButton_"]:hover {
+  background: rgba(0, 240, 255, 0.20) !important;
+  border-color: var(--cyber-cyan) !important;
+  color: var(--cyber-cyan) !important;
+}
+
+/* Now Playing / Active Now Column */
+[class*="nowPlayingColumn_"] {
+  background: rgba(14, 9, 24, 0.40) !important;
+  border-left: 1px solid rgba(189, 0, 255, 0.18) !important;
+}
+
+[class*="nowPlayingColumn_"] [class*="itemCard_"],
+[class*="nowPlayingColumn_"] [class*="outer_"][class*="interactive_"] {
+  background: rgba(24, 20, 36, 0.65) !important;
+  border: 1px solid rgba(189, 0, 255, 0.25) !important;
+  border-radius: 6px !important;
+}
+
+[class*="nowPlayingColumn_"] [class*="itemCard_"]:hover,
+[class*="nowPlayingColumn_"] [class*="outer_"][class*="interactive_"]:hover {
+  background: rgba(30, 25, 46, 0.80) !important;
+  border-color: var(--cyber-cyan) !important;
+}
+
+/* Header bar across Friends / Home */
+section[class*="title_"][class*="container_"],
+[class*="headerBar_"] {
+  background: rgba(14, 9, 24, 0.55) !important;
+  border-bottom: 1px solid rgba(189, 0, 255, 0.18) !important;
 }
 
 /* ==========================================================================
