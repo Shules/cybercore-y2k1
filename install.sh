@@ -222,7 +222,7 @@ cp "$BASEDIR"/scripts/cybercore-backup ~/.local/bin/
 cp "$BASEDIR"/scripts/cybercore-restore ~/.local/bin/
 chmod +x ~/.local/bin/cybercore-state ~/.local/bin/cybercore-gpu ~/.local/bin/cybercore-gpu-daemon ~/.local/bin/cybercore-usb-sound ~/.local/bin/cybercore-toggle-desktop ~/.local/bin/cybercore-backup ~/.local/bin/cybercore-restore
 
-# Pin Conky by connector name rather than KWin's unstable screen index.
+# Pin Conky & GLava by connector name rather than KWin's unstable screen index.
 mkdir -p ~/.local/share/kwin/scripts/cybercore-conky-output
 cp -r "$BASEDIR"/kwin-scripts/cybercore-conky-output/. ~/.local/share/kwin/scripts/cybercore-conky-output/
 kwriteconfig6 --file kwinrc --group Plugins --key cybercore-conky-outputEnabled true

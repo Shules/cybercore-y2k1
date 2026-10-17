@@ -3,8 +3,22 @@
     var moving = false;
     var watchedOutputs = [];
 
+    function isManaged(window) {
+        if (!window || !window.resourceClass) return false;
+        var cls = String(window.resourceClass).toLowerCase();
+        return cls === 'conky' || cls === 'glava';
+    }
+
+    function getTargetY(window, output) {
+        var cls = String(window.resourceClass).toLowerCase();
+        if (cls === 'glava') {
+            return output.geometry.y + 858;
+        }
+        return output.geometry.y + 56;
+    }
+
     function pin(window) {
-        if (moving || String(window.resourceClass).toLowerCase() !== 'conky') return;
+        if (moving || !isManaged(window)) return;
         var output = null;
         for (var i = 0; i < workspace.screens.length; i++) {
             if (workspace.screens[i].name === 'DP-2') output = workspace.screens[i];
@@ -13,13 +27,18 @@
         if (!output) return;
         moving = true;
         try {
+            var cls = String(window.resourceClass).toLowerCase();
             if (window.output !== output) workspace.sendClientToScreen(window, output);
             var rect = window.frameGeometry;
+            var w = rect.width > 0 ? rect.width : (cls === 'glava' ? 1920 : 1920);
+            var h = rect.height > 0 ? rect.height : (cls === 'glava' ? 180 : 766);
             var x = output.geometry.x;
-            var y = output.geometry.y + 56; // Preserve the former rule's top offset.
-            if (rect.x !== x || rect.y !== y) {
+            var y = getTargetY(window, output);
+            if (rect.x !== x || rect.y !== y || rect.width !== w || rect.height !== h) {
                 rect.x = x;
                 rect.y = y;
+                rect.width = w;
+                rect.height = h;
                 window.frameGeometry = rect;
             }
         } finally {
@@ -33,7 +52,7 @@
     }
 
     function watchWindow(window) {
-        if (String(window.resourceClass).toLowerCase() !== 'conky') return;
+        if (!isManaged(window)) return;
         window.outputChanged.connect(function () { pin(window); });
         window.frameGeometryChanged.connect(function () { pin(window); });
         pin(window);
