@@ -1,0 +1,12 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "com.cybercore.mediacontroller",
+    "Name": "Reproductor multimedia",
+    "Description": "KDE media controller with stable panel sizing",
+    "Icon": "media-playback-start",
+    "License": "GPL-2.0-or-later",
+    "Version": "1.0"
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}
