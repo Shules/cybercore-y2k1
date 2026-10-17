@@ -1,38 +1,38 @@
 /**
  * @name Cybercore Aero Y2K1
  * @author Cybercore Y2K1
- * @version 10.0.0
- * @description Pure Cybercore Aero theme for Vesktop / Discord. Complete eradication of Discord grey: rich violet carbon, electric cyan highlights, full dark glass popup cards and zero-transparency solid settings modal.
+ * @version 11.0.0
+ * @description Master Cybercore Aero theme for Vesktop / Discord. Features crisp wallpaper backdrop (zero blur) across channels & chat, elegant deep carbon grey surfaces on popouts/settings, and vibrant neon violet/electric cyan accents.
  * @source https://github.com/Shules/cybercore-y2k1
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
 
 :root {
+  /* Refined Carbon Palette (No ugly Discord greenish-grey) */
   --cyber-bg: #0E0918;
-  --cyber-bg-alt: #140C22;
-  --cyber-card: #1A102C;
-  --cyber-card-solid: #150C24;
+  --cyber-carbon: #181424;
+  --cyber-carbon-alt: #1E192E;
+  --cyber-carbon-card: #231E34;
   --cyber-violet: #BD00FF;
   --cyber-violet-dim: rgba(189, 0, 255, 0.40);
-  --cyber-violet-glow: rgba(189, 0, 255, 0.55);
   --cyber-cyan: #00F0FF;
   --cyber-cyan-dim: rgba(0, 240, 255, 0.25);
-  --cyber-cyan-glow: rgba(0, 240, 255, 0.60);
   --cyber-text: #E2E8F0;
-  --cyber-text-dim: #9D8CB6;
+  --cyber-text-dim: #A89CBD;
   --cyber-text-bright: #FFFFFF;
   --font-primary: 'Exo 2', sans-serif !important;
 }
 
 /* ==========================================================================
-   1. FIXED BACKGROUND ENGINE & BASE TRANSPARENCY
+   1. CRISP FULLSCREEN CYBERPUNK BACKDROP (ZERO BLUR OVERLAY)
    ========================================================================== */
 html, body, #app-mount {
   background: transparent !important;
   font-family: var(--font-primary) !important;
 }
 
+/* Crisp backdrop with pure 50% opacity and NO BLUR so the art is 100% sharp */
 body::before {
   content: "" !important;
   position: fixed !important;
@@ -45,13 +45,12 @@ body::after {
   content: "" !important;
   position: fixed !important;
   inset: 0 !important;
-  background: linear-gradient(135deg, rgba(14, 9, 24, 0.52) 0%, rgba(20, 10, 32, 0.48) 100%) !important;
-  backdrop-filter: blur(8px) saturate(125%) !important;
+  background: rgba(14, 9, 24, 0.45) !important;
   z-index: -1 !important;
   pointer-events: none !important;
 }
 
-/* Punch out solid grey containers from Discord main layout */
+/* Transparent wrappers across the entire main window */
 .theme-dark,
 [class*="app_"],
 [class*="layers_"],
@@ -66,18 +65,22 @@ body::after {
 }
 
 /* ==========================================================================
-   2. SIDEBARS: GUILDS, CHANNELS, MEMBERS
+   2. GUILDS & CHANNELS SIDEBAR: CRISP 50% TRANSPARENCY (SAME ARTWORK)
    ========================================================================== */
 nav[class*="guilds_"] {
-  background: rgba(10, 6, 18, 0.65) !important;
-  backdrop-filter: blur(14px) !important;
+  background: rgba(10, 6, 18, 0.50) !important;
   border-right: 1px solid var(--cyber-violet-dim) !important;
 }
 
+/* Ensure the channel panel is completely transparent to reveal the artwork */
 div[class*="sidebar_"] {
-  background: rgba(17, 10, 28, 0.60) !important;
-  backdrop-filter: blur(10px) !important;
+  background: rgba(14, 9, 24, 0.45) !important;
   border-right: 1px solid var(--cyber-violet-dim) !important;
+}
+
+div[class*="sidebar_"] > nav,
+div[class*="sidebar_"] [class*="container_"] {
+  background: transparent !important;
 }
 
 [class*="channel_"] [class*="content_"] {
@@ -86,36 +89,42 @@ div[class*="sidebar_"] {
 }
 
 [class*="channel_"]:hover [class*="content_"] {
-  background: rgba(0, 240, 255, 0.12) !important;
+  background: rgba(0, 240, 255, 0.15) !important;
   border-left-color: var(--cyber-cyan) !important;
 }
 
 [class*="channel_"][class*="selected_"] [class*="content_"] {
-  background: linear-gradient(90deg, rgba(189, 0, 255, 0.35) 0%, rgba(20, 12, 33, 0.5) 100%) !important;
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.4) 0%, rgba(30, 25, 46, 0.6) 100%) !important;
   border-left: 2px solid var(--cyber-cyan) !important;
+}
+
+/* Channel text */
+[class*="channel_"][class*="selected_"] [class*="name_"] {
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
 }
 
 /* ==========================================================================
    3. CHAT AND MESSAGES
    ========================================================================== */
 [class*="message_"]:hover {
-  background: rgba(189, 0, 255, 0.10) !important;
+  background: rgba(189, 0, 255, 0.12) !important;
 }
 
 [class*="mentioned_"] {
-  background: rgba(189, 0, 255, 0.22) !important;
+  background: rgba(189, 0, 255, 0.25) !important;
   border-left: 3px solid var(--cyber-cyan) !important;
 }
 
 [class*="mention"] {
-  background: rgba(0, 240, 255, 0.18) !important;
+  background: rgba(0, 240, 255, 0.20) !important;
   color: var(--cyber-cyan) !important;
   border: 1px solid var(--cyber-cyan) !important;
   border-radius: 3px !important;
 }
 
 [class*="channelTextArea_"] {
-  background: rgba(22, 14, 38, 0.65) !important;
+  background: rgba(24, 20, 36, 0.70) !important;
   border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 4px !important;
 }
@@ -126,24 +135,19 @@ div[class*="sidebar_"] {
 }
 
 /* ==========================================================================
-   4. SETTINGS MODAL: 100% SOLID OPAQUE DARK VIOLET (NO TRANSPARENCY, NO GREY)
+   4. SETTINGS MODAL: ELEGANT SOLID CARBON (PURGED DISCORD GREY)
    ========================================================================== */
-/* The entire settings screen is a true opaque solid frame */
-div[class*="standardSidebarView_"],
-div[class*="sidebarRegion_"],
-div[class*="contentRegion_"] {
-  background: #110A1E !important;
+/* Outer frame: solid dark carbon grey with violet border */
+div[class*="standardSidebarView_"] {
+  background: var(--cyber-carbon) !important;
+  border: 1px solid var(--cyber-violet) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 20px rgba(189, 0, 255, 0.4) !important;
   opacity: 1 !important;
 }
 
-div[class*="standardSidebarView_"] {
-  border: 1px solid var(--cyber-violet) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.98), 0 0 18px rgba(189, 0, 255, 0.45) !important;
-}
-
 div[class*="sidebarRegion_"] {
-  background: #140C26 !important;
+  background: #141020 !important;
   border-right: 1px solid var(--cyber-violet-dim) !important;
 }
 
@@ -153,7 +157,7 @@ div[class*="sidebarRegionScroller_"] {
 
 div[class*="sidebarRegion_"] [class*="item_"] {
   border-radius: 4px !important;
-  color: #9D8CB6 !important;
+  color: var(--cyber-text-dim) !important;
   transition: all 0.12s ease !important;
 }
 
@@ -163,30 +167,29 @@ div[class*="sidebarRegion_"] [class*="item_"]:hover {
 }
 
 div[class*="sidebarRegion_"] [class*="selected_"][class*="item_"] {
-  background: linear-gradient(90deg, rgba(189, 0, 255, 0.45) 0%, rgba(20, 12, 33, 0.85) 100%) !important;
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.45) 0%, rgba(35, 30, 52, 0.8) 100%) !important;
   color: #FFFFFF !important;
   border-left: 3px solid var(--cyber-cyan) !important;
 }
 
 div[class*="contentRegion_"] {
-  background: #110A1E !important;
+  background: var(--cyber-carbon) !important;
 }
 
 div[class*="contentRegionScroller_"] {
   background: transparent !important;
 }
 
-/* Forms, Field Lists and Profile Card inside Settings: Solid Violet Carbon */
+/* Form Cards & Inputs inside settings: Elegant deep carbon card */
 div[class*="accountProfileCard_"],
 div[class*="card_"][class*="outline_"],
 div[class*="background_"][class*="outline_"],
 div[class*="fieldList_"] {
-  background: #160E28 !important;
-  border: 1px solid var(--cyber-violet-dim) !important;
+  background: var(--cyber-carbon-card) !important;
+  border: 1px solid rgba(189, 0, 255, 0.3) !important;
   border-radius: 6px !important;
 }
 
-/* Kill grey inside setting form inputs */
 div[class*="fieldList_"] > div {
   border-bottom: 1px solid rgba(189, 0, 255, 0.15) !important;
 }
@@ -202,32 +205,33 @@ div[class*="closeButton_"]:hover {
 }
 
 /* ==========================================================================
-   5. PROFILE POPOUT & MODAL (NO GREY, NO TRANSPARENCY, PURE CYBERCORE AERO)
+   5. PROFILE POPOUT & MODAL: ELEGANT DARK CARBON (ZERO DISCORD GREY)
    ========================================================================== */
-/* The entire outer and inner container of the user popout card */
+/* The entire outer popout card */
 [id^="popout_"],
 div[class*="userPopoutOuter_"],
 div[class*="userProfileModalOuter_"],
 div[class*="userPopoutInner_"],
 div[class*="userProfileModalInner_"] {
-  background: #110A1E !important;
+  background: var(--cyber-carbon) !important;
   border: 1px solid var(--cyber-violet) !important;
   border-radius: 8px !important;
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.98), 0 0 16px rgba(189, 0, 255, 0.5) !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.98), 0 0 18px rgba(189, 0, 255, 0.5) !important;
   opacity: 1 !important;
 }
 
-/* Banner Top: Deep Cybercore Gradient instead of default discord cyan */
+/* Replace default discord cyan banner with Cybercore Gradient */
 [class*="userPopoutOuter_"] [class*="banner_"],
-[class*="userProfileModalOuter_"] [class*="banner_"] {
-  background: linear-gradient(135deg, #180D2C 0%, #BD00FF 60%, #00F0FF 100%) !important;
+[class*="userProfileModalOuter_"] [class*="banner_"],
+[class*="userPopoutOuter_"] [class*="bannerSVGWrapper_"] {
+  background: linear-gradient(135deg, #180E2E 0%, #BD00FF 60%, #00F0FF 100%) !important;
   border-bottom: 1px solid var(--cyber-violet-dim) !important;
 }
 
-/* Status Bubble ('¿Qué he jugado últimamente?') - Pure solid violet carbon */
+/* Status Bubble ('¿Qué he jugado últimamente?' / 'Añadir estado') */
 div[class*="statusBubbleOuter_"],
 div[class*="statusBubble_"] {
-  background: #160E28 !important;
+  background: var(--cyber-carbon-card) !important;
   border: 1px solid rgba(189, 0, 255, 0.35) !important;
   border-radius: 6px !important;
   color: var(--cyber-text) !important;
@@ -238,22 +242,22 @@ div[class*="statusBubbleOuter_"]::after {
   display: none !important;
 }
 
-/* The internal surface of the popout (Collection of games, details, bio) */
+/* Body Container (Collection of games, details, bio) - Carbon Card */
 div[class*="overlayBackground_"],
 div[class*="body_"][class*="userProfile_"] {
-  background: #160E28 !important;
+  background: var(--cyber-carbon-alt) !important;
   border: 1px solid rgba(189, 0, 255, 0.25) !important;
   border-radius: 6px !important;
 }
 
 /* Game & Activity Cards */
 div[class*="activity_"] {
-  background: #1A1030 !important;
+  background: var(--cyber-carbon-card) !important;
   border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 6px !important;
 }
 
-/* Bottom Action Menu Items (Editar perfil, No molestar, Cambiar cuentas) */
+/* Action Items (Editar perfil, No molestar, Cambiar cuentas) */
 div[class*="userPopoutOuter_"] [class*="menu_"] {
   background: transparent !important;
   border: none !important;
@@ -261,7 +265,7 @@ div[class*="userPopoutOuter_"] [class*="menu_"] {
 }
 
 div[class*="userPopoutOuter_"] [class*="item_"] {
-  background: #160E28 !important;
+  background: var(--cyber-carbon-card) !important;
   border: 1px solid rgba(189, 0, 255, 0.25) !important;
   border-radius: 4px !important;
   margin-block: 2px !important;
@@ -270,7 +274,7 @@ div[class*="userPopoutOuter_"] [class*="item_"] {
 }
 
 div[class*="userPopoutOuter_"] [class*="item_"]:hover {
-  background: rgba(0, 240, 255, 0.15) !important;
+  background: rgba(0, 240, 255, 0.18) !important;
   border-color: var(--cyber-cyan) !important;
   color: var(--cyber-cyan) !important;
 }
@@ -284,11 +288,11 @@ div[class*="userPopoutOuter_"] [class*="item_"]:hover {
 }
 
 /* ==========================================================================
-   6. GLOBAL ACTION BUTTONS & UNIVERSAL MENUS (PURGING GREY GLOBALLY)
+   6. GLOBAL BUTTONS & MENUS (POLISHED CARBON + CYBER ACCENTS)
    ========================================================================== */
-/* Action Buttons ('Editar', 'Configurar', etc) */
+/* Standard Action Buttons ('Editar', 'Configurar', etc) */
 button[class*="button_"]:not([class*="lookBlank_"]) {
-  background: #180E2A !important;
+  background: var(--cyber-carbon-card) !important;
   border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 4px !important;
   color: var(--cyber-text) !important;
@@ -296,10 +300,10 @@ button[class*="button_"]:not([class*="lookBlank_"]) {
 }
 
 button[class*="button_"]:not([class*="lookBlank_"]):hover {
-  background: rgba(0, 240, 255, 0.15) !important;
+  background: rgba(0, 240, 255, 0.18) !important;
   border-color: var(--cyber-cyan) !important;
   color: var(--cyber-cyan) !important;
-  box-shadow: 0 0 8px var(--cyber-cyan-dim) !important;
+  box-shadow: 0 0 10px var(--cyber-cyan-dim) !important;
 }
 
 /* Primary Filled Buttons */
@@ -312,17 +316,17 @@ button[class*="lookFilled_"][class*="colorBrand_"] {
 button[class*="lookFilled_"][class*="colorBrand_"]:hover {
   background: linear-gradient(135deg, #BD00FF 0%, #00F0FF 100%) !important;
   color: #0E0918 !important;
-  box-shadow: 0 0 12px var(--cyber-cyan-dim) !important;
+  box-shadow: 0 0 14px var(--cyber-cyan-dim) !important;
 }
 
 /* Context Menus */
 [role="menu"],
 [class*="menu_"],
 [class*="modal_"] {
-  background: #120920 !important;
+  background: var(--cyber-carbon) !important;
   border: 1px solid var(--cyber-violet) !important;
   border-radius: 6px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95), 0 0 12px var(--cyber-violet-dim) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95), 0 0 14px var(--cyber-violet-dim) !important;
 }
 
 [class*="item_"][role="menuitem"]:hover,
