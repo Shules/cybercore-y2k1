@@ -71,8 +71,8 @@ description = Transparencia Leve Cybercore en Firefox
 wmclass = firefox
 wmclasscomplete = false
 wmclassmatch = 1
-opacityactive = 94
+opacityactive = 98
 opacityactiverule = 2
-opacityinactive = 90
+opacityinactive = 96
 opacityinactiverule = 2
 
