@@ -1,8 +1,8 @@
 /**
  * @name Cybercore Aero Y2K1
  * @author Cybercore Y2K1
- * @version 9.0.0
- * @description Comprehensive Cybercore Aero theme for Vesktop / Discord with full dark glass styling across chats, channels, complete settings window, and user profile popouts.
+ * @version 10.0.0
+ * @description Pure Cybercore Aero theme for Vesktop / Discord. Complete eradication of Discord grey: rich violet carbon, electric cyan highlights, full dark glass popup cards and zero-transparency solid settings modal.
  * @source https://github.com/Shules/cybercore-y2k1
  */
 
@@ -12,10 +12,13 @@
   --cyber-bg: #0E0918;
   --cyber-bg-alt: #140C22;
   --cyber-card: #1A102C;
+  --cyber-card-solid: #150C24;
   --cyber-violet: #BD00FF;
-  --cyber-violet-dim: rgba(189, 0, 255, 0.35);
+  --cyber-violet-dim: rgba(189, 0, 255, 0.40);
+  --cyber-violet-glow: rgba(189, 0, 255, 0.55);
   --cyber-cyan: #00F0FF;
   --cyber-cyan-dim: rgba(0, 240, 255, 0.25);
+  --cyber-cyan-glow: rgba(0, 240, 255, 0.60);
   --cyber-text: #E2E8F0;
   --cyber-text-dim: #9D8CB6;
   --cyber-text-bright: #FFFFFF;
@@ -23,7 +26,7 @@
 }
 
 /* ==========================================================================
-   1. FIXED BACKGROUND ENGINE & OPACITY FIX
+   1. FIXED BACKGROUND ENGINE & BASE TRANSPARENCY
    ========================================================================== */
 html, body, #app-mount {
   background: transparent !important;
@@ -48,7 +51,7 @@ body::after {
   pointer-events: none !important;
 }
 
-/* Punch out solid wrappers */
+/* Punch out solid grey containers from Discord main layout */
 .theme-dark,
 [class*="app_"],
 [class*="layers_"],
@@ -123,159 +126,169 @@ div[class*="sidebar_"] {
 }
 
 /* ==========================================================================
-   4. SETTINGS MODAL: FULL OPAQUE COHESIVE CYBERCORE STYLING
+   4. SETTINGS MODAL: 100% SOLID OPAQUE DARK VIOLET (NO TRANSPARENCY, NO GREY)
    ========================================================================== */
-/* The entire settings view must be a real solid dark glass surface */
-[class*="standardSidebarView_"] {
-  background: #10091D !important;
-  border: 1px solid var(--cyber-violet) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95), 0 0 16px rgba(189, 0, 255, 0.35) !important;
+/* The entire settings screen is a true opaque solid frame */
+div[class*="standardSidebarView_"],
+div[class*="sidebarRegion_"],
+div[class*="contentRegion_"] {
+  background: #110A1E !important;
+  opacity: 1 !important;
 }
 
-/* Settings Left Navigation Sidebar */
-[class*="sidebarRegion_"] {
-  background: #140C24 !important;
+div[class*="standardSidebarView_"] {
+  border: 1px solid var(--cyber-violet) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.98), 0 0 18px rgba(189, 0, 255, 0.45) !important;
+}
+
+div[class*="sidebarRegion_"] {
+  background: #140C26 !important;
   border-right: 1px solid var(--cyber-violet-dim) !important;
 }
 
-[class*="sidebarRegionScroller_"] {
+div[class*="sidebarRegionScroller_"] {
   background: transparent !important;
 }
 
-[class*="sidebarRegion_"] [class*="item_"] {
+div[class*="sidebarRegion_"] [class*="item_"] {
   border-radius: 4px !important;
   color: #9D8CB6 !important;
   transition: all 0.12s ease !important;
 }
 
-[class*="sidebarRegion_"] [class*="item_"]:hover {
+div[class*="sidebarRegion_"] [class*="item_"]:hover {
   background: rgba(0, 240, 255, 0.12) !important;
   color: var(--cyber-cyan) !important;
 }
 
-[class*="sidebarRegion_"] [class*="selected_"][class*="item_"] {
-  background: linear-gradient(90deg, rgba(189, 0, 255, 0.4) 0%, rgba(20, 12, 33, 0.8) 100%) !important;
+div[class*="sidebarRegion_"] [class*="selected_"][class*="item_"] {
+  background: linear-gradient(90deg, rgba(189, 0, 255, 0.45) 0%, rgba(20, 12, 33, 0.85) 100%) !important;
   color: #FFFFFF !important;
   border-left: 3px solid var(--cyber-cyan) !important;
 }
 
-/* Settings Content Body */
-[class*="contentRegion_"] {
-  background: #10091D !important;
+div[class*="contentRegion_"] {
+  background: #110A1E !important;
 }
 
-[class*="contentRegionScroller_"] {
+div[class*="contentRegionScroller_"] {
   background: transparent !important;
 }
 
-/* Settings Form Sections, Cards, and Fields (Profile Card, Passwords, etc) */
-[class*="accountProfileCard_"],
-[class*="card_"][class*="outline_"],
-[class*="background_"][class*="outline_"],
-[class*="fieldList_"] {
-  background: #160E28 !important;
-  border: 1px solid rgba(189, 0, 255, 0.3) !important;
-  border-radius: 6px !important;
-}
-
-/* Profile Preview Banner inside Account Settings */
-[class*="profileCustomizationSection_"] {
+/* Forms, Field Lists and Profile Card inside Settings: Solid Violet Carbon */
+div[class*="accountProfileCard_"],
+div[class*="card_"][class*="outline_"],
+div[class*="background_"][class*="outline_"],
+div[class*="fieldList_"] {
   background: #160E28 !important;
   border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 6px !important;
 }
 
-/* Close ESC Button */
-[class*="closeButton_"] {
+/* Kill grey inside setting form inputs */
+div[class*="fieldList_"] > div {
+  border-bottom: 1px solid rgba(189, 0, 255, 0.15) !important;
+}
+
+div[class*="closeButton_"] {
   border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 4px !important;
 }
 
-[class*="closeButton_"]:hover {
+div[class*="closeButton_"]:hover {
   background: rgba(255, 0, 127, 0.25) !important;
   border-color: #FF007F !important;
 }
 
 /* ==========================================================================
-   5. COMPLETE USER PROFILE POPOUT & MODAL (FIX BLUE BANNER & GREY CARDS)
+   5. PROFILE POPOUT & MODAL (NO GREY, NO TRANSPARENCY, PURE CYBERCORE AERO)
    ========================================================================== */
-/* The entire outer wrapper of the user popout */
+/* The entire outer and inner container of the user popout card */
+[id^="popout_"],
 div[class*="userPopoutOuter_"],
-div[class*="userProfileModalOuter_"] {
-  background: #10091D !important;
-  border: 1px solid var(--cyber-violet) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95), 0 0 16px rgba(189, 0, 255, 0.4) !important;
-  overflow: hidden !important;
-}
-
+div[class*="userProfileModalOuter_"],
 div[class*="userPopoutInner_"],
 div[class*="userProfileModalInner_"] {
-  background: transparent !important;
+  background: #110A1E !important;
+  border: 1px solid var(--cyber-violet) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.98), 0 0 16px rgba(189, 0, 255, 0.5) !important;
+  opacity: 1 !important;
 }
 
-/* Profile Header / Banner: Apply Cybercore Gradient instead of default Discord Blue */
-div[class*="userPopoutOuter_"] [class*="banner_"]:not([style*="background-image"]),
-div[class*="userProfileModalOuter_"] [class*="banner_"]:not([style*="background-image"]) {
+/* Banner Top: Deep Cybercore Gradient instead of default discord cyan */
+[class*="userPopoutOuter_"] [class*="banner_"],
+[class*="userProfileModalOuter_"] [class*="banner_"] {
   background: linear-gradient(135deg, #180D2C 0%, #BD00FF 60%, #00F0FF 100%) !important;
   border-bottom: 1px solid var(--cyber-violet-dim) !important;
 }
 
-/* Status Bubble ('¿Qué he jugado últimamente?') */
-div[class*="userPopoutOuter_"] [class*="statusBubbleOuter_"],
-div[class*="userPopoutOuter_"] [class*="statusBubble_"] {
-  background: #180E28 !important;
+/* Status Bubble ('¿Qué he jugado últimamente?') - Pure solid violet carbon */
+div[class*="statusBubbleOuter_"],
+div[class*="statusBubble_"] {
+  background: #160E28 !important;
   border: 1px solid rgba(189, 0, 255, 0.35) !important;
   border-radius: 6px !important;
+  color: var(--cyber-text) !important;
 }
 
-/* Status Bubble Arrow */
-div[class*="userPopoutOuter_"] [class*="statusBubbleOuter_"]::before,
-div[class*="userPopoutOuter_"] [class*="statusBubbleOuter_"]::after {
+div[class*="statusBubbleOuter_"]::before,
+div[class*="statusBubbleOuter_"]::after {
   display: none !important;
 }
 
-/* Inner Details Surface (Game Collection, Roles, Bio) */
-div[class*="userPopoutOuter_"] [class*="overlayBackground_"],
-div[class*="userProfileModalOuter_"] [class*="overlayBackground_"] {
+/* The internal surface of the popout (Collection of games, details, bio) */
+div[class*="overlayBackground_"],
+div[class*="body_"][class*="userProfile_"] {
   background: #160E28 !important;
   border: 1px solid rgba(189, 0, 255, 0.25) !important;
   border-radius: 6px !important;
 }
 
-/* Game & App Activity Cards inside Profile Popout */
-div[class*="userPopoutOuter_"] [class*="activity_"] {
-  background: #180E2A !important;
-  border: 1px solid rgba(189, 0, 255, 0.25) !important;
+/* Game & Activity Cards */
+div[class*="activity_"] {
+  background: #1A1030 !important;
+  border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 6px !important;
 }
 
-/* Profile Popout Action Items (Editar perfil, No molestar, Cambiar cuentas) */
+/* Bottom Action Menu Items (Editar perfil, No molestar, Cambiar cuentas) */
+div[class*="userPopoutOuter_"] [class*="menu_"] {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 div[class*="userPopoutOuter_"] [class*="item_"] {
+  background: #160E28 !important;
+  border: 1px solid rgba(189, 0, 255, 0.25) !important;
   border-radius: 4px !important;
+  margin-block: 2px !important;
+  color: var(--cyber-text) !important;
   transition: all 0.12s ease !important;
 }
 
 div[class*="userPopoutOuter_"] [class*="item_"]:hover {
   background: rgba(0, 240, 255, 0.15) !important;
+  border-color: var(--cyber-cyan) !important;
   color: var(--cyber-cyan) !important;
 }
 
 /* Role Badges */
 [class*="rolePill_"],
 [class*="role_"] {
-  background: rgba(189, 0, 255, 0.2) !important;
+  background: rgba(189, 0, 255, 0.25) !important;
   border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 4px !important;
 }
 
 /* ==========================================================================
-   6. GLOBAL ACTION BUTTONS, MENUS & MODALS
+   6. GLOBAL ACTION BUTTONS & UNIVERSAL MENUS (PURGING GREY GLOBALLY)
    ========================================================================== */
-/* All solid action buttons (Editar, Configurar, etc) */
+/* Action Buttons ('Editar', 'Configurar', etc) */
 button[class*="button_"]:not([class*="lookBlank_"]) {
-  background: #160E28 !important;
+  background: #180E2A !important;
   border: 1px solid var(--cyber-violet-dim) !important;
   border-radius: 4px !important;
   color: var(--cyber-text) !important;
@@ -289,7 +302,7 @@ button[class*="button_"]:not([class*="lookBlank_"]):hover {
   box-shadow: 0 0 8px var(--cyber-cyan-dim) !important;
 }
 
-/* Primary Brand Filled Buttons */
+/* Primary Filled Buttons */
 button[class*="lookFilled_"][class*="colorBrand_"] {
   background: linear-gradient(135deg, #A200FF 0%, #BD00FF 100%) !important;
   border: 1px solid var(--cyber-violet) !important;
@@ -302,14 +315,14 @@ button[class*="lookFilled_"][class*="colorBrand_"]:hover {
   box-shadow: 0 0 12px var(--cyber-cyan-dim) !important;
 }
 
-/* Universal Context Menus & Popouts */
+/* Context Menus */
 [role="menu"],
 [class*="menu_"],
 [class*="modal_"] {
   background: #120920 !important;
   border: 1px solid var(--cyber-violet) !important;
   border-radius: 6px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 12px var(--cyber-violet-dim) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95), 0 0 12px var(--cyber-violet-dim) !important;
 }
 
 [class*="item_"][role="menuitem"]:hover,
@@ -329,7 +342,7 @@ button[class*="lookFilled_"][class*="colorBrand_"]:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(189, 0, 255, 0.35) !important;
+  background: rgba(189, 0, 255, 0.40) !important;
   border-radius: 3px !important;
 }
 
