@@ -22,11 +22,22 @@ Name_9=9
 Number=10
 Rows=1
 
+[Effect-better-blur-dx]
+BlurMatching=true
+BlurNonMatching=false
+BlurStrength=15
+Contrast=105
+NoiseStrength=2
+Saturation=160
+WindowClasses=firefox\nfirefox-default\nvesktop\ndiscord
+
 [Effect-blur]
 BlurStrength=15
 NoiseStrength=0
 
 [Plugins]
+better_blur_dxEnabled=true
+blurEnabled=false
 cybercore-conky-outputEnabled=true
 cybercore-toggle-desktopEnabled=false
 kwin6_effect_tv_glitchEnabled=true
