@@ -12,7 +12,7 @@ import sys
 import tempfile
 from datetime import datetime
 
-CONFIGS = 'kdeglobals kwinrc dolphinrc krunnerrc kwinrulesrc kglobalshortcutsrc plasmashellrc plasma-org.kde.plasma.desktop-appletsrc klassyrc konsolerc klassy Kvantum conky glava fastfetch yakuakerc autostart/org.kde.yakuake.desktop plasmanotifyrc gtk-3.0 gtk-4.0 mozilla/firefox vesktop'.split()
+CONFIGS = 'kdeglobals kwinrc dolphinrc krunnerrc kwinrulesrc kglobalshortcutsrc plasmashellrc plasma-org.kde.plasma.desktop-appletsrc klassyrc konsolerc klassy Kvantum conky glava fastfetch yakuakerc autostart/org.kde.yakuake.desktop plasmanotifyrc gtk-3.0 gtk-4.0 mozilla/firefox vesktop Vencord'.split()
 SHARES = ['plasma/plasmoids', 'plasma/desktoptheme/Cybercore-Y2K1', 'color-schemes', 'konsole', 'fonts', 'icons/phosphor', 'icons/Cybercore-Bars', 'applications/krunner_cmds', 'applications/cybercore-toggle-desktop.desktop', 'kwin/scripts', 'sounds/Cybercore-Longhorn', 'wallpapers/Cybercore']
 BINS = 'cybercore-backup cybercore-restore cybercore-state cybercore-gpu cybercore-gpu-daemon cybercore-usb-sound cybercore-toggle-desktop br bt cl dd ka mc mnext mpause mplay mprev mz ss tm vl wf ws'.split() + ['br'+str(n) for n in [1,*range(10,101,10)]] + ['t'+str(n) for n in [1,5,10,15,20,30,45,60,90,120]] + ['v'+str(n) for n in range(0,101,5)] + ['w'+str(n) for n in range(1,11)]
 ROOTS = ['.config/'+n for n in CONFIGS] + ['.local/share/'+n for n in SHARES] + ['.local/bin/'+n for n in BINS] + ['.config/systemd/user/'+n+'.service' for n in ['conky','glava','cybercore-gpu','cybercore-usb-sound']] + ['.vesktopCustomCommands']
