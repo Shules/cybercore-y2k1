@@ -61,9 +61,9 @@ description = Cybercore Aero Blur en Vesktop y Discord
 wmclass = (vesktop|discord)
 wmclasscomplete = false
 wmclassmatch = 3
-opacityactive = 96
+opacityactive = 92
 opacityactiverule = 2
-opacityinactive = 93
+opacityinactive = 88
 opacityinactiverule = 2
 
 [4]
@@ -71,9 +71,9 @@ description = Transparencia Leve Cybercore en Firefox
 wmclass = firefox
 wmclasscomplete = false
 wmclassmatch = 1
-opacityactive = 96
+opacityactive = 90
 opacityactiverule = 2
-opacityinactive = 93
+opacityinactive = 85
 opacityinactiverule = 2
 
 
