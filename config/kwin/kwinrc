@@ -24,14 +24,14 @@ Rows=1
 
 [Effect-better-blur-dx]
 BlurDecorations=true
-BlurMatching=false
+BlurMatching=true
 BlurMenus=true
-BlurNonMatching=true
+BlurNonMatching=false
 BlurStrength=15
 Contrast=105
 NoiseStrength=2
 Saturation=160
-WindowClasses=
+WindowClasses=/(firefox|vesktop|discord|dolphin)/
 
 [Effect-blur]
 BlurStrength=15
