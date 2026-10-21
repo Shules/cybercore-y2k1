@@ -36,6 +36,7 @@ else
         glava
         klassy
         phinger-cursors
+        kwin-effects-better-blur-dx
     )
 
     MISSING_PACMAN=()
@@ -147,8 +148,9 @@ for pdir in ~/.config/mozilla/firefox/*.default* ~/.config/mozilla/firefox/*.Pro
 done
 
 echo "[1.3] Deploying Vesktop / Vencord configuration and custom commands..."
-mkdir -p ~/.config/vesktop/themes
+mkdir -p ~/.config/vesktop/themes ~/.config/Vencord/themes
 cp -r "$BASEDIR"/vencord/vesktop/* ~/.config/vesktop/ 2>/dev/null || true
+cp -r "$BASEDIR"/vencord/vesktop/themes/* ~/.config/Vencord/themes/ 2>/dev/null || true
 if [ -d "$BASEDIR"/vencord/.vesktopCustomCommands ]; then
     cp -r "$BASEDIR"/vencord/.vesktopCustomCommands ~/
     chmod +x ~/.vesktopCustomCommands/*.sh 2>/dev/null || true
@@ -257,6 +259,8 @@ systemctl --user restart plasma-kglobalaccel >/dev/null 2>&1 || true
 # 7. Apply & Reload
 echo "[12] Reloading KWin and Plasma..."
 qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
+qdbus org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
+qdbus org.kde.KWin /Effects org.kde.kwin.Effects.loadEffect better_blur_dx >/dev/null 2>&1 || true
 rm -rf ~/.cache/plasma* || true
 rm -rf ~/.cache/krunner* || true
 

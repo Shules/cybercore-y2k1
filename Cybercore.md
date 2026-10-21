@@ -333,8 +333,8 @@ Secuencia: GRUB → Plymouth → SDDM → KDE Plasma.
 - [x] 8. Monitor secundario.
 - [x] 9. Konsole + prompt + Fastfetch + Yakuake.
 - [ ] 10. Polonium opcional.
-- [ ] 11. Firefox.
-- [ ] 12. Discord/Vencord.
+- [x] 11. Firefox.
+- [x] 12. Discord/Vencord.
 - [ ] 13. Reproductor propio.
 - [ ] 14. Drawer de notas.
 - [ ] 15. Reduced Motion.
