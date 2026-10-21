@@ -12,7 +12,7 @@
     function getTargetY(window, output) {
         var cls = String(window.resourceClass).toLowerCase();
         if (cls === 'glava') {
-            return output.geometry.y + 790;
+            return output.geometry.y + 858;
         }
         return output.geometry.y + 56;
     }
@@ -31,7 +31,7 @@
             if (window.output !== output) workspace.sendClientToScreen(window, output);
             var rect = window.frameGeometry;
             var w = rect.width > 0 ? rect.width : (cls === 'glava' ? 1920 : 1920);
-            var h = rect.height > 0 ? rect.height : (cls === "glava" ? 228 : 766);
+            var h = rect.height > 0 ? rect.height : (cls === 'glava' ? 180 : 766);
             var x = output.geometry.x;
             var y = getTargetY(window, output);
             if (rect.x !== x || rect.y !== y || rect.width !== w || rect.height !== h) {

@@ -31,7 +31,7 @@ BlurStrength=15
 Contrast=105
 NoiseStrength=2
 Saturation=160
-WindowClasses=/(firefox|vesktop|discord|dolphin)/
+WindowClasses=firefox\nfirefox-default\nvesktop\ndiscord
 
 [Effect-blur]
 BlurStrength=15
